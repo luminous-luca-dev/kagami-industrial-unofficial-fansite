@@ -3,6 +3,9 @@
    社員証ジェネレーター
    ============================================ */
 
+const logoImg = new Image();
+logoImg.src = './android-chrome-192x192.png';
+
 const ID_CONFIG = {
     width: 450,
     height: 280,
@@ -100,13 +103,15 @@ function generateIdCard(name) {
     ctx.fillRect(0, 5, w, 50);
 
     // Company logo mark
-    ctx.fillStyle = '#C8A65E';
-    ctx.fillRect(15, 15, 32, 32);
-    ctx.fillStyle = '#122C4F';
-    ctx.font = 'bold 18px Montserrat, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('KI', 31, 32);
+    // drawImage(画像, X座標, Y座標, 幅, 高さ)
+    if (logoImg.complete) {
+        ctx.drawImage(logoImg, 15, 15, 32, 32);
+    } else {
+        // 万が一読み込みが間に合っていない場合の保険
+        logoImg.onload = () => {
+            ctx.drawImage(logoImg, 15, 15, 32, 32);
+        };
+    }
 
     // Company name
     ctx.fillStyle = '#FFFFFF';
