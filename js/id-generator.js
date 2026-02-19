@@ -130,6 +130,13 @@ function generateIdCard(name) {
     ctx.textAlign = 'right';
     ctx.fillText('EMPLOYEE ID CARD', w - 20, 32);
 
+    // "UNOFFICIAL/FANMADE" label
+    // 上のラベルより少し小さく、少し薄い色で、Y座標を少し下にずらして表示します
+    ctx.fillStyle = 'rgba(200, 166, 94, 0.5)';
+    ctx.font = '500 7px Montserrat, sans-serif';
+    // textAlignは直前の 'right' が引き継がれます
+    ctx.fillText('UNOFFICIAL / FANMADE', w - 20, 43);
+
     // Photo placeholder
     ctx.fillStyle = 'rgba(255,255,255,0.08)';
     ctx.fillRect(20, 70, 100, 120);
