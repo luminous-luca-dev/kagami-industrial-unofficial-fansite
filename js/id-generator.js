@@ -57,6 +57,25 @@ function getRandomItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
+let uploadedPhoto = null; // 選択された画像を保持する変数
+
+// 写真が選択された時のイベント
+document.getElementById('employee-photo').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+            uploadedPhoto = img; // 画像オブジェクトを保存
+            alert('写真を受け付けました。');
+        };
+        img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+});
+
 function generateIdCard(name) {
     if (!name || !name.trim()) {
         alert('お名前を入力してください。');
@@ -137,26 +156,64 @@ function generateIdCard(name) {
     // textAlignは直前の 'right' が引き継がれます
     ctx.fillText('UNOFFICIAL / FANMADE', w - 20, 43);
 
-    // Photo placeholder
+    // --- Photo Area ---
+    const photoX = 20;
+    const photoY = 70;
+    const photoW = 100;
+    const photoH = 120;
+
+    // 背景枠
     ctx.fillStyle = 'rgba(255,255,255,0.08)';
-    ctx.fillRect(20, 70, 100, 120);
+    ctx.fillRect(photoX, photoY, photoW, photoH);
+
+    if (uploadedPhoto) {
+        // ★写真がある場合：中央トリミングして描画
+        const img = uploadedPhoto;
+        const imgRatio = img.width / img.height;
+        const targetRatio = photoW / photoH;
+        let sx, sy, sWidth, sHeight;
+
+        if (imgRatio > targetRatio) {
+            sHeight = img.height;
+            sWidth = img.height * targetRatio;
+            sx = (img.width - sWidth) / 2;
+            sy = 0;
+        } else {
+            sWidth = img.width;
+            sHeight = img.width / targetRatio;
+            sx = 0;
+            sy = (img.height - sHeight) / 2;
+        }
+
+        ctx.save(); // 状態を保存
+        // 枠からはみ出さないようにクリッピング（念のため）
+        ctx.beginPath();
+        ctx.rect(photoX, photoY, photoW, photoH);
+        ctx.clip();
+        
+        ctx.drawImage(img, sx, sy, sWidth, sHeight, photoX, photoY, photoW, photoH);
+        
+        ctx.restore(); // 状態を戻す
+    } else {
+        // ★写真がない場合：従来のシルエットを描画
+        ctx.fillStyle = 'rgba(200, 166, 94, 0.15)';
+        ctx.beginPath();
+        ctx.arc(70, 110, 25, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(70, 165, 40, 25, 0, Math.PI, 0, true);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.font = '600 7px Montserrat, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('NO PHOTO', 70, 200);
+    }
+
+    // 共通の枠線
     ctx.strokeStyle = 'rgba(200, 166, 94, 0.3)';
     ctx.lineWidth = 1;
-    ctx.strokeRect(20, 70, 100, 120);
-
-    // Avatar silhouette
-    ctx.fillStyle = 'rgba(200, 166, 94, 0.15)';
-    ctx.beginPath();
-    ctx.arc(70, 110, 25, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(70, 165, 40, 25, 0, Math.PI, 0, true);
-    ctx.fill();
-
-    ctx.fillStyle = 'rgba(255,255,255,0.3)';
-    ctx.font = '600 7px Montserrat, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('PHOTO', 70, 200);
+    ctx.strokeRect(photoX, photoY, photoW, photoH);
 
     // Employee data
     const dept = getRandomItem(ID_CONFIG.departments);
