@@ -24,8 +24,10 @@
 <meta property="og:title" content="【非公式】加賀美インダストリアル ファンサイト">
     <meta property="og:description" content="加賀美ハヤト様の活動を応援する非公式ファンメイドサイトです。">
     <meta property="og:image" content=https://kagami-industrial-unofficial-fansite.pages.dev/android-chrome-192x192.png>
-
-	<link rel="stylesheet" href="css/style.css"> <link rel="stylesheet" href="css/perikan.css">  <script src="js/perikan.js"></script> <script src="js/perikan.js"></script>
+		
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	
+	<link rel="stylesheet" href="css/style.css"> <link rel="stylesheet" href="css/perikan.css"><script src="js/perikan.js"></script><script src="js/ranking-display.js"></script>
 </head>
 
 <body>
@@ -78,15 +80,15 @@
 		<div class="geo-line geo-line--2"></div>
 		<div class="geo-line geo-line--3"></div>
 		<div class="page-header__content">
-			<p class="page-header__label">Information</p>
-			<h1 class="page-header__title">このサイトについて</h1>
-			<p class="page-header__subtitle">Manager Profile &amp; Site Policy</p>
+			<p class="page-header__label">ROOM</p>
+			<h1 class="page-header__title">休憩室</h1>
+			<p class="page-header__subtitle">Break room</p>
 		</div>
 	</div>
 
 	<div class="container">
 		<div class="breadcrumb">
-			<a href="index.html">HOME</a><span>›</span><span>About</span>
+			<a href="index.html">HOME</a><span>›</span><span>ROOM</span>
 		</div>
 	</div>
 	
@@ -94,16 +96,19 @@
     <div class="container">
         <div class="minigame-wrapper" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(200, 166, 94, 0.2); padding: var(--space-xl); border-radius: 8px; text-align: center; max-width: 600px; margin: 0 auto;">
             
-            <span class="section-label" style="color: var(--color-accent-light);">Aptitude Test</span>
-            <h2 style="color: var(--color-white); margin-bottom: var(--space-sm);">特殊適性検査：ペリカン検知</h2>
+            <span class="section-label" style="color: var(--color-accent-light);">MINI GAME</span>
+            <h2 style="color: var(--color-white); margin-bottom: var(--space-sm);">シュレディンガーのペリカン</h2>
             <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: var(--space-lg);">
                 コンテナの中に隠されたペリカンが「右」「左」どちらを向いているか予測してください。<br>
                 連続正解数に応じて、あなたの社内階級が上昇します。
             </p>
+			<p style="color: rgba(255,255,255,0.5); font-size: 0.6rem; margin-bottom: var(--space-lg);">
+                ※このゲームは1/256の壁を越える、無慈悲な運試し（クソゲー）です。
+            </p>
 
             <div class="minigame-stats" style="display: flex; justify-content: space-around; margin-bottom: var(--space-md); font-weight: bold; color: var(--color-accent);">
                 <div>SCORE: <span id="game-score" style="font-size: 1.5rem; color: #fff;">0</span></div>
-                <div>CLASS: <span id="game-rank" style="font-size: 1.5rem; color: #fff;">応募者</span></div>
+                <div>CLASS: <span id="game-rank" style="font-size: 1.5rem; color: #fff;">アルバイト級</span></div>
             </div>
 
             <div id="game-screen" style="width: 200px; height: 200px; margin: 0 auto var(--space-md); background: #122C4F; border: 2px solid var(--color-border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4rem;">
@@ -123,100 +128,56 @@
                 <p style="color: #fff; margin-bottom: var(--space-md);">あなたの最終階級は「<span id="final-rank" style="color: var(--color-accent); font-weight:bold;"></span>」です。</p>
                 
                 <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-                    <button class="btn btn--accent" id="btn-ranking" style="width: 100%; max-width: 250px;">🏆 ランキングに登録する</button>
-                    <button class="btn btn--outline" id="btn-retry" style="width: 100%; max-width: 250px;">🔄 もう一度挑戦する</button>
-                </div>
+					<button class="btn btn--outline" id="btn-retry" style="width: 100%; max-width: 250px;">🔄 もう一度挑戦する</button>
+					<button class="btn btn--accent" id="btn-ranking" style="width: 100%; max-width: 250px;">🏆 ランキングに登録する</button>
+					<p style="font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 15px; text-align: left; line-height: 1.5;">
+						※【ランキング登録に関する注意事項】<br>
+						・公序良俗に反する名前、特定の個人や団体を誹謗中傷する名前での登録は固く禁じます。<br>
+						・管理者（当サイト運営者）の判断により、不適切とみなされたデータは予告なく削除する場合があります。<br>
+						・本機能はファンコミュニティの親睦を目的としたものであり、ANYCOLOR株式会社様とは一切関係ありません。
+					</p>
+				</div>
             </div>
 
         </div>
     </div>
 </section>
 
-	<section class="section" id="manager">
-		<div class="container">
-			<span class="section-label">Manager</span>
-			<h2 class="section-title">担当者紹介</h2>
+<p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: var(--space-lg);">
+                素材提供：フリーペンシル（<a href="https://iconbu.com/">https://iconbu.com</a>）
+            </p>
 
-			<div style="display: grid; grid-template-columns: 1fr; max-width: 800px; margin: 0 auto; gap: var(--space-xl); align-items: start;" class="profile-grid">
-				
-				<div class="card fade-in" style="height: 100%;">
-					<div style="text-align: center; margin-bottom: var(--space-md);">
-						<div style="font-size: 3rem;">🏢</div>
-						<h3 class="card__title" style="margin-top: var(--space-sm);">るか <span style="font-size: 0.8em; opacity: 0.7;">in バーチャル世界</span></h3>
-						<p style="color: var(--color-primary); font-weight: bold; font-size: 0.9rem;">加賀美インダストリアル広報部<br>バーチャル広報課 社員</p>
-					</div>
-					<div class="card__text" style="font-size: 0.9rem; line-height: 1.8;">
-						<p style="margin-bottom: 1em;">
-							弊社の魅力をより多くの人へ伝えるため会社ホームページを作成。
-						</p>
-						<p style="margin-bottom: 1em;">
-							加賀美インダストリアルでは残業もなく完全週休二日制、フレックスタイムやリモートワークも導入していただいているため労働環境にはかなり満足している。
-						</p>
-                        <p style="margin-bottom: 1em;">唯一不満があるとすれば、弊社の取り組みの「SDGs」（CSR活動ページ参照）の影響で社内でペットボトルを捨てる際に握りつぶさなければならないのが面倒ということ。</p>
-						<p style="margin-bottom: 1em;">
-							ここだけの話だが、社長が出しっぱなしにしていたダイカガミ1/16モデルに足の小指を強打したところ労災が降りたことがある。<br>
-							辞めたくないのでリストラは勘弁して欲しい。
-						</p>
-						<p style="margin-bottom: 1em;">
-							今度の有給休暇でヘルエスタ王国に観光へ行こうと思っている。フジサンダクラーヌを一目見てみたい。
-						</p>
-                        <p style="margin-bottom: 1em;"><strong>担当者Xアカウント: </strong> <a href="https://x.com/Luca_tec_crt" target="_blank" style="color: var(--color-accent); text-decoration: underline;">るか＠加賀美インダストリアル非公式HP(X / Twitter)</a></p>
-                        
-					</div>
-				</div>
 
-				<div class="card fade-in" style="height: 100%">
-					<div style="text-align: center; margin-bottom: var(--space-md);">
-						<div style="font-size: 3rem;">💻</div>
-						<h3 class="card__title" style="margin-top: var(--space-sm);">るか <span style="font-size: 0.8em; opacity: 0.7;">in Another Dimension</span></h3>
-						<p style="color: var(--color-text-muted); font-weight: bold; font-size: 0.9rem;">ROF-MAOを愛す大学1年生</p>
-					</div>
-					<div class="card__text" style="font-size: 0.9rem; line-height: 1.8;">
-						<p style="margin-bottom: 1em;">
-							当時『ROF-MAO無人島』を拝見して「にじさんじ」を知り、ROF-MAOを推し続けている。
-						</p>
-						<p style="margin-bottom: 1em;">
-							加賀美インダストリアルと様々な場所で耳にするのに会社の明確な情報やホームページなどが存在しないことに疑問を持ち、詳しくないながらも情報をかき集めファンメイドサイトを制作。
-                            <br>生粋のファンの方々にもお褒め頂きｳﾍｳﾍである。
-						</p>
-                        
-						<p style="margin-bottom: 1em;">
-							AIエージェントにかなり頼ってしまった為引け目を感じているが、コードは理解しているため許して欲しい。
-                            <br>基本情報技術者（FE）の資格取得を目指しておりサボタージュのつもりでサイト制作を始めたが、作成にあたってかなり実感を伴った学習ができてしまった。たなぼた。
-						</p>
-						<p>
-							加賀美ハヤト様ありがとうございます。これからも応援しております。
-						</p>
-					</div>
-				</div>
+<section class="section section--dark" id="online-ranking-board">
+    <div class="container">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(200, 166, 94, 0.15); padding: var(--space-lg); border-radius: 4px; max-width: 500px; margin: 0 auto;">
+            
+            <div style="text-align: center; margin-bottom: var(--space-md);">
+                <span class="section-label" style="color: var(--color-accent-light); font-size: 0.7rem; letter-spacing: 0.2em;">CONFIDENTIAL</span>
+                <h3 style="color: var(--color-white); font-size: 1.2rem; margin-top: 5px;">名誉ペリカン社員　名簿</h3>
+            </div>
 
-			</div>
-		</div>
-	</section>
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; color: #fff;">
+                <thead>
+                    <tr style="border-bottom: 1px solid rgba(200, 166, 94, 0.3); color: var(--color-accent);">
+                        <th style="padding: 10px 5px; text-align: left; font-weight: normal;">RANK</th>
+                        <th style="padding: 10px 5px; text-align: left; font-weight: normal;">NAME / CLASS</th>
+                        <th style="padding: 10px 5px; text-align: right; font-weight: normal;">SCORE</th>
+                    </tr>
+                </thead>
+                <tbody id="global-ranking-body">
+                    <tr>
+                        <td colspan="3" style="padding: 20px; text-align: center; color: rgba(255,255,255,0.3);">名簿を照会中...</td>
+                    </tr>
+                </tbody>
+			</table>
+        </div>
+    </div>
 
-	<section class="section section--alt" id="policy">
-		<div class="container">
-			<span class="section-label">Policy</span>
-			<h2 class="section-title">サイトポリシー</h2>
-
-			<div class="card" style="padding: var(--space-xl);">
-				<div style="margin-bottom: var(--space-xl);">
-					<h3 style="font-size: 1.2rem; color: var(--color-primary); border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-xs); margin-bottom: var(--space-md);">改修点</h3>
-					<p style="font-size: 0.9rem; line-height: 1.8;">
-						・サイトロゴを「非公式（ファンメイド）」であることが一目で判別できるデザインへと変更<br>
-・フッターだけでなくヘッダーにも非公式ファンサイトという旨を追加<br>
-・社員証ジェネレーター結果に「UNOFFICIAL / FANMADE」の透かしを追加<br>
-・社長挨拶にロールプレイである旨の注釈を明記<br>
-・社長挨拶の宣材写真（Xリンクからの埋め込み）に「本人様Xリンクの埋め込みを使用し画像転載は行っていない」旨の注釈を追加<br>
-・Google等検索エンジンで表示されるタイトル部に非公式を明示<br>
-・OGP設定（SNSカード）に「非公式」を明記<br>
-・公式二次創作ガイドラインへのリンク設置と遵守表明<br>
-・サイトポリシーの記述を一部変更<br>
-					</p>
-				</div>
-			</div>
-		</div>
-	</section>
+	<p style="font-size: 0.65rem; color: rgba(255,255,255,0.3); margin-top: 10px; text-align: center;">
+		※不適切な名称は予告なく削除されます。また、本名簿は一定期間ごとにリセットされる場合があります。
+	</p>
+</section>
 
 	<footer class="site-footer">
 		<div class="container">

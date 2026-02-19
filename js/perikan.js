@@ -1,3 +1,17 @@
+// windowに保存することで、2回読み込まれても「上書き」扱いにし、エラーを防ぐ
+window.SUPABASE_URL = 'https://vcsnquepttevlmhgyeje.supabase.co';
+window.SUPABASE_KEY = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
+
+// _supabase も二重定義を避ける
+if (!window._supabase) {
+    window._supabase = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
+}
+
+// 以前のコードで _supabase を使っている箇所があるなら、これを定義しておく
+const _supabase = window._supabase;
+
+const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"]; // ここに禁止用語を追加
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- 基本設定 ---
     let score = 0;
@@ -5,11 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameState = 'WAITING'; // 'WAITING' (回答待ち), 'RESULT' (判定表示中)
 
     const ranks = [
-        { min: 0, name: '応募者' }, { min: 1, name: 'アルバイト級' },
-        { min: 3, name: 'インターン級' }, { min: 5, name: '契約社員級' },
-        { min: 10, name: '正社員級' }, { min: 15, name: '主任級' },
-        { min: 20, name: '課長級' }, { min: 30, name: '部長級' },
-        { min: 40, name: '役員級' }, { min: 50, name: '代表取締役社長' }
+        { min: 0, name: 'アルバイト級' }, { min: 1, name: '正社員級' },
+        { min: 2, name: '主任級' }, { min: 3, name: '係長級' },
+        { min: 4, name: '課長級' }, { min: 5, name: '部長級' },
+        { min: 6, name: '役員級' }, { min: 7, name: '副社長級' },
+        { min: 8, name: '代表取締役級' },
     ];
 
     const screen = document.getElementById('game-screen');
@@ -73,7 +87,22 @@ document.addEventListener('DOMContentLoaded', () => {
             rankDisplay.innerText = getRank(score);
             feedback.style.color = '#4CAF50';
             feedback.innerText = '⭕ 正解！';
-            btnNext.style.display = 'inline-block'; // 「次に進む」を表示
+            // ★スコア8（クリア）判定を追加
+            if (score >= 8) {
+                gameState = 'CLEAR'; // 状態をクリアに変更
+                setTimeout(() => {
+                    controls.style.display = 'none';
+                    // ゲームオーバー画面を流用するか、専用のクリア表示を出す
+                    gameOverScreen.style.display = 'block';
+                    // クリア用メッセージに書き換え
+                    gameOverScreen.querySelector('h3').innerText = '🎉 特殊適性検査合格！';
+                    gameOverScreen.querySelector('h3').style.color = '#FFD700'; // ゴールド
+                    document.getElementById('final-rank').innerText = '代表取締役社長（伝説の検知士）';
+                    feedback.innerText = '🎊 おめでとうございます！クリアです！';
+                }, 500);
+            } else {
+                btnNext.style.display = 'inline-block'; // 次へボタンを表示
+            }
         } else {
             // 【不正解】
             feedback.style.color = '#ff4a4a';
@@ -116,12 +145,52 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ランキング
-    document.getElementById('btn-ranking').addEventListener('click', () => {
-        const playerName = prompt("ランキングに登録する名前を入力してください:", "名無し社員");
-        if (playerName) {
-            alert(`【ランキング登録】\n名前: ${playerName}\nスコア: ${score}\n階級: ${getRank(score)}`);
+    document.getElementById('btn-ranking').onclick = async () => {
+        const playerName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
+        
+        // NGワードチェック
+        const isInvalid = NG_WORDS.some(word => playerName.includes(word));
+        
+        if (isInvalid) {
+            alert("不適切な表現が含まれているため、登録できません。");
+            return; // 処理を中断
         }
-    });
+        if (playerName.length > 10) {
+            alert("社内規定により、氏名は10文字以内でお願いします。");
+            return;
+        }
+        if (playerName) {
+            // --- データベースへ保存 ---
+            const { data, error } = await _supabase
+                .from('ranking')
+                .insert([
+                    { name: playerName, score: score, rank: getRank(score) }
+                ]);
+
+            if (error) {
+                console.error('保存エラー:', error);
+                alert('登録に失敗しました。');
+                return;
+            }
+
+            // --- 最新ランキングを取得して表示 ---
+            const { data: topPlayers, error: fetchError } = await _supabase
+                .from('ranking')
+                .select('*')
+                .order('score', { ascending: false }) // スコアが高い順
+                .limit(10); // 上位10名
+
+            if (fetchError) {
+                alert('ランキングの取得に失敗しました。');
+            } else {
+                let rankingTable = "🏆 【オンライン TOP 10】\n";
+                topPlayers.forEach((entry, index) => {
+                    rankingTable += `${index + 1}位: ${entry.name} - ${entry.score}点 (${entry.rank})\n`;
+                });
+                alert(rankingTable);
+            }
+        }
+    };
 
     // 初回スタート
     nextRound();
