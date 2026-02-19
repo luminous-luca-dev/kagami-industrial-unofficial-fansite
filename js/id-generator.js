@@ -321,7 +321,7 @@ function generateIdCard(name) {
                         await navigator.share({
                             files: [file],
                             title: '加賀美インダストリアル 非公式 社員証',
-                            text: '加賀美インダストリアルの社員証を発行しました！',
+                            text: '加賀美インダストリアルの非公式社員証を発行しました！\n#加賀美インダストリアル非公式HP　#加賀美ハヤト',
                         });
                         return; // 共有に成功したらここで終了
                     }
