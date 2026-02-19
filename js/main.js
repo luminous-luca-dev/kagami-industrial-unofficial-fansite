@@ -132,7 +132,7 @@ function triggerGoldenSign() {
   // Create overlay
   const overlay = document.createElement('div');
   overlay.className = 'golden-sign-overlay';
-  overlay.innerHTML = '<div class="golden-sign">加賀美ハヤト</div>';
+  overlay.innerHTML = '<div class="golden-sign">加賀美隼人</div>';
   document.body.appendChild(overlay);
 
   // Create gold particles
