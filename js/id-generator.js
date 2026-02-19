@@ -300,12 +300,41 @@ function generateIdCard(name) {
     // Show canvas and download button
     canvas.style.display = 'block';
     const downloadBtn = document.getElementById('id-card-download');
+    
     if (downloadBtn) {
         downloadBtn.style.display = 'inline-flex';
-        downloadBtn.onclick = () => {
+        
+        // ボタンクリック時の挙動をスマホ共有対応に書き換え
+        downloadBtn.onclick = async () => {
+            const dataUrl = canvas.toDataURL('image/png');
+            const fileName = `kagami_industrial_id_${name.trim()}.png`;
+
+            // --- 方法2: Web Share API (スマホ用) ---
+            if (navigator.share) {
+                try {
+                    // Base64をBlobに変換してファイルオブジェクトを作成
+                    const blob = await (await fetch(dataUrl)).blob();
+                    const file = new File([blob], fileName, { type: 'image/png' });
+
+                    // 共有可能かチェックしてから実行
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: '加賀美インダストリアル 非公式 社員証',
+                            text: '加賀美インダストリアルの社員証を発行しました！',
+                        });
+                        return; // 共有に成功したらここで終了
+                    }
+                } catch (err) {
+                    console.error('Share failed:', err);
+                    // ユーザーキャンセル以外のエラーの場合は従来のダウンロードへ
+                }
+            }
+
+            // --- 方法1: 従来のファイルダウンロード (PC or Share未対応スマホ用) ---
             const link = document.createElement('a');
-            link.download = `kagami_industrial_id_${name.trim()}.png`;
-            link.href = canvas.toDataURL('image/png');
+            link.download = fileName;
+            link.href = dataUrl;
             link.click();
         };
     }
