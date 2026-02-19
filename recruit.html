@@ -255,7 +255,12 @@
                     <input type="text" id="employee-name" class="id-generator__input" placeholder="お名前を入力してください"
                         maxlength="20"
                         style="border-color: rgba(200, 166, 94, 0.3); color: var(--color-white); background: rgba(255,255,255,0.05);">
-                    <button id="generate-id-btn" class="btn btn--accent">社員証を発行する</button>
+                    <label class="btn btn--outline" style="cursor: pointer;">
+                        📷 写真を選択
+                        <input type="file" id="employee-photo" accept="image/*" style="display: none;">
+                    </label>
+                    
+                        <button id="generate-id-btn" class="btn btn--accent">社員証を発行する</button>
                 </div>
 
                 <div class="id-generator__preview">
