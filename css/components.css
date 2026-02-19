@@ -611,6 +611,8 @@
     background: var(--color-white);
     transition: border-color var(--transition-fast);
     min-width: 280px;
+    box-sizing: border-box; /* paddingを含めて100%にする */
+    max-width: 100%;        /* 親要素を絶対超えない */
 }
 
 .id-generator__input:focus {
@@ -626,10 +628,21 @@
     display: inline-block;
     box-shadow: var(--shadow-xl);
     transition: transform var(--transition-base);
+    max-width: 100%;        /* 画面幅に収める */
+    box-sizing: border-box;
+    display: inline-block;  /* 既存のまま */
+    vertical-align: middle;
 }
 
 .id-generator__canvas-wrap:hover {
     transform: scale(1.02) rotate(-1deg);
+}
+
+#id-card-canvas {
+    max-width: 100% !important; /* スマホ幅に合わせて自動縮小 */
+    height: auto !important;    /* 比率を維持 */
+    display: block;             /* 余計な隙間を消す */
+    margin: 0 auto;
 }
 
 /* ---------- Responsive Components ---------- */
@@ -661,12 +674,19 @@
         font-size: 1.1rem;
     }
 
+    .id-generator {
+        padding: var(--space-lg) var(--space-md); /* 左右の余白を少し詰める */
+    }
+
     .id-generator__form {
         flex-direction: column;
+        width: 100%;
     }
 
     .id-generator__input {
-        min-width: 100%;
+        min-width: 0;      /* min-width: 100%だと強すぎるので0にする */
+        width: 100%;       /* その代わりwidthを100%にする */
+        text-align: center;
     }
 
     .news-ticker__label {
