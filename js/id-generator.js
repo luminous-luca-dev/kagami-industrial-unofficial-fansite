@@ -68,8 +68,15 @@ document.getElementById('employee-photo').addEventListener('change', function(e)
     reader.onload = function(event) {
         const img = new Image();
         img.onload = function() {
-            uploadedPhoto = img; // 画像オブジェクトを保存
-            alert('写真を受け付けました。');
+            // 1. Canvas描画用の変数に保存
+            uploadedPhoto = img; 
+
+            // 2. プレビュー画像を表示する処理
+            const previewContainer = document.getElementById('photo-preview-container');
+            const previewImg = document.getElementById('photo-preview-img');
+            
+            previewImg.src = event.target.result; // 画像のURLをセット
+            previewContainer.style.display = 'block'; // 非表示(none)から表示(block)へ
         };
         img.src = event.target.result;
     };
