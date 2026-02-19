@@ -12,6 +12,8 @@ const _supabase = window._supabase;
 
 const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"]; // ここに禁止用語を追加
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- 基本設定 ---
     let score = 0;
@@ -72,11 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
         btnRight.disabled = true;
 
         // ペリカン表示
+        const imgPath = 'perikan.png';
         // 🦆(デフォルト左向き)
         if (currentDirection === 'left') {
-            screen.innerHTML = '🦆';
+            screen.innerHTML = `<img src="${imgPath}" style="width: 100%; height: 100%; object-fit: contain; transform: scaleX(-1);">`;
         } else {
-            screen.innerHTML = '<span style="transform: scaleX(-1); display:inline-block;">🦆</span>';
+            screen.innerHTML = `<img src="${imgPath}" style="width: 100%; height: 100%; object-fit: contain;">`;
         }
 
         // 正誤判定
@@ -95,10 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     // ゲームオーバー画面を流用するか、専用のクリア表示を出す
                     gameOverScreen.style.display = 'block';
                     // クリア用メッセージに書き換え
-                    gameOverScreen.querySelector('h3').innerText = '🎉 特殊適性検査合格！';
+                    gameOverScreen.querySelector('h3').innerText = '🎉 すべてのペリカンの向きを当てられました！';
                     gameOverScreen.querySelector('h3').style.color = '#FFD700'; // ゴールド
-                    document.getElementById('final-rank').innerText = '代表取締役社長（伝説の検知士）';
-                    feedback.innerText = '🎊 おめでとうございます！クリアです！';
+                    document.getElementById('final-rank').innerText = '代表取締役社長級（ペリカンマスター）';
+                    feedback.innerText = '🎊 おめでとうございます！「ペリカン多くないですか!?」';
                 }, 500);
             } else {
                 btnNext.style.display = 'inline-block'; // 次へボタンを表示
