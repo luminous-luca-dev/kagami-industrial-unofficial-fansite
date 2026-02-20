@@ -126,7 +126,7 @@
     <div class="container">
         <div class="minigame-wrapper" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(200, 166, 94, 0.2); padding: var(--space-xl); border-radius: 8px; text-align: center; max-width: 600px; margin: 0 auto;">
             
-            <span class="section-label" style="color: var(--color-accent-light);">MINI GAME</span>
+            <span class="section-label" style="color: var(--color-accent-light);">MINI GAME 01</span>
             <h2 style="color: var(--color-white); margin-bottom: var(--space-sm);">シュレディンガーのペリカン</h2>
             <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: var(--space-lg);">
                 コンテナの中に隠されたペリカンが「右」「左」どちらを向いているか予測してください。<br>
@@ -207,6 +207,177 @@
 		※不適切な名称は予告なく削除されます。また、本名簿は一定期間ごとにリセットされる場合があります。
 	</p>
 </section>
+
+<section class="section section--dark" id="orange-game">
+    <div class="container">
+        <div class="minigame-wrapper" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(200, 166, 94, 0.2); padding: var(--space-xl); border-radius: 8px; text-align: center; max-width: 600px; margin: 40px auto;">
+            
+            <span class="section-label" style="color: var(--color-accent-light);">MINI GAME 02</span>
+            <h2 style="color: var(--color-white); margin-bottom: var(--space-sm);">オレンジ生搾り</h2>
+            <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: var(--space-lg);">
+                オレンジを限界まで絞り、社長のコップを満たしてください。<br>
+                100.00%に近いほど、あなたの「社内事務階級」が上昇します。
+            </p>
+			<p style="color: rgba(255, 255, 255, 0.5); font-size: 0.7rem; margin-top: var(--space-lg);">
+                ※ 100.01%を超えると、コップは社長により破壊されます。<br>　
+            </p>
+
+            <div class="minigame-stats" style="display: flex; justify-content: space-around; margin-bottom: var(--space-md); font-weight: bold; color: var(--color-accent);">
+                <div>AMOUNT: <span id="juice-percent" style="font-size: 1.5rem; color: #fff;">0.00</span>%</div>
+                <div>CLASS: <span id="orange-rank" style="font-size: 1.5rem; color: #fff;">バイト級</span></div>
+            </div>
+
+            <div id="orange-game-screen" style="width: 200px; height: 260px; margin: 0 auto var(--space-md); background: #122C4F; border: 2px solid var(--color-border); border-radius: 8px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 20px 0;">
+                
+                <div id="target-orange" style="font-size: 4rem; transition: transform 0.1s;">🍊</div>
+
+                <div id="cup-container" style="width: 80px; height: 120px; border: 3px solid rgba(255,255,255,0.3); border-top: none; border-radius: 0 0 10px 10px; position: relative; overflow: hidden; background: rgba(255,255,255,0.05);">
+                    <div id="juice-fill" style="position: absolute; bottom: 0; width: 100%; height: 0%; background: #FF9F1C; box-shadow: 0 0 15px #FF9F1C;"></div>
+                    <div id="orange-shutter" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #122C4F; transform: translateY(-100%); transition: transform 0.4s ease; border-bottom: 2px solid var(--color-accent); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--color-accent);">CLOSED</div>
+                </div>
+            </div>
+
+            <div id="orange-controls">
+                <button class="btn btn--accent" id="btn-orange-pour" style="width: 100%; max-width: 250px; margin: 0 auto; user-select: none;">
+                    手で搾り出す（長押し）
+                </button>
+                <div id="orange-feedback" style="margin-top: 15px; font-weight: bold; height: 24px; color: #ffffff;"></div>
+                <button class="btn btn--outline" id="btn-orange-retry" style="display: none; width: 100%; max-width: 250px; margin: 10px auto 0;">もう一度挑戦</button>
+            </div>
+
+            
+        </div>
+    </div>
+</section>
+
+<script>
+(function() {
+    let amount = 0;
+    let isActive = false;
+    let timer;
+    
+    const juiceFill = document.getElementById('juice-fill');
+    const percentDisp = document.getElementById('juice-percent');
+    const shutter = document.getElementById('orange-shutter');
+    const orange = document.getElementById('target-orange');
+    const rankDisp = document.getElementById('orange-rank');
+    const pourBtn = document.getElementById('btn-orange-pour');
+    const retryBtn = document.getElementById('btn-orange-retry');
+    const feedback = document.getElementById('orange-feedback');
+
+    const pourSpeed = 0.78; // スピード微調整
+
+    function startAction(e) {
+        if (e) e.preventDefault();
+        if (amount > 0 && !isActive) return; // 終了後の誤作動防止
+
+        isActive = true;
+        feedback.innerText = "";
+        retryBtn.style.display = "none";
+        
+        timer = setInterval(() => {
+            amount += pourSpeed;
+            if (amount > 120) stopAction(); // 限界突破
+            updateUI();
+        }, 30);
+    }
+
+    function stopAction(e) {
+        if (e) e.preventDefault();
+        if (!isActive) return;
+
+        isActive = false;
+        clearInterval(timer);
+        shutter.style.transform = 'translateY(-100%)'; // 扉を開ける
+        judgeResult();
+        pourBtn.style.display = "none";
+        retryBtn.style.display = "inline-block";
+    }
+
+    function updateUI() {
+        percentDisp.innerText = amount.toFixed(2);
+        juiceFill.style.height = Math.min(amount, 100) + '%';
+        
+        // オレンジの変形
+        const squeeze = 1 - (amount * 0.006);
+        orange.style.transform = `scale(${Math.max(squeeze, 0.4)}, ${Math.max(squeeze + 0.2, 0.5)})`;
+		
+		// 【追加】70%を超えたらスコア表示をフェードアウト
+		if (amount >= 70) {
+			// transitionを効かせるためにstyleで制御
+			percentDisp.parentElement.style.opacity = "0";
+			percentDisp.parentElement.style.transition = "opacity 0.5s ease";
+		}
+
+        // 扉の開閉
+        if (amount > 65) {
+            shutter.style.transform = 'translateY(0)';
+        }
+    }
+
+    function judgeResult() {
+		// 【追加】スコアを再表示させる
+		percentDisp.parentElement.style.opacity = "1";
+
+        const diff = Math.abs(100 - amount);
+        let rank = "";
+        let msg = "";
+
+        if (amount > 100) {
+            rank = "始末書級";
+            msg = "溢れました。「あらららら...」ﾊﾞｷｯ";
+        } else if (diff === 0) {
+            rank = "ねむねむにゃんこ級";
+            msg = "奇跡の100.00%！「これすごくないですか!?」";
+		} else if (diff <= 1.0) {
+            rank = "社長の右腕級";
+            msg = "素晴らしい！「よくこぼれませんでしたね!?」";
+        } else if (diff <= 5.0) {
+            rank = "社長秘書級";
+            msg = "表面張力を感じます。「シンプルすごくないか？」";
+		} else if (diff <= 10.0) {
+            rank = "秘書級";
+            msg = "絶妙な力加減です。「さすがですね！」";
+        } else if (diff <= 15.0) {
+            rank = "ベテラン事務員級";
+            msg = "いい握力です。「お！ありがとうございます！」";
+		} else if (diff <= 30.0) {
+            rank = "事務員級";
+            msg = "GOOD。「いただきます！」";
+        } else {
+            rank = "バイト級";
+            msg = "より強欲にいきましょう。「少なくないですか？」";
+        }
+
+        rankDisp.innerText = rank;
+        feedback.innerText = msg;
+    }
+
+    function resetGame() {
+        amount = 0;
+        isActive = false;
+		
+		// 【追加】透明度をリセット
+		percentDisp.parentElement.style.opacity = "1";
+		percentDisp.parentElement.style.transition = "none";
+        percentDisp.innerText = "0.00";
+        juiceFill.style.height = "0%";
+        orange.style.transform = "scale(1)";
+        shutter.style.transform = 'translateY(-100%)';
+        rankDisp.innerText = "バイト級";
+        feedback.innerText = "";
+        pourBtn.style.display = "inline-block";
+        retryBtn.style.display = "none";
+    }
+
+    // イベント登録
+    pourBtn.addEventListener('mousedown', startAction);
+    pourBtn.addEventListener('touchstart', startAction);
+    window.addEventListener('mouseup', stopAction);
+    window.addEventListener('touchend', stopAction);
+    retryBtn.addEventListener('click', resetGame);
+})();
+</script>
 
 	<footer class="site-footer">
 		<div class="container">
