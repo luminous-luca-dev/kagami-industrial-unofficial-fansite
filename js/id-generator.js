@@ -89,6 +89,15 @@ function generateIdCard(name) {
         return;
     }
 
+    // 1. 社長判定
+    const presidentNames = ['加賀美ハヤト', '加賀美隼人', '加賀美　ハヤト', '加賀美　隼人'];
+    const isPresident = presidentNames.includes(name.trim());
+
+    // 2. 部署・役職・社員番号をここで確定させる（上書き防止！）
+    const dept = isPresident ? '加賀美インダストリアル' : getRandomItem(ID_CONFIG.departments);
+    const rank = isPresident ? '代表取締役社長' : getRandomItem(ID_CONFIG.ranks);
+    const empId = isPresident ? 'KI-0001-BOSS' : generateEmployeeId(); // 社長専用IDにする遊び心
+
     const canvas = document.getElementById('id-card-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -104,8 +113,15 @@ function generateIdCard(name) {
 
     // Background
     const bgGrad = ctx.createLinearGradient(0, 0, w, h);
-    bgGrad.addColorStop(0, '#122C4F');
-    bgGrad.addColorStop(1, '#1a3d6e');
+    if (isPresident) {
+        // 社長専用：情熱の赤グラデーション
+        bgGrad.addColorStop(0, '#550000'); // 深い赤
+        bgGrad.addColorStop(1, '#7e1717'); // 鮮やかな赤
+    } else {
+        // 一般社員：信頼の青グラデーション
+        bgGrad.addColorStop(0, '#122C4F');
+        bgGrad.addColorStop(1, '#1a3d6e');
+    }
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, w, h);
 
@@ -223,9 +239,6 @@ function generateIdCard(name) {
     ctx.strokeRect(photoX, photoY, photoW, photoH);
 
     // Employee data
-    const dept = getRandomItem(ID_CONFIG.departments);
-    const rank = getRandomItem(ID_CONFIG.ranks);
-    const empId = generateEmployeeId();
 
     const dataX = 140;
 
