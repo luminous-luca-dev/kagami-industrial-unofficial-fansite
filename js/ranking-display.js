@@ -22,9 +22,10 @@ function escapeHTML(str) {
         try {
             const { data: players, error } = await _supabase
                 .from('ranking')
-                .select('name, score, rank')
+                .select('name, score, rank, created_at')
                 .order('score', { ascending: false })
-                .limit(10);
+                .order('created_at', { ascending: false })
+                .limit(15);
 
             if (error) throw error;
 
