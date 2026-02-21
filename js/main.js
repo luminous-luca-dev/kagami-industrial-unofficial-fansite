@@ -33,6 +33,36 @@ document.addEventListener('click', (e) => {
   } catch (err) { console.error('link-debug click error', err); }
 }, { capture: true });
 
+// Fallback: if a touchstart happened on a link but navigation didn't occur, navigate on touchend.
+let __lastTouchAnchor = null;
+document.addEventListener('touchstart', (e) => {
+  try {
+    const a = e.target && e.target.closest ? e.target.closest('a') : null;
+    __lastTouchAnchor = a;
+  } catch (err) { __lastTouchAnchor = null; }
+}, { capture: true });
+
+document.addEventListener('touchend', (e) => {
+  try {
+    const a = (__lastTouchAnchor && (__lastTouchAnchor.contains(e.target) || __lastTouchAnchor === e.target)) ? __lastTouchAnchor : (e.target && e.target.closest ? e.target.closest('a') : null);
+    __lastTouchAnchor = null;
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href) return;
+    if (href.startsWith('#') || href.startsWith('javascript:')) return;
+    // if the event or anchor was prevented elsewhere, do nothing
+    if (e.defaultPrevented) return;
+    // if link has target=_blank, open in new tab
+    if (a.target === '_blank') {
+      window.open(a.href, '_blank');
+      return;
+    }
+    // finally navigate
+    console.log('link-debug touchend navigating to', a.href);
+    window.location.href = a.href;
+  } catch (err) { console.error('link-debug touchend error', err); }
+}, { passive: true });
+
 /* ---------- Header & Navigation ---------- */
 function initHeader() {
   const header = document.querySelector('.site-header');
