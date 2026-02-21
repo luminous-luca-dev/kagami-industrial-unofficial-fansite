@@ -13,6 +13,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // キャプチャ段階で全ての通常リンクを強制遷移させるハンドラ（モバイルで別のリスナが preventDefault している場合のフォールバック）
 // NOTE: removed aggressive capture-phase link fallback (caused side effects)
+// Debug handlers: non-intrusively log touch/click on anchors to trace which handler prevents navigation.
+document.addEventListener('touchstart', (e) => {
+  try {
+    const a = e.target && e.target.closest ? e.target.closest('a') : null;
+    if (!a) return;
+    console.log('link-debug touchstart on', a.href || a.getAttribute('href'), 'defaultPrevented=', e.defaultPrevented);
+  } catch (err) { console.error('link-debug touchstart error', err); }
+}, { capture: true });
+
+document.addEventListener('click', (e) => {
+  try {
+    const a = e.target && e.target.closest ? e.target.closest('a') : null;
+    if (!a) return;
+    console.log('link-debug click on', a.href || a.getAttribute('href'), 'captureDefaultPrevented=', e.defaultPrevented);
+    Promise.resolve().then(() => {
+      console.log('link-debug post-click defaultPrevented=', e.defaultPrevented, 'target=', a.outerHTML);
+    });
+  } catch (err) { console.error('link-debug click error', err); }
+}, { capture: true });
 
 /* ---------- Header & Navigation ---------- */
 function initHeader() {
