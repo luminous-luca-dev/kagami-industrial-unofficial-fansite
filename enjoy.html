@@ -258,10 +258,25 @@
 
 <script>
 (function() {
+    // --- 1. Supabaseの安全な初期化（ペリカンと完全に共有・共存） ---
+    window.SUPABASE_URL = 'https://vcsnquepttevlmhgyeje.supabase.co';
+    window.SUPABASE_KEY = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
+
+    if (!window._supabase && typeof supabase !== 'undefined') {
+        window._supabase = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
+    }
+    const _supabase = window._supabase;
+
+    // --- NGワードの設定 ---
+    const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"];
+
+    // --- 2. 基本設定・変数 ---
     let amount = 0;
     let isActive = false;
     let timer;
-    
+    const pourSpeed = 0.78;
+
+    // --- 3. 要素の取得 ---
     const juiceFill = document.getElementById('juice-fill');
     const percentDisp = document.getElementById('juice-percent');
     const shutter = document.getElementById('orange-shutter');
@@ -270,13 +285,13 @@
     const pourBtn = document.getElementById('btn-orange-pour');
     const retryBtn = document.getElementById('btn-orange-retry');
     const feedback = document.getElementById('orange-feedback');
+    const orangeRankingBtn = document.getElementById('btn-orange-ranking');
+    const gameScreen = document.getElementById('orange-game-screen'); // 100%時のアニメーション用
 
-    const pourSpeed = 0.78; // スピード微調整
-
+    // --- 4. アクション処理 ---
     function startAction(e) {
-        // スマホでの画面スクロール等の誤作動を防ぐ
         if (e && e.cancelable) e.preventDefault();
-        if (amount > 0 && !isActive) return; // 終了後の誤作動防止
+        if (amount > 0 && !isActive) return;
 
         isActive = true;
         feedback.innerText = "";
@@ -284,7 +299,7 @@
         
         timer = setInterval(() => {
             amount += pourSpeed;
-            if (amount > 120) stopAction(); // 限界突破
+            if (amount > 120) stopAction();
             updateUI();
         }, 30);
     }
@@ -295,46 +310,41 @@
 
         isActive = false;
         clearInterval(timer);
-        shutter.style.transform = 'translateY(-100%)'; // 扉を開ける
+        shutter.style.transform = 'translateY(-100%)';
         judgeResult();
         pourBtn.style.display = "none";
         retryBtn.style.display = "inline-block";
     }
 
+    // --- 5. UIの更新 ---
     function updateUI() {
         percentDisp.innerText = amount.toFixed(2);
         juiceFill.style.height = Math.min(amount, 100) + '%';
         
-        // オレンジの変形
+        // オレンジが絞られるアニメーション
         const squeeze = 1 - (amount * 0.006);
         orange.style.transform = `scale(${Math.max(squeeze, 0.4)}, ${Math.max(squeeze + 0.2, 0.5)})`;
         
-        // 【追加】70%を超えたらスコア表示をフェードアウト
+        // 70%を超えたら％表示を消す演出
         if (amount >= 70) {
-            // transitionを効かせるためにstyleで制御
             percentDisp.parentElement.style.opacity = "0";
             percentDisp.parentElement.style.transition = "opacity 0.5s ease";
         }
 
-        // 扉の開閉
+        // 65%を超えたらシャッターを下ろす演出
         if (amount > 65) {
             shutter.style.transform = 'translateY(0)';
         }
     }
 
+    // --- 6. 結果判定・演出 ---
     function judgeResult() {
-        // 【追加】スコアを再表示させる
-        percentDisp.parentElement.style.opacity = "1";
-
-        // 【追加】リザルトが出たらランキングボタンを表示
-        document.getElementById('btn-orange-ranking').style.display = "inline-block";
+        percentDisp.parentElement.style.opacity = "1"; // パーセント表示を戻す
+        orangeRankingBtn.style.display = "inline-block"; // ランキングボタン表示
     
-        pourBtn.style.display = "none";
-        retryBtn.style.display = "inline-block";
-
-        const diff = Math.abs(100 - amount);
         let rank = "";
         let msg = "";
+        const diff = Math.abs(100 - amount);
 
         if (amount > 100) {
             rank = "始末書級";
@@ -343,117 +353,91 @@
             rank = "ねむねむにゃんこ級";
             msg = "奇跡の100.00%！！「夜遊びしてくる！」";
             
-            // --- 🚨修正：存在しないIDによるエラー（ペリカンが死ぬ原因）を回避 ---
-            const gameContainer = document.getElementById('orange-game-screen'); 
-            if (gameContainer) {
-                gameContainer.classList.add('shake-animation'); // CSSで定義
-            }
+            // 100.00%時の特別アニメーション
+            if (gameScreen) gameScreen.classList.add('shake-animation');
 
-            // --- 演出：花吹雪を飛ばす ---
-            // エラーにならないよう typeof で存在チェックを追加
-            if (typeof confetti !== 'undefined') {
+            if (typeof confetti === 'function') {
                 confetti({
                     particleCount: 150,
                     spread: 70,
                     origin: { y: 0.6 },
-                    colors: ['#FFD700', '#FFA500', '#FFFFFF'] // 金・オレンジ・白
+                    colors: ['#FFD700', '#FFA500', '#FFFFFF']
                 });
             }
-        } else if (diff <= 1.0) {
-            rank = "社長の右腕級";
-            msg = "表面張力を感じます！「これすごくないですか!?」";
-        } else if (diff <= 5.0) {
-            rank = "社長秘書級";
-            msg = "素晴らしい！「よくこぼれませんでしたね!?」";
-        } else if (diff <= 10.0) {
-            rank = "秘書級";
-            msg = "絶妙な力加減です。「さすがですね！」";
-        } else if (diff <= 15.0) {
-            rank = "ベテラン事務員級";
-            msg = "いい握力です。「お！ありがとうございます！」";
-        } else if (diff <= 30.0) {
-            rank = "事務員級";
-            msg = "GOOD。「いただきます！」";
-        } else {
-            rank = "バイト級";
-            msg = "より強欲にいきましょう。「少なくないですか？」";
-        }
+        } else if (diff <= 1.0) { rank = "社長の右腕級"; msg = "表面張力を感じます！「これすごくないですか!?」";
+        } else if (diff <= 5.0) { rank = "社長秘書級"; msg = "素晴らしい！「よくこぼれませんでしたね!?」";
+        } else if (diff <= 10.0) { rank = "秘書級"; msg = "絶妙な力加減です。「さすがですね！」";
+        } else if (diff <= 15.0) { rank = "ベテラン事務員級"; msg = "いい握力です。「お！ありがとうございます！」";
+        } else if (diff <= 30.0) { rank = "事務員級"; msg = "GOOD。「いただきます！」";
+        } else { rank = "バイト級"; msg = "より強欲にいきましょう。「少なくないですか？」"; }
 
         rankDisp.innerText = rank;
         feedback.innerText = msg;
     }
 
-    function resetGame(e) {
-        if (e && e.cancelable) e.preventDefault();
+    // --- 7. リセット処理 ---
+    function resetGame() {
         amount = 0;
         isActive = false;
-
-        // 【追加】リセット時はランキングボタンを隠す
-        document.getElementById('btn-orange-ranking').style.display = "none";
-    
-        pourBtn.style.display = "inline-block";
-        retryBtn.style.display = "none";
+        orangeRankingBtn.style.display = "none";
         
-        // 【追加】透明度をリセット
         percentDisp.parentElement.style.opacity = "1";
         percentDisp.parentElement.style.transition = "none";
         percentDisp.innerText = "0.00";
+        
         juiceFill.style.height = "0%";
         orange.style.transform = "scale(1)";
         shutter.style.transform = 'translateY(-100%)';
         rankDisp.innerText = "バイト級";
         feedback.innerText = "";
+        
         pourBtn.style.display = "inline-block";
         retryBtn.style.display = "none";
+        if (gameScreen) gameScreen.classList.remove('shake-animation');
     }
 
-    // --- 🚨修正：スマホイベント対応強化（もう一度ボタンが押せない原因を解消） ---
-    const isTouch = 'ontouchstart' in window;
-
+    // --- 8. イベント登録 ---
     pourBtn.addEventListener('mousedown', startAction);
-    pourBtn.addEventListener('touchstart', startAction);
+    pourBtn.addEventListener('touchstart', startAction, {passive: false});
     window.addEventListener('mouseup', stopAction);
     window.addEventListener('touchend', stopAction);
-    
-    // リトライボタンにタッチイベントを追加
     retryBtn.addEventListener('click', resetGame);
-    if (isTouch) retryBtn.addEventListener('touchstart', resetGame);
 
-    // ランキング登録ボタンにタッチイベントを追加
-    const rankingBtn = document.getElementById('btn-orange-ranking');
-    const rankingAction = async (e) => {
-        if (e && e.cancelable) e.preventDefault();
+    // --- 9. ランキング登録機能（NGワード判定・文字数制限保持） ---
+    orangeRankingBtn.onclick = async () => {
+        if (!_supabase) {
+            alert("通信の準備ができていません。ページを更新してください。");
+            return;
+        }
+
+        const inputName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
+        
+        // キャンセルされた場合
+        if (inputName === null || inputName.trim() === "") {
+            return;
+        }
+
+        // NGワードチェック
+        const isInvalid = NG_WORDS.some(word => inputName.includes(word));
+        if (isInvalid) {
+            alert("不適切な表現が含まれているため、登録できません。");
+            return; 
+        }
+
+        // 文字数チェック
+        if (inputName.length > 10) {
+            alert("社内規定により、氏名は10文字以内でお願いします。");
+            return;
+        }
+
         try {
-            if (amount === 0) {
-                alert("オレンジを絞ってから登録してください！");
-                return;
-            }
-
-            const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"]; 
-            const inputName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
-            
-            // 【重要】スマホでのキャンセル・空欄対策
-            if (inputName === null) return; 
-            const playerName = inputName.trim();
-            if (playerName === "") return;
-
-            // バリデーション
-            if (NG_WORDS.some(word => playerName.includes(word))) {
-                alert("不適切な表現が含まれているため、登録できません。");
-                return;
-            }
-            if (playerName.length > 10) {
-                alert("社内規定により、氏名は10文字以内でお願いします。");
-                return;
-            }
-
-            // --- 1. データベースへ保存 ---
             const finalScore = parseFloat(amount.toFixed(2));
             const currentRank = rankDisp.innerText;
 
+            // データベースへ保存
             const { error: insertError } = await _supabase
                 .from('orange-ranking')
-                .insert([{ name: playerName, score: finalScore, rank: currentRank }]);
+                .insert([{ name: inputName, score: finalScore, rank: currentRank }]);
 
             if (insertError) {
                 console.error('保存エラー:', insertError);
@@ -461,7 +445,7 @@
                 return;
             }
 
-            // --- 2. 最新ランキングを取得 ---
+            // 最新ランキングを取得して表示 (100%以下、スコア降順)
             const { data: topPlayers, error: fetchError } = await _supabase
                 .from('orange-ranking')
                 .select('*')
@@ -472,22 +456,16 @@
             if (fetchError) {
                 alert('ランキングの取得に失敗しました。');
             } else {
-                let rankingTable = "🏆 【オンライン TOP 10】\n";
+                let rankingTable = "🏆 【オレンジ生搾り TOP 10】\n";
                 topPlayers.forEach((entry, index) => {
                     rankingTable += `${index + 1}位: ${entry.name} - ${entry.score}% (${entry.rank})\n`;
                 });
-                // スマホのキーボードが閉じるのを待つために少しだけ遅延させる
-                setTimeout(() => { alert(rankingTable); }, 200);
+                alert(rankingTable);
             }
-
         } catch (err) {
-            console.error('致命的なエラー:', err);
-            alert('通信エラーが発生しました。');
+            console.error('Orange Ranking Error:', err);
         }
     };
-
-    rankingBtn.addEventListener('click', rankingAction);
-    if (isTouch) rankingBtn.addEventListener('touchstart', rankingAction);
 
 })();
 </script>
