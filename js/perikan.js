@@ -70,8 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 判定処理 ---
     function checkAnswer(selected) {
+        console.log('perikan: checkAnswer called with', selected, 'gameState=', gameState);
         // すでに判定中なら入力を受け付けない（これが重要！）
-        if (gameState !== 'WAITING') return;
+        if (gameState !== 'WAITING') {
+            console.log('perikan: checkAnswer ignored because gameState=', gameState);
+            return;
+        }
         gameState = 'RESULT'; 
 
         // ボタンを即座に無効化
@@ -129,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // クリックとタッチの両方を扱う（タッチ後に発生するクリックを無視する）
     if (btnLeft) {
         btnLeft.addEventListener('touchstart', (e) => {
+            console.log('perikan: touchstart left');
             if (e && e.cancelable) e.preventDefault();
             lastInputWasTouch = true;
             btnLeft.classList.add('selected');
@@ -136,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: false });
 
         btnLeft.onclick = (e) => {
+            console.log('perikan: click left (lastInputWasTouch=', lastInputWasTouch, ')');
             if (lastInputWasTouch) { lastInputWasTouch = false; return; }
             e.preventDefault();
             btnLeft.classList.add('selected');
@@ -145,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnRight) {
         btnRight.addEventListener('touchstart', (e) => {
+            console.log('perikan: touchstart right');
             if (e && e.cancelable) e.preventDefault();
             lastInputWasTouch = true;
             btnRight.classList.add('selected');
@@ -152,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: false });
 
         btnRight.onclick = (e) => {
+            console.log('perikan: click right (lastInputWasTouch=', lastInputWasTouch, ')');
             if (lastInputWasTouch) { lastInputWasTouch = false; return; }
             e.preventDefault();
             btnRight.classList.add('selected');
