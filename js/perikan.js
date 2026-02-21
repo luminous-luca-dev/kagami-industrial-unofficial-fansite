@@ -1,13 +1,3 @@
-// windowに保存することで、2回読み込まれても「上書き」扱いにし、エラーを防ぐ
-window.SUPABASE_URL = 'https://vcsnquepttevlmhgyeje.supabase.co';
-window.SUPABASE_KEY = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
-
-// _supabase も二重定義を避ける
-if (!window._supabase) {
-    window._supabase = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
-}
-
-// 以前のコードで _supabase を使っている箇所があるなら、これを定義しておく
 const _supabase = window._supabase;
 
 const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"]; // ここに禁止用語を追加
