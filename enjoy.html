@@ -261,6 +261,7 @@
 
 <script>
 (function() {
+	document.addEventListener('DOMContentLoaded', () => {
 	const _supabase = window._supabase;
     let amount = 0;
     let isActive = false;
@@ -496,7 +497,7 @@
 
     rankingBtn.addEventListener('click', rankingAction);
     if (isTouch) rankingBtn.addEventListener('touchstart', rankingAction);
-
+	});
 })();
 </script>
 
