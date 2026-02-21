@@ -23,6 +23,7 @@ function escapeHTML(str) {
             const { data: players, error } = await _supabase
                 .from('orange-ranking')
                 .select('name, score, rank, created_at')
+                .lte('score', 100)
                 .order('score', { ascending: false })
                 .order('created_at', { ascending: false })
                 .limit(15);
