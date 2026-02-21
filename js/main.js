@@ -78,11 +78,16 @@ function initHeader() {
 
   // Hamburger menu
   if (hamburger && mobileOverlay) {
-    hamburger.addEventListener('click', () => {
+    const toggleMobileMenu = (e) => {
+      if (e && e.cancelable) e.preventDefault();
       hamburger.classList.toggle('active');
       mobileOverlay.classList.toggle('active');
       document.body.style.overflow = mobileOverlay.classList.contains('active') ? 'hidden' : '';
-    });
+    };
+
+    hamburger.addEventListener('click', toggleMobileMenu);
+    // touchstart support for mobile (prevent double click by allowing passive:false)
+    hamburger.addEventListener('touchstart', toggleMobileMenu, { passive: false });
 
     // Close on link click
     mobileOverlay.querySelectorAll('a').forEach(link => {
