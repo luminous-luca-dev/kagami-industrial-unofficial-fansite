@@ -214,7 +214,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // ランキング登録（_supabase はここで遅延参照）
     const btnRankingEl = document.getElementById('btn-ranking');
     if (btnRankingEl) {
-        btnRankingEl.onclick = async () => {
+        // 共通ハンドラを定義して touchstart / click 両方を使えるようにする
+        const rankingHandler = async (e) => {
+            if (e && e.cancelable) e.preventDefault();
+            console.log('perikan: rankingHandler invoked (type=', e && e.type, ')');
+
+            // 二重発火防止
+            if (e && e.type === 'click' && lastInputWasTouch) { lastInputWasTouch = false; return; }
+
             const _supabase = window._supabase;
             if (!_supabase) {
                 console.error('perikan: Supabase client is not initialized yet.');
@@ -222,8 +229,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const playerName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
-            if (!playerName) return;
+            const inputName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
+            if (inputName === null) return; // キャンセル
+            const playerName = inputName.trim();
+            if (playerName === '') return;
 
             // NGワードチェック
             const isInvalid = NG_WORDS.some(word => playerName.includes(word));
@@ -237,35 +246,47 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // --- データベースへ保存 ---
-            const { data, error } = await _supabase
-                .from('ranking')
-                .insert([
-                    { name: playerName, score: score, rank: getRank(score) }
-                ]);
+            try {
+                const { data, error } = await _supabase
+                    .from('ranking')
+                    .insert([
+                        { name: playerName, score: score, rank: getRank(score) }
+                    ]);
 
-            if (error) {
-                console.error('保存エラー:', error);
-                alert('登録に失敗しました。');
-                return;
-            }
+                if (error) {
+                    console.error('保存エラー:', error);
+                    alert('登録に失敗しました。');
+                    return;
+                }
 
-            // --- 最新ランキングを取得して表示 ---
-            const { data: topPlayers, error: fetchError } = await _supabase
-                .from('ranking')
-                .select('*')
-                .order('score', { ascending: false }) // スコアが高い順
-                .limit(10); // 上位10名
+                // --- 最新ランキングを取得して表示 ---
+                const { data: topPlayers, error: fetchError } = await _supabase
+                    .from('ranking')
+                    .select('*')
+                    .order('score', { ascending: false }) // スコアが高い順
+                    .limit(10);
 
-            if (fetchError) {
-                alert('ランキングの取得に失敗しました。');
-            } else {
-                let rankingTable = "🏆 【オンライン TOP 10】\n";
-                topPlayers.forEach((entry, index) => {
-                    rankingTable += `${index + 1}位: ${entry.name} - ${entry.score}点 (${entry.rank})\n`;
-                });
-                alert(rankingTable);
+                if (fetchError) {
+                    alert('ランキングの取得に失敗しました。');
+                } else {
+                    let rankingTable = "🏆 【オンライン TOP 10】\n";
+                    topPlayers.forEach((entry, index) => {
+                        rankingTable += `${index + 1}位: ${entry.name} - ${entry.score}点 (${entry.rank})\n`;
+                    });
+                    alert(rankingTable);
+                }
+            } catch (err) {
+                console.error('rankingHandler error:', err);
+                alert('通信エラーが発生しました。');
             }
         };
+
+        btnRankingEl.addEventListener('touchstart', (e) => {
+            lastInputWasTouch = true;
+            rankingHandler(e);
+        }, { passive: false });
+
+        btnRankingEl.addEventListener('click', rankingHandler);
     }
 
     // 初回スタート
