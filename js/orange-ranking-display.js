@@ -1,21 +1,6 @@
-function escapeHTML(str) {
-    return str.replace(/[&<>"']/g, function(m) {
-        return {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#39;'
-        }[m];
-    });
-}
-
 (function() {
     // 1. 設定（あなたのプロジェクトのURLとキーに書き換えてください）
-    const SUPABASE_URL = 'https://vcsnquepttevlmhgyeje.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
-
-    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const _supabase = window._supabase;
 
     // 2. ランキングを取得して表示する関数
     async function fetchGlobalRanking() {
