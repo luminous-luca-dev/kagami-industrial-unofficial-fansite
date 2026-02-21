@@ -247,7 +247,7 @@
                 </button>
                 <div id="orange-feedback" style="margin-top: 15px; font-weight: bold; height: 24px; color: #ffffff;"></div>
                 <button class="btn btn--outline" id="btn-orange-retry" style="display: none; width: 100%; max-width: 250px; margin: 10px auto 0;">もう一度挑戦</button>
-				<button class="btn btn--accent" id="btn-orange-ranking" style="width: 100%; max-width: 250px;">🏆 ランキングに登録する</button>
+				<button class="btn btn--accent" id="btn-orange-ranking" style="display: none; width: 100%; max-width: 250px;">🏆 ランキングに登録する</button>
             </div>
 
             
@@ -324,6 +324,12 @@
 		// 【追加】スコアを再表示させる
 		percentDisp.parentElement.style.opacity = "1";
 
+		// 【追加】リザルトが出たらランキングボタンを表示
+		document.getElementById('btn-orange-ranking').style.display = "inline-block";
+    
+		pourBtn.style.display = "none";
+		retryBtn.style.display = "inline-block";
+
         const diff = Math.abs(100 - amount);
         let rank = "";
         let msg = "";
@@ -361,6 +367,12 @@
     function resetGame() {
         amount = 0;
         isActive = false;
+
+		// 【追加】リセット時はランキングボタンを隠す
+		document.getElementById('btn-orange-ranking').style.display = "none";
+    
+		pourBtn.style.display = "inline-block";
+		retryBtn.style.display = "none";
 		
 		// 【追加】透明度をリセット
 		percentDisp.parentElement.style.opacity = "1";
