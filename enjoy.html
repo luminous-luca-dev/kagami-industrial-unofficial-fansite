@@ -407,84 +407,70 @@
     window.addEventListener('touchend', stopAction);
     retryBtn.addEventListener('click', resetGame);
 
-	// ランキング
-    document.getElementById('btn-orange-ranking').onclick = async () => {
-
-        if (amount === 0) {
-            alert("オレンジを絞ってから登録してください！");
-            return;
-        }
-		const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"]; // ここに禁止用語を追加
-
-		const playerName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
-        if (!playerName) return; // キャンセル時は中断
-
-
-
-
-
-
-
-        // NGワードチェック
-        const isInvalid = NG_WORDS.some(word => playerName.includes(word));
-        
-        if (isInvalid) {
-            alert("不適切な表現が含まれているため、登録できません。");
-            return; // 処理を中断
-        }
-        if (playerName.length > 10) {
-            alert("社内規定により、氏名は10文字以内でお願いします。");
-            return;
-        }
-        if (playerName) {
-			// --- 修正ポイント：変数名の不整合と関数未定義を解消 ---
-        	const finalScore = parseFloat(amount.toFixed(2)); // scoreの代わりにamountを使用
-        	const currentRank = rankDisp.innerText;           // judgeResultで確定したランクを取得
-            
-			// --- データベースへ保存 ---
-            const { data, error } = await _supabase
-                .from('orange-ranking')
-                .insert([
-                    { name: playerName, score: finalScore, rank: currentRank }
-                ]);
-
-            if (error) {
-                console.error('保存エラー:', error);
-                alert('登録に失敗しました。');
-                return;
-            
-
-
-
-
-
-
-
-
-
-
-				
+	// ランキング登録ボタン
+	document.getElementById('btn-orange-ranking').onclick = async () => {
+		try {
+			if (amount === 0) {
+				alert("オレンジを絞ってから登録してください！");
+				return;
 			}
 
-            // --- 最新ランキングを取得して表示 ---
-            const { data: topPlayers, error: fetchError } = await _supabase
-                .from('orange-ranking')
-                .select('*')
-				.lte('score', 100) // 100以下のデータのみ取得する場合（溢れた人をランキングから除外）
-                .order('score', { ascending: false }) // スコアが高い順
-                .limit(10); // 上位10名
+			const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"]; 
+			const inputName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
+			
+			// 【重要】スマホでのキャンセル・空欄対策
+			if (inputName === null) return; 
+			const playerName = inputName.trim();
+			if (playerName === "") return;
 
-            if (fetchError) {
-                alert('ランキングの取得に失敗しました。');
-            } else {
-                let rankingTable = "🏆 【オンライン TOP 10】\n";
-                topPlayers.forEach((entry, index) => {
-                    rankingTable += `${index + 1}位: ${entry.name} - ${entry.score}% (${entry.rank})\n`;
-                });
-                alert(rankingTable);
-            }
-        }
-    };
+			// バリデーション
+			if (NG_WORDS.some(word => playerName.includes(word))) {
+				alert("不適切な表現が含まれているため、登録できません。");
+				return;
+			}
+			if (playerName.length > 10) {
+				alert("社内規定により、氏名は10文字以内でお願いします。");
+				return;
+			}
+
+			// --- 1. データベースへ保存 ---
+			const finalScore = parseFloat(amount.toFixed(2));
+			const currentRank = rankDisp.innerText;
+
+			const { error: insertError } = await _supabase
+				.from('orange-ranking')
+				.insert([{ name: playerName, score: finalScore, rank: currentRank }]);
+
+			if (insertError) {
+				console.error('保存エラー:', insertError);
+				alert('登録に失敗しました。');
+				return;
+			}
+
+			// --- 2. 最新ランキングを取得 ---
+			const { data: topPlayers, error: fetchError } = await _supabase
+				.from('orange-ranking')
+				.select('*')
+				.lte('score', 100)
+				.order('score', { ascending: false })
+				.limit(10);
+
+			if (fetchError) {
+				alert('ランキングの取得に失敗しました。');
+			} else {
+				let rankingTable = "🏆 【オンライン TOP 10】\n";
+				topPlayers.forEach((entry, index) => {
+					rankingTable += `${index + 1}位: ${entry.name} - ${entry.score}% (${entry.rank})\n`;
+				});
+				// スマホのキーボードが閉じるのを待つために少しだけ遅延させる
+				setTimeout(() => { alert(rankingTable); }, 200);
+			}
+
+		} catch (err) {
+			console.error('致命的なエラー:', err);
+			alert('通信エラーが発生しました。');
+		}
+	}; // ここでしっかり閉じる！
 })();
 </script>
 
