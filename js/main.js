@@ -11,6 +11,26 @@ document.addEventListener('DOMContentLoaded', () => {
   highlightActiveNav();
 });
 
+// キャプチャ段階で全ての通常リンクを強制遷移させるハンドラ（モバイルで別のリスナが preventDefault している場合のフォールバック）
+document.addEventListener('click', (e) => {
+  try {
+    const a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href) return;
+    // 内部アンカーやjavascript: を除外
+    if (href.startsWith('#') || href.startsWith('javascript:')) return;
+
+    // ここで既に preventDefault されていれば、強制的に遷移させる
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    // use absolute href to handle relative paths correctly
+    window.location.href = a.href;
+  } catch (err) {
+    console.error('link-capture fallback error:', err);
+  }
+}, { capture: true });
+
 /* ---------- Header & Navigation ---------- */
 function initHeader() {
   const header = document.querySelector('.site-header');
