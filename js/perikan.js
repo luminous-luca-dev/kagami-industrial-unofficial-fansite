@@ -1,5 +1,4 @@
-const _supabase = window._supabase;
-
+// NOTE: defer reading `window._supabase` until it's actually needed
 const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"]; // ここに禁止用語を追加
 
 
@@ -28,11 +27,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const controls = document.getElementById('game-controls');
     const gameOverScreen = document.getElementById('game-over-screen');
 
-    // 追加：要素が取得できているか確認（取得失敗なら原因をログに出す）
+    // 追加：要素が取得できているか確認（取得失敗なら詳細ログを出すが処理は継続）
     if (!btnLeft || !btnRight) {
-        console.error('perikan: btn-select-left / btn-select-right が見つかりません', btnLeft, btnRight);
-        return;
+        console.error('perikan: btn-select-left / btn-select-right が見つかりません', {
+            btnLeftExists: !!btnLeft,
+            btnRightExists: !!btnRight,
+            screen, scoreDisplay, rankDisplay, feedback, btnNext, controls, gameOverScreen
+        });
+        // 続行して、可能な限りフォールバックで動作させる
     }
+
+    // タッチとクリックの二重発火を防ぐフラグ
+    let lastInputWasTouch = false;
 
     // 追加：ページ読み込み時に初期ラウンドを開始（未呼び出しだとボタンが押しても反応しない可能性あり）
     nextRound();
@@ -120,48 +126,81 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- イベント割り当て (.onclickを使うことで重複登録を防ぐ) ---
-    btnLeft.onclick = (e) => {
-        e.preventDefault();
-        btnLeft.classList.add('selected');
-        checkAnswer('left');
-    };
+    // クリックとタッチの両方を扱う（タッチ後に発生するクリックを無視する）
+    if (btnLeft) {
+        btnLeft.addEventListener('touchstart', (e) => {
+            if (e && e.cancelable) e.preventDefault();
+            lastInputWasTouch = true;
+            btnLeft.classList.add('selected');
+            checkAnswer('left');
+        }, { passive: false });
 
-    btnRight.onclick = (e) => {
-        e.preventDefault();
-        btnRight.classList.add('selected');
-        checkAnswer('right');
-    };
+        btnLeft.onclick = (e) => {
+            if (lastInputWasTouch) { lastInputWasTouch = false; return; }
+            e.preventDefault();
+            btnLeft.classList.add('selected');
+            checkAnswer('left');
+        };
+    }
+
+    if (btnRight) {
+        btnRight.addEventListener('touchstart', (e) => {
+            if (e && e.cancelable) e.preventDefault();
+            lastInputWasTouch = true;
+            btnRight.classList.add('selected');
+            checkAnswer('right');
+        }, { passive: false });
+
+        btnRight.onclick = (e) => {
+            if (lastInputWasTouch) { lastInputWasTouch = false; return; }
+            e.preventDefault();
+            btnRight.classList.add('selected');
+            checkAnswer('right');
+        };
+    }
 
     btnNext.onclick = (e) => {
         e.preventDefault();
         nextRound();
     };
 
-    document.getElementById('btn-retry').onclick = () => {
-        score = 0;
-        scoreDisplay.innerText = "0";
-        rankDisplay.innerText = ranks[0].name;
-        controls.style.display = 'block';
-        gameOverScreen.style.display = 'none';
-        nextRound();
-    };
+    const btnRetryEl = document.getElementById('btn-retry');
+    if (btnRetryEl) {
+        btnRetryEl.onclick = () => {
+            score = 0;
+            scoreDisplay.innerText = "0";
+            rankDisplay.innerText = ranks[0].name;
+            controls.style.display = 'block';
+            gameOverScreen.style.display = 'none';
+            nextRound();
+        };
+    }
 
-    // ランキング
-    document.getElementById('btn-ranking').onclick = async () => {
-        const playerName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
-        
-        // NGワードチェック
-        const isInvalid = NG_WORDS.some(word => playerName.includes(word));
-        
-        if (isInvalid) {
-            alert("不適切な表現が含まれているため、登録できません。");
-            return; // 処理を中断
-        }
-        if (playerName.length > 10) {
-            alert("社内規定により、氏名は10文字以内でお願いします。");
-            return;
-        }
-        if (playerName) {
+    // ランキング登録（_supabase はここで遅延参照）
+    const btnRankingEl = document.getElementById('btn-ranking');
+    if (btnRankingEl) {
+        btnRankingEl.onclick = async () => {
+            const _supabase = window._supabase;
+            if (!_supabase) {
+                console.error('perikan: Supabase client is not initialized yet.');
+                alert('ランキング機能は現在利用できません（通信準備中）。後で再試行してください。');
+                return;
+            }
+
+            const playerName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
+            if (!playerName) return;
+
+            // NGワードチェック
+            const isInvalid = NG_WORDS.some(word => playerName.includes(word));
+            if (isInvalid) {
+                alert("不適切な表現が含まれているため、登録できません。");
+                return; // 処理を中断
+            }
+            if (playerName.length > 10) {
+                alert("社内規定により、氏名は10文字以内でお願いします。");
+                return;
+            }
+
             // --- データベースへ保存 ---
             const { data, error } = await _supabase
                 .from('ranking')
@@ -191,8 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 alert(rankingTable);
             }
-        }
-    };
+        };
+    }
 
     // 初回スタート
     nextRound();
