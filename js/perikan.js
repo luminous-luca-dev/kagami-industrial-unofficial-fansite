@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnLeft) {
         btnLeft.addEventListener('touchstart', (e) => {
             console.log('perikan: touchstart left');
+            if (gameState !== 'WAITING') { console.log('perikan: touch ignored (not WAITING)'); return; }
             if (e && e.cancelable) e.preventDefault();
             lastInputWasTouch = true;
             btnLeft.classList.add('selected');
@@ -142,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         btnLeft.onclick = (e) => {
             console.log('perikan: click left (lastInputWasTouch=', lastInputWasTouch, ')');
+            if (gameState !== 'WAITING') { console.log('perikan: click ignored (not WAITING)'); return; }
             if (lastInputWasTouch) { lastInputWasTouch = false; return; }
             e.preventDefault();
             btnLeft.classList.add('selected');
@@ -152,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnRight) {
         btnRight.addEventListener('touchstart', (e) => {
             console.log('perikan: touchstart right');
+            if (gameState !== 'WAITING') { console.log('perikan: touch ignored (not WAITING)'); return; }
             if (e && e.cancelable) e.preventDefault();
             lastInputWasTouch = true;
             btnRight.classList.add('selected');
@@ -160,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         btnRight.onclick = (e) => {
             console.log('perikan: click right (lastInputWasTouch=', lastInputWasTouch, ')');
+            if (gameState !== 'WAITING') { console.log('perikan: click ignored (not WAITING)'); return; }
             if (lastInputWasTouch) { lastInputWasTouch = false; return; }
             e.preventDefault();
             btnRight.classList.add('selected');
@@ -167,14 +171,37 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    btnNext.onclick = (e) => {
-        e.preventDefault();
-        nextRound();
-    };
+    // add touch support for next button
+    if (btnNext) {
+        btnNext.addEventListener('touchstart', (e) => {
+            console.log('perikan: touchstart next');
+            if (e && e.cancelable) e.preventDefault();
+            nextRound();
+        }, { passive: false });
+
+        btnNext.onclick = (e) => {
+            console.log('perikan: click next');
+            e.preventDefault();
+            nextRound();
+        };
+    }
 
     const btnRetryEl = document.getElementById('btn-retry');
     if (btnRetryEl) {
-        btnRetryEl.onclick = () => {
+        btnRetryEl.addEventListener('touchstart', (e) => {
+            console.log('perikan: touchstart retry');
+            if (e && e.cancelable) e.preventDefault();
+            score = 0;
+            scoreDisplay.innerText = "0";
+            rankDisplay.innerText = ranks[0].name;
+            controls.style.display = 'block';
+            gameOverScreen.style.display = 'none';
+            nextRound();
+        }, { passive: false });
+
+        btnRetryEl.onclick = (e) => {
+            console.log('perikan: click retry');
+            e.preventDefault();
             score = 0;
             scoreDisplay.innerText = "0";
             rankDisplay.innerText = ranks[0].name;
