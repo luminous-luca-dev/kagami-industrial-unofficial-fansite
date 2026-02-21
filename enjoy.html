@@ -249,8 +249,9 @@
                 <button class="btn btn--outline" id="btn-orange-retry" style="display: none; width: 100%; max-width: 250px; margin: 10px auto 0;">もう一度挑戦</button>
 				<button class="btn btn--accent" id="btn-orange-ranking" style="display: none; width: 100%; max-width: 250px;">🏆 ランキングに登録する</button>
             </div>
-
-            
+            <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; margin-bottom: var(--space-lg);">
+                Inspired by （<a href="https://pheniki-games.com/girigirimilk/">ギリギリまで牛乳を注ぐゲーム</a>）
+            </p>
         </div>
     </div>
 </section>
@@ -339,13 +340,25 @@
             msg = "溢れました。「あらららら...」ﾊﾞｷｯ";
         } else if (diff === 0) {
             rank = "ねむねむにゃんこ級";
-            msg = "奇跡の100.00%！「これすごくないですか!?」";
+            msg = "奇跡の100.00%！！「夜遊びしてくる！」";
+			// --- 演出：画面を揺らす ---
+			const gameContainer = document.getElementById('orange-game-container');
+			gameContainer.classList.add('shake-animation'); // CSSで定義
+
+			// --- 演出：花吹雪を飛ばす ---
+			// もし canvas-confetti などのライブラリを入れていればここで実行！
+			confetti({
+				particleCount: 150,
+				spread: 70,
+				origin: { y: 0.6 },
+				colors: ['#FFD700', '#FFA500', '#FFFFFF'] // 金・オレンジ・白
+			});
 		} else if (diff <= 1.0) {
             rank = "社長の右腕級";
-            msg = "素晴らしい！「よくこぼれませんでしたね!?」";
+            msg = "表面張力を感じます！「これすごくないですか!?」";
         } else if (diff <= 5.0) {
             rank = "社長秘書級";
-            msg = "表面張力を感じます。「シンプルすごくないか？」";
+            msg = "素晴らしい！「よくこぼれませんでしたね!?」";
 		} else if (diff <= 10.0) {
             rank = "秘書級";
             msg = "絶妙な力加減です。「さすがですね！」";
@@ -401,7 +414,8 @@
             alert("オレンジを絞ってから登録してください！");
             return;
         }
-
+		const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"]; // ここに禁止用語を追加
+		
 		const playerName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
         if (!playerName) return; // キャンセル時は中断
         // NGワードチェック
@@ -461,7 +475,7 @@
             
             <div style="text-align: center; margin-bottom: var(--space-md);">
                 <span class="section-label" style="color: var(--color-accent-light); font-size: 0.7rem; letter-spacing: 0.2em;">CONFIDENTIAL</span>
-                <h3 style="color: var(--color-white); font-size: 1.2rem; margin-top: 5px;">名誉ペリカン社員　名簿</h3>
+                <h3 style="color: var(--color-white); font-size: 1.2rem; margin-top: 5px;">名誉生搾り社員　名簿</h3>
             </div>
 
             <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; color: #fff;">
