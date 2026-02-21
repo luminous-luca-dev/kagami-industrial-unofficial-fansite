@@ -425,6 +425,7 @@
             const { data: topPlayers, error: fetchError } = await _supabase
                 .from('orange-ranking')
                 .select('*')
+				.lte('score', 100) // 100以下のデータのみ取得する場合（溢れた人をランキングから除外）
                 .order('score', { ascending: false }) // スコアが高い順
                 .limit(10); // 上位10名
 
