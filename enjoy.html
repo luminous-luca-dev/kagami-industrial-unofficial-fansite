@@ -415,9 +415,16 @@
             return;
         }
 		const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"]; // ここに禁止用語を追加
-		
+
 		const playerName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
         if (!playerName) return; // キャンセル時は中断
+
+
+
+
+
+
+
         // NGワードチェック
         const isInvalid = NG_WORDS.some(word => playerName.includes(word));
         
@@ -445,7 +452,19 @@
                 console.error('保存エラー:', error);
                 alert('登録に失敗しました。');
                 return;
-            }
+            
+
+
+
+
+
+
+
+
+
+
+				
+			}
 
             // --- 最新ランキングを取得して表示 ---
             const { data: topPlayers, error: fetchError } = await _supabase

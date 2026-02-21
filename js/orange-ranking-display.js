@@ -40,7 +40,7 @@ function escapeHTML(str) {
             tbody.innerHTML = ''; // ローディング表示を消す
 
             players.forEach((player, index) => {
-                const isPresident = player.score >= 8;
+                const isPresident = player.score >= 99;
                 const row = `
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.3s;" 
                         onmouseover="this.style.background='rgba(200, 166, 94, 0.05)'" 
