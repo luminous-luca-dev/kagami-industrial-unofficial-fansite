@@ -28,6 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const controls = document.getElementById('game-controls');
     const gameOverScreen = document.getElementById('game-over-screen');
 
+    // 追加：要素が取得できているか確認（取得失敗なら原因をログに出す）
+    if (!btnLeft || !btnRight) {
+        console.error('perikan: btn-select-left / btn-select-right が見つかりません', btnLeft, btnRight);
+        return;
+    }
+
+    // 追加：ページ読み込み時に初期ラウンドを開始（未呼び出しだとボタンが押しても反応しない可能性あり）
+    nextRound();
+
     function getRank(s) {
         let r = ranks[0].name;
         ranks.forEach(rank => { if (s >= rank.min) r = rank.name; });
