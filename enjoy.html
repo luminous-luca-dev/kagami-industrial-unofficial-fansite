@@ -258,14 +258,20 @@
 
 <script>
 (function() {
-    // --- 1. Supabaseの安全な初期化（ペリカンと完全に共有・共存） ---
-    window.SUPABASE_URL = 'https://vcsnquepttevlmhgyeje.supabase.co';
-    window.SUPABASE_KEY = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
-
-    if (!window._supabase && typeof supabase !== 'undefined') {
-        window._supabase = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
-    }
-    const _supabase = window._supabase;
+    // --- 1. Supabaseの安全な初期化（エラーを絶対に出さない工夫） ---
+    const initSupabase = () => {
+        // すでにペリカン側などで初期化済みの場合はそれを使う
+        if (window._supabase) return window._supabase;
+        
+        // ライブラリ自体が存在するかチェック
+        if (typeof supabase !== 'undefined') {
+            const url = 'https://vcsnquepttevlmhgyeje.supabase.co';
+            const key = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
+            window._supabase = supabase.createClient(url, key);
+            return window._supabase;
+        }
+        return null;
+    };
 
     // --- NGワードの設定 ---
     const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"];
