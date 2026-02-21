@@ -27,7 +27,11 @@
 		
 	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 	
-	<link rel="stylesheet" href="css/style.css"> <link rel="stylesheet" href="css/perikan.css"><script src="js/perikan.js"></script><script src="js/ranking-display.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/perikan.css">
+	<script src="js/perikan.js"></script>
+	<script src="js/ranking-display.js"></script>
+	<script src="js/orange-ranking-display.js"></script>
 </head>
 
 <body>
@@ -243,6 +247,7 @@
                 </button>
                 <div id="orange-feedback" style="margin-top: 15px; font-weight: bold; height: 24px; color: #ffffff;"></div>
                 <button class="btn btn--outline" id="btn-orange-retry" style="display: none; width: 100%; max-width: 250px; margin: 10px auto 0;">もう一度挑戦</button>
+				<button class="btn btn--accent" id="btn-orange-ranking" style="width: 100%; max-width: 250px;">🏆 ランキングに登録する</button>
             </div>
 
             
@@ -376,8 +381,97 @@
     window.addEventListener('mouseup', stopAction);
     window.addEventListener('touchend', stopAction);
     retryBtn.addEventListener('click', resetGame);
+
+	// ランキング
+    document.getElementById('btn-orange-ranking').onclick = async () => {
+
+        if (amount === 0) {
+            alert("オレンジを絞ってから登録してください！");
+            return;
+        }
+
+		const playerName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
+        if (!playerName) return; // キャンセル時は中断
+        // NGワードチェック
+        const isInvalid = NG_WORDS.some(word => playerName.includes(word));
+        
+        if (isInvalid) {
+            alert("不適切な表現が含まれているため、登録できません。");
+            return; // 処理を中断
+        }
+        if (playerName.length > 10) {
+            alert("社内規定により、氏名は10文字以内でお願いします。");
+            return;
+        }
+        if (playerName) {
+			// --- 修正ポイント：変数名の不整合と関数未定義を解消 ---
+        	const finalScore = parseFloat(amount.toFixed(2)); // scoreの代わりにamountを使用
+        	const currentRank = rankDisp.innerText;           // judgeResultで確定したランクを取得
+            
+			// --- データベースへ保存 ---
+            const { data, error } = await _supabase
+                .from('orange-ranking')
+                .insert([
+                    { name: playerName, score: finalScore, rank: currentRank }
+                ]);
+
+            if (error) {
+                console.error('保存エラー:', error);
+                alert('登録に失敗しました。');
+                return;
+            }
+
+            // --- 最新ランキングを取得して表示 ---
+            const { data: topPlayers, error: fetchError } = await _supabase
+                .from('orange-ranking')
+                .select('*')
+                .order('score', { ascending: false }) // スコアが高い順
+                .limit(10); // 上位10名
+
+            if (fetchError) {
+                alert('ランキングの取得に失敗しました。');
+            } else {
+                let rankingTable = "🏆 【オンライン TOP 10】\n";
+                topPlayers.forEach((entry, index) => {
+                    rankingTable += `${index + 1}位: ${entry.name} - ${entry.score}% (${entry.rank})\n`;
+                });
+                alert(rankingTable);
+            }
+        }
+    };
 })();
 </script>
+
+<section class="section section--dark" id="online-orange-ranking-board">
+    <div class="container">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(200, 166, 94, 0.15); padding: var(--space-lg); border-radius: 4px; max-width: 500px; margin: 0 auto;">
+            
+            <div style="text-align: center; margin-bottom: var(--space-md);">
+                <span class="section-label" style="color: var(--color-accent-light); font-size: 0.7rem; letter-spacing: 0.2em;">CONFIDENTIAL</span>
+                <h3 style="color: var(--color-white); font-size: 1.2rem; margin-top: 5px;">名誉ペリカン社員　名簿</h3>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; color: #fff;">
+                <thead>
+                    <tr style="border-bottom: 1px solid rgba(200, 166, 94, 0.3); color: var(--color-accent);">
+                        <th style="padding: 10px 5px; text-align: left; font-weight: normal;">RANK</th>
+                        <th style="padding: 10px 5px; text-align: left; font-weight: normal;">NAME / CLASS</th>
+                        <th style="padding: 10px 5px; text-align: right; font-weight: normal;">SCORE</th>
+                    </tr>
+                </thead>
+                <tbody id="global-orange-ranking-body">
+                    <tr>
+                        <td colspan="3" style="padding: 20px; text-align: center; color: rgba(255,255,255,0.3);">名簿を照会中...</td>
+                    </tr>
+                </tbody>
+			</table>
+        </div>
+    </div>
+
+	<p style="font-size: 0.65rem; color: rgba(255,255,255,0.3); margin-top: 10px; text-align: center;">
+		※不適切な名称は予告なく削除されます。また、本名簿は一定期間ごとにリセットされる場合があります。
+	</p>
+</section>
 
 	<footer class="site-footer">
 		<div class="container">
