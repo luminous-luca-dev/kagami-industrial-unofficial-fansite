@@ -360,6 +360,70 @@
 
         rankDisp.innerText = rank;
         feedback.innerText = msg;
+
+        // ★【追加：リザルト確定時に自動保存を実行】
+        // amountの値を小数点第2位までの数値にして、確定したrankと一緒に送る
+        const finalScore = parseFloat(amount.toFixed(2));
+        saveOrangeGameScore(finalScore, rank);
+    }
+
+    // --- Supabaseにオレンジミニゲームのハイスコアを自動保存する関数 ---
+    async function saveOrangeGameScore(finalScore, finalRank) {
+        const savedPlayerId = localStorage.getItem('kagami_employee_id');
+        
+        if (!savedPlayerId) {
+            console.log('orange: 未ログイン状態のため、スコアの自動保存をスキップしました。');
+            return;
+        }
+
+        const _supabase = window._supabase;
+        if (!_supabase) {
+            console.error('orange: Supabaseクライアントが初期化されていないため、保存できません。');
+            return;
+        }
+
+        // 今回のスコアが100を超えていたら（溢れていたら）、ハイスコア更新の対象外にする
+        if (finalScore > 100) {
+            console.log('orange: 100%を超えて溢れたため、ハイスコア更新の対象外です。');
+            return;
+        }
+
+        try {
+            // 1. 現在のDBに保存されているスコアを取得する
+            const { data: currentProfile, error: fetchError } = await _supabase
+                .from('profiles')
+                .select('orange_score')
+                .eq('player_id', savedPlayerId)
+                .single();
+
+            if (fetchError) {
+                console.error('orange: 現在のスコア取得に失敗しました:', fetchError);
+                return;
+            }
+
+            const dbScore = currentProfile && currentProfile.orange_score ? currentProfile.orange_score : 0;
+
+            // 2. 今回のスコアが、過去のハイスコアより高い場合のみ更新する
+            if (finalScore > dbScore) {
+                const { error: updateError } = await _supabase
+                    .from('profiles')
+                    .update({ 
+                        orange_score: finalScore,
+                        orange_rank: finalRank
+                    })
+                    .eq('player_id', savedPlayerId);
+
+                if (updateError) {
+                    console.error('orange: 社員ステータスの更新に失敗しました:', updateError);
+                } else {
+                    console.log(`orange: ハイスコア更新！ (${dbScore}% -> ${finalScore}%)`);
+                }
+            } else {
+                console.log(`orange: 今回のスコア(${finalScore}%)はハイスコア(${dbScore}%)以下のため、保存をスキップしました。`);
+            }
+        } catch (err) {
+            console.error('orange: スコア保存中に通信例外が発生しました:', err);
+        }
     }
 
     function resetGame(e) {

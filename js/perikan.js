@@ -48,7 +48,62 @@ document.addEventListener('DOMContentLoaded', () => {
         ranks.forEach(rank => { if (s >= rank.min) r = rank.name; });
         return r;
     }
-    
+
+
+    // --- Supabaseにミニゲームのハイスコアを自動保存する関数 ---
+    async function saveMiniGameScore(finalScore, finalRank) {
+        const savedPlayerId = localStorage.getItem('kagami_employee_id');
+        
+        if (!savedPlayerId) {
+            console.log('perikan: 未ログイン状態のため、スコアの自動保存をスキップしました。');
+            return;
+        }
+
+        const _supabase = window._supabase;
+        if (!_supabase) {
+            console.error('perikan: Supabaseクライアントが初期化されていないため、保存できません。');
+            return;
+        }
+
+        try {
+            // 1. まず現在のDBに保存されているスコアを取得する
+            const { data: currentProfile, error: fetchError } = await _supabase
+                .from('profiles')
+                .select('perikan_score')
+                .eq('player_id', savedPlayerId)
+                .single();
+
+            if (fetchError) {
+                console.error('perikan: 現在のスコア取得に失敗しました:', fetchError);
+                return;
+            }
+
+            // DBの既存スコア（データがない、またはNULLの場合は0として扱う）
+            const dbScore = currentProfile && currentProfile.perikan_score ? currentProfile.perikan_score : 0;
+
+            // 2. 今回のスコアが、過去のハイスコア以上（またはより高い）場合のみ更新する
+            if (finalScore > dbScore) {
+                const { error: updateError } = await _supabase
+                    .from('profiles')
+                    .update({ 
+                        perikan_score: finalScore,
+                        perikan_rank: finalRank
+                    })
+                    .eq('player_id', savedPlayerId);
+
+                if (updateError) {
+                    console.error('perikan: 社員ステータスの更新に失敗しました:', updateError);
+                } else {
+                    console.log(`perikan: ハイスコア更新！ (${dbScore}点 -> ${finalScore}点)`);
+                }
+            } else {
+                console.log(`perikan: 今回のスコア(${finalScore}点)はハイスコア(${dbScore}点)以下のため、保存をスキップしました。`);
+            }
+        } catch (err) {
+            console.error('perikan: スコア保存中に通信例外が発生しました:', err);
+        }
+    }
+
 
     // --- 次のラウンドの準備 ---
     function nextRound() {
@@ -103,6 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // ★スコア8（クリア）判定を追加
             if (score >= 8) {
                 gameState = 'CLEAR'; // 状態をクリアに変更
+
+                // ★【追加：クリア時に自動保存】
+                saveMiniGameScore(score, '代表取締役社長級');
+
                 setTimeout(() => {
                     controls.style.display = 'none';
                     // ゲームオーバー画面を流用するか、専用のクリア表示を出す
@@ -126,6 +185,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 controls.style.display = 'none';
                 gameOverScreen.style.display = 'block';
                 document.getElementById('final-rank').innerText = getRank(score);
+
+                // ★【追加：ゲームオーバー時にその時点のスコアを自動保存】
+                saveMiniGameScore(score, getRank(score));
+
             }, 1000);
         }
     }
