@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ranks.forEach(rank => { if (s >= rank.min) r = rank.name; });
         return r;
     }
+    
 
     // --- 次のラウンドの準備 ---
     function nextRound() {
