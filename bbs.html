@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYB1GGHVZ4"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+        
+            gtag('config', 'G-DYB1GGHVZ4');
+        </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社員掲示板 | 加賀美インダストリアル | 非公式</title>
+    <meta name="description" content="加賀美インダストリアル社員専用の社内掲示板です。">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta property="og:title" content="社員掲示板 | 【非公式】加賀美インダストリアル">
+    <meta property="og:description" content="加賀美インダストリアルの社内専用ポータル掲示板です。">
+    <meta property="og:image" content=https://kagami-industrial-unofficial-fansite.pages.dev/android-chrome-192x192.png>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* 掲示板特有の簡易スタイル（必要に応じてCSSファイルに移行してください） */
+        .breadcrumb {
+            list-style: none;
+            display: flex;
+            gap: 10px;
+            padding: 15px 0;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .breadcrumb li { display: inline; }
+        .breadcrumb li + li::before {
+            content: ">";
+            margin-right: 10px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .breadcrumb a:hover { color: #d4af37; /* ゴールド系 */ }
+        
+        .page-header-simple {
+            padding: 60px 0 30px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+    <div class="container">
+        <a href="index.html" class="site-logo">
+            <div class="site-logo__mark" style="width: 40px; height: 40px; flex-shrink: 0;">
+                <img src="android-chrome-192x192.png" alt="KI Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: middle;">
+            </div>
+            <div class="site-logo__text">
+                <div class="site-logo__title-row">
+                    <span class="site-logo__name-ja">加賀美インダストリアル</span>
+                </div>
+                <span class="site-logo__name-en">Kagami Industrial Inc.</span>
+                <span class="site-logo__unofficial">非公式ファンサイト</span>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul class="main-nav__list">
+                <li class="main-nav__item"><a href="index.html">Home</a></li>
+                <li class="main-nav__item"><a href="about.html">About</a></li>
+                <li class="main-nav__item"><a href="history.html">History</a></li>
+                <li class="main-nav__item"><a href="business.html">Business</a></li>
+                <li class="main-nav__item"><a href="technology.html">Technology</a></li>
+                <li class="main-nav__item"><a href="sustainability.html">CSR</a></li>
+                <li class="main-nav__item"><a href="recruit.html">Recruit</a></li>
+                <li class="main-nav__item"><a href="ir.html">IR</a></li>
+            </ul>
+        </nav>
+        <button class="hamburger" aria-label="メニュー">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+    </header>
+
+    <div class="mobile-nav-overlay">
+        <ul class="mobile-nav__list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="business.html">Business</a></li>
+            <li><a href="technology.html">Technology</a></li>
+            <li><a href="sustainability.html">Sustainability</a></li>
+            <li><a href="recruit.html">Recruit</a></li>
+            <li><a href="ir.html">IR</a></li>
+        </ul>
+    </div>
+
+    <main style="padding-top: 80px;"> <div class="container">
+            <ul class="breadcrumb fade-in">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="enjoy.html">休憩室 (ROOM)</a></li>
+                <li>社員掲示板</li>
+            </ul>
+
+            <div class="page-header-simple fade-in">
+                <span class="section-label">Bulletin Board</span>
+                <h1 class="section-title">社内専用掲示板</h1>
+                <p style="color: rgba(255, 255, 255, 0.6); margin-top: 10px;">業務連絡から日々の息抜きまで、社員間の交流にご活用ください。</p>
+            </div>
+
+            <section class="section" style="max-width: 800px; margin: 0 auto; padding-top: 0;">
+                
+                <div id="auth-section" class="fade-in" style="text-align: center; padding: 40px; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                    <h2 style="margin-bottom: 20px; font-size: 1.5rem;">ポータル・ログイン</h2>
+                    <p style="margin-bottom: 30px; font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);">
+                        入室するには社員ID（任意の英数字）を入力してください。
+                    </p>
+                    <div style="display: flex; gap: 10px; justify-content: center; max-width: 400px; margin: 0 auto;">
+                        <input type="text" id="employee-id-input" class="form-input" placeholder="社員IDを入力">
+                        <button id="login-btn" class="btn btn--accent" style="white-space: nowrap;">認証</button>
+                    </div>
+                </div>
+
+                <div id="bbs-section" class="fade-in" style="display: none;">
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div>
+                            <span style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);">現在の接続ID: </span>
+                            <strong id="current-employee-id" style="font-family: var(--font-en, sans-serif); color: #d4af37; font-size: 1.2rem; letter-spacing: 0.05em; margin-left: 10px;"></strong>
+                        </div>
+                        <button id="logout-btn" class="btn btn--outline" style="padding: 5px 15px; font-size: 0.8rem;">ログアウト</button>
+                    </div>
+
+                    <div style="background: rgba(0, 0, 0, 0.2); padding: 25px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 40px;">
+                        <textarea id="post-content" class="form-textarea" rows="3" placeholder="メッセージを入力してください..." style="resize: vertical; margin-bottom: 15px;"></textarea>
+                        <div style="text-align: right;">
+                            <button id="post-btn" class="btn btn--primary">送信</button>
+                        </div>
+                    </div>
+
+                    <div id="timeline" style="display: flex; flex-direction: column; gap: 20px;">
+                        </div>
+
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="site-logo" style="pointer-events: none;">
+                        <div class="site-logo__mark" style="width: 40px; height: 40px; flex-shrink: 0;">
+                    <img src="android-chrome-192x192.png" alt="KI Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: middle;">
+                </div>
+                        <div class="site-logo__text">
+                            <span class="site-logo__name-ja">加賀美インダストリアル</span>
+                            <span class="site-logo__name-en">Kagami Industrial Inc.</span>
+                        </div>
+                    </div>
+                    <p class="footer-brand__desc">
+                        MATERIAL / HEAVY MACHINERY &amp; HOBBY / ENTERTAINMENT<br>
+                        鋼鉄の巨人も、掌のミニカーも。すべての情熱は等価である。
+                    </p>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav__title">Company</h4>
+                    <ul class="footer-nav__list">
+                        <li><a href="about.html">企業情報</a></li>
+                        <li><a href="history.html">沿革</a></li>
+                        <li><a href="business.html">事業紹介</a></li>
+                        <li><a href="technology.html">技術・研究開発</a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav__title">Information</h4>
+                    <ul class="footer-nav__list">
+                        <li><a href="sustainability.html">CSR活動</a></li>
+                        <li><a href="recruit.html">採用情報</a></li>
+                        <li><a href="ir.html">投資家情報</a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav__title">Group</h4>
+                    <ul class="footer-nav__list">
+                        <li><a href="business.html#group">加賀美リゾート</a></li>
+                        <li><a href="business.html#group">加賀美損保</a></li>
+                        <li><a href="business.html#group">加賀美水道局</a></li>
+                        <li><a href="business.html#group">加賀美不動産</a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav">
+                    <h4 class="footer-nav__title">About</h4>
+                    <ul class="footer-nav__list">
+                        <li><a href="manager.html#manager">担当者紹介</a></li>
+                        <li><a href="manager.html#policy">サイトポリシー</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-nav">
+                    <h4 class="footer-nav__title">ROOM</h4>
+                    <ul class="footer-nav__list">
+                        <li><a href="enjoy.html">休憩室</a></li>
+                        <li><a href="bbs.html">社員掲示板</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; Kagami Industrial (Unofficial Fan Site)</p>
+                <p class="footer-disclaimer">
+                    【免責事項】<br>
+                    本サイトは、ANYCOLOR株式会社所属バーチャルライバー「加賀美ハヤト」様のファンによる非公式ファンサイトです。<br>
+                    実在の人物・団体・企業とは一切関係ありません。<br>
+                    掲載されている情報は、公式配信およびWiki等の情報を元にしたフィクションを含みます。
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+
+    <script>
+    // --- 初期設定とグローバル変数 ---
+    if (!window._supabase) {
+        const url = 'https://vcsnquepttevlmhgyeje.supabase.co';
+        const key = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
+        window._supabase = supabase.createClient(url, key);
+    }
+    const _supabase = window._supabase; // 既存の共通クライアントを参照
+    let currentUser = null;
+    let currentReplyParentId = null; // 返信先のID
+
+    // いいねした投稿をローカルに記憶する配列
+    let likedPosts = JSON.parse(localStorage.getItem('bbs_liked_posts')) || [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        await initBBS();
+    });
+
+    async function initBBS() {
+        const savedPlayerId = localStorage.getItem('kagami_employee_id');
+        
+        if (!savedPlayerId) {
+            document.getElementById('form-container').innerHTML = `
+                <div class="guest-message">⚠ 投稿するには社員ログイン（IDの登録）が必要です。</div>
+            `;
+        } else {
+            // profilesテーブルから現在のユーザー情報を引っ張ってくる
+            try {
+                const { data, error } = await _supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('player_id', savedPlayerId)
+                    .single();
+
+                if (!error && data) {
+                    currentUser = data;
+                    const maskedId = maskPlayerId(currentUser.player_id);
+                    document.getElementById('user-preview').innerText = `投稿者: ${currentUser.name || '名無し社員'} (${maskedId})`;
+                } else {
+                    document.getElementById('user-preview').innerText = `投稿者ID: ${maskPlayerId(savedPlayerId)}`;
+                    currentUser = { player_id: savedPlayerId, name: '名無し社員', perikan_rank: '未所属', orange_rank: '未所属' };
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // 投稿一覧の取得
+        await fetchTimeline();
+    }
+
+    // IDの下4桁を隠す便利関数
+    function maskPlayerId(id) {
+        if (!id) return '****';
+        return id.replace(/.{4}$/, '****');
+    }
+
+    // タイムライン取得処理
+    async function fetchTimeline() {
+        try {
+            // 全投稿を取得（新しい順）
+            const { data: posts, error } = await _supabase
+                .from('bbs_posts')
+                .select(`
+                    *,
+                    profiles:player_id (
+                        username,
+                        perikan_rank,
+                        orange_rank
+                    )
+                `)
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            const timelineEl = document.getElementById('timeline');
+            timelineEl.innerHTML = '';
+
+            // 親投稿（parent_id が NULL のもの）と、返信投稿に分ける
+            const parentPosts = posts.filter(p => !p.parent_id);
+            const replyPosts = posts.filter(p => p.parent_id);
+
+            // 親投稿をループ処理（新着順に上から並べる）
+            parentPosts.forEach(post => {
+                const postHtml = createPostCardHtml(post, false);
+                timelineEl.appendChild(postHtml);
+
+                // この親に対する返信を古い順（会話の流れ順）に並び替えて直下に挿入
+                const repliesForThis = replyPosts
+                    .filter(r => r.parent_id === post.id)
+                    .reverse(); 
+
+                repliesForThis.forEach(reply => {
+                    const replyHtml = createPostCardHtml(reply, true);
+                    timelineEl.appendChild(replyHtml);
+                });
+            });
+
+        } catch (err) {
+            console.error('タイムライン取得エラー:', err);
+        }
+    }
+
+    // 投稿カードのHTML要素を生成する関数
+    function createPostCardHtml(post, isReply) {
+        const card = document.createElement('div');
+        card.className = `post-card ${isReply ? 'is-reply' : ''}`;
+        card.id = `post-${post.id}`;
+
+        const maskedId = maskPlayerId(post.player_id);
+        const formattedTime = new Date(post.created_at).toLocaleString('ja-JP', {
+            month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'
+        });
+
+        // いいね状態の判定
+        const isLiked = likedPosts.includes(post.id);
+
+        // 称号バッジの組み立て（データがあるときだけ薄く表示）
+        let displayName = '名無し社員';
+        let badgeHtml = '';
+        if (post.profiles) {
+            if (post.profiles.perikan_rank) badgeHtml += `<span class="badge">🦆 ${post.profiles.perikan_rank}</span>`;
+            if (post.profiles.orange_rank) badgeHtml += `<span class="badge orange">🍊 ${post.profiles.orange_rank}</span>`;
+        }
+
+        card.innerHTML = `
+            <div class="post-header">
+                <div class="meta-left">
+                    <span class="author-name" id="author-name-${post.id}">${escapeHtml(displayName)}</span>
+                    <span class="author-id">${maskedId}</span>
+                    <div class="author-badges">${badgeHtml}</div>
+                </div>
+                <span class="post-time">${formattedTime}</span>
+            </div>
+            <div class="post-content" id="content-${post.id}">${escapeHtml(post.content)}</div>
+            <div class="post-actions">
+                <button class="action-btn ${isLiked ? 'like-active' : ''}" onclick="toggleLike(${post.id}, ${post.likes})">
+                    ❤️ <span id="like-count-${post.id}">${post.likes || 0}</span>
+                </button>
+                ${!isReply ? `<button class="action-btn" onclick="setReplyTarget(${post.id})">💬 返信</button>` : ''}
+                <button class="action-btn btn-hide-toggle" onclick="toggleMosaic(${post.id}, this)">👁 隠す</button>
+            </div>
+        `;
+        return card;
+    }
+
+    // 投稿送信処理
+    async function submitPost() {
+        const inputEl = document.getElementById('post-input');
+        const content = inputEl.value.trim();
+
+        if (!content) return;
+        if (!currentUser) {
+            alert('投稿権限がありません。');
+            return;
+        }
+
+        try {
+            const { error } = await _supabase
+                .from('bbs_posts')
+                .insert([{
+                    player_id: currentUser.player_id,
+                    content: content,
+                    parent_id: currentReplyParentId // 返信なら親IDが入る
+                }]);
+
+            if (error) throw error;
+
+            // フォームリセット
+            inputEl.value = '';
+            cancelReply();
+            
+            // 再読み込み
+            await fetchTimeline();
+
+        } catch (err) {
+            console.error('投稿エラー:', err);
+            alert('投稿の送信に失敗しました。');
+        }
+    }
+
+    // 返信モードのセット（引数をIDのみに簡略化）
+    function setReplyTarget(postId) {
+        currentReplyParentId = postId;
+        const nameEl = document.getElementById(`author-name-${postId}`);
+        const name = nameEl ? nameEl.innerText : '社員';
+        const badge = document.getElementById('reply-badge');
+        badge.innerHTML = `👤 ${name} さんへの返信中 <span onclick="cancelReply()">×</span>`;
+        badge.style.display = 'block';
+        document.getElementById('post-input').focus();
+    }
+
+    // 返信モードの解除
+    function cancelReply() {
+        currentReplyParentId = null;
+        document.getElementById('reply-badge').style.display = 'none';
+    }
+
+    // いいねのトグル処理
+    async function toggleLike(postId, currentLikes) {
+        const likeBtn = document.querySelector(`#post-${postId} .action-btn:first-child`);
+        const countSpan = document.getElementById(`like-count-${postId}`);
+        
+        let newLikes = currentLikes;
+
+        if (likedPosts.includes(postId)) {
+            // すでにいいね済みなら解除
+            likedPosts = likedPosts.filter(id => id !== postId);
+            newLikes = Math.max(0, newLikes - 1);
+            likeBtn.classList.remove('like-active');
+        } else {
+            // 新規いいね
+            likedPosts.push(postId);
+            newLikes += 1;
+            likeBtn.classList.add('like-active');
+        }
+
+        // ローカルストレージ保存
+        localStorage.setItem('bbs_liked_posts', JSON.stringify(likedPosts));
+        countSpan.innerText = newLikes;
+
+        // DB更新
+        await _supabase
+            .from('bbs_posts')
+            .update({ likes: newLikes })
+            .eq('id', postId);
+    }
+
+    // モザイクのトグル処理
+    function toggleMosaic(postId, btn) {
+        const contentEl = document.getElementById(`content-${postId}`);
+        if (contentEl.classList.contains('mosaic-active')) {
+            contentEl.classList.remove('mosaic-active');
+            btn.innerText = '👁 隠す';
+        } else {
+            contentEl.classList.add('mosaic-active');
+            btn.innerText = '👁 表示';
+        }
+    }
+
+    // エスケープ処理（XSS対策）
+    function escapeHtml(str) {
+        return str
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+    </script>
+
+</body>
+</html>
