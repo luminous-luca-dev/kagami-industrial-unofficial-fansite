@@ -38,22 +38,21 @@
             <div class="site-logo__text">
                 <div class="site-logo__title-row">
                     <span class="site-logo__name-ja">加賀美インダストリアル</span>
-					<span class="site-logo__unofficial">非公式ファンサイト</span>
-                    
                 </div>
 				<span class="site-logo__name-en">Kagami Industrial Inc.</span>
+				<span class="site-logo__unofficial">非公式ファンサイト</span>
             </div>
         </a>
         <nav class="main-nav">
             <ul class="main-nav__list">
-                <li class="main-nav__item"><a href="index.html" class="active">Home</a></li>
+                <li class="main-nav__item"><a href="index.html">Home</a></li>
                 <li class="main-nav__item"><a href="about.html">About</a></li>
                 <li class="main-nav__item"><a href="history.html">History</a></li>
                 <li class="main-nav__item"><a href="business.html">Business</a></li>
                 <li class="main-nav__item"><a href="technology.html">Technology</a></li>
                 <li class="main-nav__item"><a href="sustainability.html">CSR</a></li>
                 <li class="main-nav__item"><a href="recruit.html">Recruit</a></li>
-                <li class="main-nav__item"><a href="ir.html">IR</a></li>
+                <li class="main-nav__item"><a href="ir.html"class="active">IR</a></li>
             </ul>
         </nav>
         <button class="hamburger" aria-label="メニュー">
@@ -62,34 +61,7 @@
     </div>
 	</header>
 
-	<style>
-		/* 社名と注記を横並びにするためのラッパー */
-		.site-logo__title-row {
-			display: flex;
-			align-items: baseline; /* 文字の下のラインを揃える */
-			flex-wrap: wrap;       /* 画面が狭すぎるときは自然に折り返す */
-			gap: 10px;             /* 社名と注記の間の余白 */
-		}
 
-		/* 「非公式ファンサイト」のスタイル */
-		.site-logo__unofficial {
-			font-size: 0.75em;     /* 社名より少し小さく */
-			color: currentColor;   /* 親要素の文字色を引き継ぐ */
-			opacity: 0.6;          /* 透明度を下げて「薄めに」表現 */
-			font-weight: normal;   /* 太字にならないように */
-			white-space: nowrap;   /* テキストが途中で改行されないようにする */
-		}
-
-		/* (任意) スマートフォンなどで画面がとても狭い場合の調整例 */
-		@media (max-width: 480px) {
-			.site-logo__title-row {
-				gap: 6px; /* 余白を少し詰める */
-			}
-			.site-logo__unofficial {
-				font-size: 0.7em; /* さらに少し小さくする */
-			}
-		}
-	</style>
 
     <div class="mobile-nav-overlay">
         <ul class="mobile-nav__list">
