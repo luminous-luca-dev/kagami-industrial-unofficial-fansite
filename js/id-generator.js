@@ -3,6 +3,12 @@
    社員証ジェネレーター
    ============================================ */
 
+if (!window._supabase) {
+    const url = 'https://vcsnquepttevlmhgyeje.supabase.co';
+    const key = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
+    window._supabase = supabase.createClient(url, key);
+}
+
 const logoImg = new Image();
 logoImg.src = './android-chrome-192x192.png';
 
@@ -47,10 +53,54 @@ const ID_CONFIG = {
     ]
 };
 
-function generateEmployeeId() {
-    const year = new Date().getFullYear();
-    const num = String(Math.floor(Math.random() * 9999) + 1).padStart(4, '0');
-    return `KI-${year}-${num}`;
+// 新しいID発行関数（Supabaseのデータ件数から発行順を数え、重複も防ぐ）
+async function generateUniqueEmployeeId() {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'; // 小文字の英数字
+    
+    // 1. 現在の profiles テーブルの全件数を取得して、次の発行順（4桁）を決める
+    const { count, error: countError } = await _supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true });
+    
+    if (countError) {
+        console.error('データ件数の取得に失敗しました:', countError);
+        throw countError;
+    }
+    
+    // 現在の件数 + 1 を4桁にパディング（例: 1番目なら 0001, 12番目なら 0012）
+    const sequenceNum = String((count || 0) + 1).padStart(4, '0');
+
+    let isUnique = false;
+    let empId = '';
+
+    // 2. 万が一、ランダムな4桁が重複した場合に備えてループでチェック
+    while (!isUnique) {
+        let randomStr = '';
+        for (let i = 0; i < 4; i++) {
+            randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+
+        // 指定のフォーマットに成形
+        empId = `KI-${sequenceNum}-${randomStr}`;
+
+        // Supabaseに同じIDが既に存在するか検索
+        const { data, error } = await _supabase
+            .from('profiles')
+            .select('player_id')
+            .eq('player_id', empId);
+
+        if (error) {
+            console.error('IDの重複チェックに失敗しました:', error);
+            throw error;
+        }
+
+        // 検索結果が0件（まだ誰も使っていない）なら確定
+        if (data.length === 0) {
+            isUnique = true;
+        }
+    }
+
+    return empId;
 }
 
 function getRandomItem(arr) {
@@ -83,10 +133,16 @@ document.getElementById('employee-photo').addEventListener('change', function(e)
     reader.readAsDataURL(file);
 });
 
-function generateIdCard(name) {
+async function generateIdCard(name) {
     if (!name || !name.trim()) {
         alert('お名前を入力してください。');
         return;
+    }
+
+    const genBtn = document.getElementById('generate-id-btn');
+    if (genBtn) {
+        genBtn.disabled = true;
+        genBtn.innerText = '社員証を発行中...';
     }
 
     // 1. 社長判定
@@ -96,7 +152,45 @@ function generateIdCard(name) {
     // 2. 部署・役職・社員番号をここで確定させる（上書き防止！）
     const dept = isPresident ? '加賀美インダストリアル' : getRandomItem(ID_CONFIG.departments);
     const rank = isPresident ? '代表取締役社長' : getRandomItem(ID_CONFIG.ranks);
-    const empId = isPresident ? 'KI-0001-BOSS' : generateEmployeeId(); // 社長専用IDにする遊び心
+
+
+    // --- 2. 【ここを大幅修正】社員番号をSupabaseと連動させる ---
+    let empId = '';
+    if (isPresident) {
+        empId = 'KI-0001-BOSS'; 
+    } else {
+        try {
+            // 新しいユニークIDの生成を待つ
+            empId = await generateUniqueEmployeeId();
+            
+            // Supabaseの profiles テーブルに新規登録
+            const { error: insertError } = await _supabase
+                .from('profiles')
+                .insert([
+                    { 
+                        player_id: empId, 
+                        username: name.trim(), 
+                        perikan_rank: '', // 初期値は空（ミニゲームクリア時に上書きする用）
+                        perikan_score: 0, 
+                        orange_rank: '',
+                        orange_score: 0,
+                    }
+                ]);
+            
+            if (insertError) throw insertError;
+
+        } catch (err) {
+            console.error(err);
+            alert('データベースへの登録に失敗しました。もう一度お試しください。');
+            if (genBtn) {
+                genBtn.disabled = false;
+                genBtn.innerText = '社員証を発行する';
+            }
+            return;
+        }
+    }
+    // --------------------------------------------------------
+
 
     const canvas = document.getElementById('id-card-canvas');
     if (!canvas) return;
@@ -350,6 +444,11 @@ function generateIdCard(name) {
             link.href = dataUrl;
             link.click();
         };
+    }
+
+    if (genBtn) {
+        genBtn.disabled = false;
+        genBtn.innerText = '社員証を発行する';
     }
 }
 
