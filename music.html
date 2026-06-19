@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fan Site - 音楽室 (Music Room)</title>
+    <link rel="stylesheet" href="css/music_style.css">
+</head>
+<body>
+    <div class="daw-container">
+        <header class="toolbar">
+            <h1>音楽室 (Music Studio)</h1>
+            <div class="controls">
+                <button id="playBtn" class="btn primary">▶ 再生</button>
+                <button id="stopBtn" class="btn">■ 停止</button>
+                <div class="tempo-control">
+                    <label for="bpm">BPM:</label>
+                    <input type="number" id="bpm" value="120" min="60" max="240">
+                </div>
+                <div class="file-ops">
+                    <button id="saveBtn" class="btn">💾 保存 (.txt)</button>
+                    <label class="btn load-btn">
+                        📂 読込 <input type="file" id="loadBtn" accept=".txt">
+                    </label>
+                </div>
+            </div>
+        </header>
+
+        <div class="templates-area">
+            <h3>初心者向けテンプレート集</h3>
+            <button class="btn template-btn" data-type="rockBeat">🎸 8ビート(ロック)</button>
+            <button class="btn template-btn" data-type="fourOnFloor">🪩 4つ打ち(ダンス)</button>
+            <button class="btn template-btn" data-type="clear">🗑️ クリア</button>
+        </div>
+
+        <main class="sequencer">
+            <div id="tracks"></div>
+        </main>
+    </div>
+    <script src="js/music.js"></script>
+</body>
+</html>
