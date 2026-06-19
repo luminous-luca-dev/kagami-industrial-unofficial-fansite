@@ -12,6 +12,12 @@ let currentReplyParentId = null; // 返信先のID
 let likedPosts = JSON.parse(localStorage.getItem('bbs_liked_posts')) || [];
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // 送信ボタンにクリックイベントを紐付け（★これを追加しないとボタンが反応しません）
+    const postBtn = document.getElementById('post-btn');
+    if (postBtn) {
+        postBtn.addEventListener('click', submitPost);
+    }
+
     await initBBS();
 });
 
@@ -34,10 +40,13 @@ async function initBBS() {
             if (!error && data) {
                 currentUser = data;
                 const maskedId = maskPlayerId(currentUser.player_id);
-                document.getElementById('user-preview').innerText = `投稿者: ${currentUser.username || '名無し社員'} (${maskedId})`;
+                
+                document.getElementById('user-preview').innerText = currentUser.username || '名無し社員';
+                document.getElementById('current-employee-id').innerText = maskedId;
             } else {
-                document.getElementById('user-preview').innerText = `投稿者ID: ${maskPlayerId(savedPlayerId)}`;
-                currentUser = { player_id: savedPlayerId, name: '名無し社員', perikan_rank: '未所属', orange_rank: '未所属' };
+                document.getElementById('user-preview').innerText = '名無し社員';
+                document.getElementById('current-employee-id').innerText = maskPlayerId(savedPlayerId);
+                currentUser = { player_id: savedPlayerId, username: '名無し社員', perikan_rank: '未所属', orange_rank: '未所属' };
             }
         } catch (e) {
             console.error(e);
@@ -248,4 +257,12 @@ function escapeHtml(str) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
+
+// ログアウト処理
+function logoutBBS() {
+    if (confirm('社内掲示板からログアウトしますか？')) {
+        localStorage.removeItem('kagami_employee_id');
+        location.reload(); // ページをリロードしてゲスト画面に戻す
+    }
 }
