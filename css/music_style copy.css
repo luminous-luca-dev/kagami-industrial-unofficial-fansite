@@ -352,3 +352,27 @@ input[type="number"] {
         height: 35px;
     }
 }
+
+
+/* ---------- 楽器名入力欄 (Track Name Input) ---------- */
+.daw-container .track-name-input {
+    background: rgba(255, 255, 255, 0.05); /* 背景はうっすら明るい透け感 */
+    color: var(--color-white);             /* 文字色は白 */
+    border: 1px solid rgba(200, 166, 94, 0.3); /* ゴールドの細い枠線 */
+    border-radius: 2px;
+    padding: 0.4rem 0.6rem;
+    font-family: var(--font-body-ja);
+    font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: all var(--transition-fast);
+    margin-bottom: 8px; /* 下のボタンとの隙間 */
+}
+
+/* 入力中（フォーカス時）はゴールドに発光させる */
+.daw-container .track-name-input:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 8px rgba(200, 166, 94, 0.4);
+}

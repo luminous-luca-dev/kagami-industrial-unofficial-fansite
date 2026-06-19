@@ -141,8 +141,11 @@ function renderTracks() {
         const infoDiv = document.createElement('div');
         infoDiv.className = 'track-info';
 
+        // ▼修正ポイント1：テキストボックスにidとnameを付与
         const nameInput = document.createElement('input');
         nameInput.type = 'text';
+        nameInput.id = `name_${track.id}`;   // 追加：固有のID
+        nameInput.name = `name_${track.id}`; // 追加：固有のNAME
         nameInput.className = 'track-name-input';
         nameInput.value = track.name;
         nameInput.addEventListener('change', (e) => {
@@ -152,14 +155,17 @@ function renderTracks() {
         const trackControls = document.createElement('div');
         trackControls.className = 'track-controls';
 
-        // 外部音源ファイルインポート用のラベル&インプット
+        // ▼修正ポイント2：ファイル選択をラベル＆非表示インプットの形に変更
         const fileLabel = document.createElement('label');
-        fileLabel.className = 'file-import-label';
-        fileLabel.textContent = `📁 ${track.fileName}`;
+        fileLabel.className = 'btn load-btn';       // 追加：CSSに合わせたボタンスタイル
+        fileLabel.htmlFor = `file_${track.id}`;     // 追加：下のinputと紐付け
+        fileLabel.innerHTML = `<span class="material-symbols-outlined">folder_open</span> ${track.fileName}`;
         
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
+        fileInput.id = `file_${track.id}`;          // 追加：固有のID
         fileInput.accept = 'audio/*';
+        fileInput.style.display = 'none';           // 追加：デフォルトのダサいボタンを非表示
         fileInput.addEventListener('change', (e) => {
             handleFileImport(track.id, e.target.files[0]);
         });
@@ -168,7 +174,7 @@ function renderTracks() {
         // トラック削除ボタン
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'btn danger';
-        deleteBtn.textContent = '❌';
+        deleteBtn.textContent = '×';
         deleteBtn.addEventListener('click', () => {
             state.tracks = state.tracks.filter(t => t.id !== track.id);
             renderTracks();

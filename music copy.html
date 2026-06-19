@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/music_style copy.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet" />
 </head>
 <body>
     <section class="section section--dark">
@@ -21,9 +22,9 @@
                     <input type="number" id="bpm" value="120" min="60" max="240">
                 </div>
                 <div class="file-ops">
-                    <button id="saveBtn" class="btn">💾 保存 (.txt)</button>
+                    <button id="saveBtn" class="btn"><span class="material-symbols-outlined">save</span> 保存 (.txt)</button>
                     <label class="btn load-btn">
-                        📂 読込 <input type="file" id="loadBtn" accept=".txt">
+                        <span class="material-symbols-outlined">folder_open</span> 読込 <input type="file" id="loadBtn" accept=".txt">
                     </label>
                 </div>
             </div>
@@ -31,15 +32,15 @@
 
         <div class="templates-area">
             <h3>初心者向けテンプレート集</h3>
-            <button class="btn template-btn" data-type="rockBeat">🎸 8ビート(ロック)</button>
-            <button class="btn template-btn" data-type="fourOnFloor">🪩 4つ打ち(ダンス)</button>
-            <button class="btn template-btn" data-type="clear">🗑️ クリア</button>
+            <button class="btn template-btn" data-type="rockBeat"><span class="material-symbols-outlined">music_note</span> 8ビート(ロック)</button>
+            <button class="btn template-btn" data-type="fourOnFloor"><span class="material-symbols-outlined">accessibility_new</span> 4つ打ち(ダンス)</button>
+            <button class="btn template-btn" data-type="clear"><span class="material-symbols-outlined">delete</span> クリア</button>
         </div>
 
         <main class="sequencer">
             <div id="tracks"></div>
         </main>
-        <button id="addTrackBtn" class="btn success">➕ トラックを追加</button>
+        <button id="addTrackBtn" class="btn success">＋ トラックを追加</button>
     </div>
     </section>
     <script src="js/music copy.js"></script>
