@@ -191,6 +191,13 @@ async function generateIdCard(name) {
     }
     // --------------------------------------------------------
 
+    // 発行された社員IDをブラウザに保存して、即座にログイン状態にする
+    // （※ 'employeeId' の部分は、ログインページや掲示板で呼び出しているキー名と全く同じにしてください）
+    localStorage.setItem('kagami_employee_id', empId);
+
+    // （オプション）もし画面上に「〇〇としてログイン中」のような表示エリアがあれば、ここでテキストを更新してもOKです
+    // document.getElementById('current-employee-id').innerText = empId;
+
 
     const canvas = document.getElementById('id-card-canvas');
     if (!canvas) return;
