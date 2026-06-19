@@ -1,0 +1,253 @@
+/* =========================================================
+BBS専用スタイル（メインサイトの style.css の変数を継承）
+========================================================= */
+
+/* ベースのコンテナレイアウト（style.cssの.containerと併用想定） */
+.bbs-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 投稿フォーム */
+.post-form-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    /* メインサイトのカードに合わせて丸みをなくし、シャドウで浮かせる */
+    border-radius: 0; 
+    padding: var(--space-xl);
+    margin-bottom: var(--space-xl);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition-base);
+}
+.post-form-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* 返信中バッジ */
+.reply-target-badge {
+    display: none;
+    background: var(--color-primary-light);
+    color: var(--color-white);
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.8rem;
+    margin-bottom: var(--space-md);
+    width: fit-content;
+    font-family: var(--font-en);
+    letter-spacing: 0.05em;
+}
+.reply-target-badge span {
+    margin-left: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--color-accent-light);
+}
+
+/* テキストエリア */
+textarea {
+    width: 100%;
+    height: 100px;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    color: var(--color-text);
+    padding: var(--space-md);
+    box-sizing: border-box;
+    resize: vertical;
+    font-family: var(--font-body-ja);
+    font-size: 0.95rem;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 1px var(--color-accent); /* フォーカス時に上品なゴールドの枠 */
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-md);
+}
+
+.user-info-preview {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-en);
+}
+
+/* 送信ボタン（メインサイトの .btn--accent を踏襲） */
+.btn-submit {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    border: none;
+    padding: 0.85rem 2.5rem;
+    font-family: var(--font-en);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+.btn-submit:hover {
+    background-color: var(--color-accent-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* タイムラインコンテナ */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+/* 投稿カード */
+.post-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    /* 左側にエレガントなゴールドのアクセントライン */
+    border-left: 4px solid var(--color-accent);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+.post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* 返信カード（インデント表示） */
+.post-card.is-reply {
+    margin-left: var(--space-xl);
+    /* 返信は区別のためネイビーのライン＋薄いグレー背景 */
+    border-left: 4px solid var(--color-primary-light);
+    background-color: var(--color-bg);
+    padding: var(--space-md) var(--space-lg);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-sm);
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.meta-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* 投稿者名に明朝体を適用してフォーマル感を演出 */
+.author-name {
+    font-family: var(--font-heading-ja);
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 1.1rem;
+}
+
+.author-id {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-family: var(--font-en);
+    letter-spacing: 0.05em;
+}
+
+.author-badges {
+    display: flex;
+    gap: 8px;
+    font-size: 0.75rem;
+}
+
+/* 称号バッジ */
+.badge {
+    background: rgba(200, 166, 94, 0.08); /* ゴールドの極薄背景 */
+    border: 1px solid rgba(200, 166, 94, 0.4);
+    color: var(--color-accent-dark);
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+}
+.badge.orange {
+    /* もう一つのランクはネイビーベースで統一感を出す */
+    background: rgba(26, 61, 110, 0.05);
+    border: 1px solid rgba(26, 61, 110, 0.3);
+    color: var(--color-primary-light);
+}
+
+.post-time {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-family: var(--font-en);
+    letter-spacing: 0.05em;
+}
+
+/* 本文とモザイク */
+.post-content {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--color-text);
+    white-space: pre-wrap;
+    margin-bottom: var(--space-md);
+    transition: filter 0.3s;
+}
+.post-content.mosaic-active {
+    filter: blur(6px);
+    user-select: none;
+    pointer-events: none;
+}
+
+/* アクションボタン領域 */
+.post-actions {
+    display: flex;
+    gap: var(--space-lg);
+    font-size: 0.8rem;
+    /* 本文とアクションボタンを上品な点線で区切る */
+    border-top: 1px dashed var(--color-border);
+    padding-top: var(--space-sm);
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color var(--transition-fast);
+    font-family: var(--font-body-ja);
+}
+.action-btn:hover {
+    color: var(--color-accent);
+}
+
+.action-btn.like-active {
+    color: #d94a4a; /* 上品な赤に変更 */
+    font-weight: bold;
+}
+
+.action-btn.btn-hide-toggle {
+    margin-left: auto;
+}
+
+/* ログイン催促メッセージ */
+.guest-message {
+    text-align: center;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: var(--space-md);
+    border: 1px solid var(--color-primary-light);
+    background-color: var(--color-bg);
+    border-radius: 0;
+    margin-bottom: var(--space-xl);
+}
