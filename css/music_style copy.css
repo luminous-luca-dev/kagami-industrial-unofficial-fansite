@@ -1,0 +1,354 @@
+:root {
+    --bg-color: #1e1e1e;
+    --panel-bg: #2d2d2d;
+    --text-color: #f0f0f0;
+    --accent: #4CAF50;
+    --accent-hover: #45a049;
+    --track-bg: #3d3d3d;
+    --step-off: #555;
+    --step-on: #00bcd4;
+    --step-current: #ff9800;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    user-select: none;
+}
+
+.daw-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--panel-bg);
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.controls, .file-ops {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn:hover { background-color: #555; }
+.btn.primary { background-color: var(--accent); }
+.btn.primary:hover { background-color: var(--accent-hover); }
+
+input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    background: #111;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+.load-btn input { display: none; }
+
+.templates-area {
+    background-color: var(--panel-bg);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.templates-area h3 { margin-top: 0; font-size: 16px; color: #aaa; }
+
+.track {
+    display: flex;
+    align-items: center;
+    background-color: var(--panel-bg);
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.track-info {
+    width: 150px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.steps {
+    display: flex;
+    gap: 5px;
+    flex: 1;
+}
+
+.step {
+    flex: 1;
+    height: 40px;
+    background-color: var(--step-off);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    border: 1px solid #222;
+}
+
+.step:nth-child(4n+1) { border-left: 2px solid #888; } /* 拍の区切り */
+.step.active { background-color: var(--step-on); box-shadow: 0 0 8px var(--step-on); }
+.step.current-step { border: 2px solid var(--step-current); transform: scale(1.05); }
+
+
+/* ============================================
+   KAGAMI INDUSTRIAL - 音楽室 (DAW Component)
+   加賀美インダストリアル 世界観統合版
+   ============================================ */
+
+.daw-container {
+    /* KAGAMIのデザインシステム変数をDAW用にマッピング */
+    --daw-panel: rgba(10, 26, 48, 0.6); /* --color-primary-dark をベースにした透過パネル */
+    --daw-text: var(--color-white);
+    --daw-accent: var(--color-accent);  /* 加賀美ゴールド #C8A65E */
+    --daw-accent-hover: var(--color-accent-light);
+    --daw-step-off: rgba(255, 255, 255, 0.08);
+    --daw-step-on: var(--color-accent);
+    --daw-step-current: var(--color-white);
+
+    width: 100%;
+    margin: 0 auto;
+    font-family: var(--font-body-ja);
+    color: var(--daw-text);
+    user-select: none;
+}
+
+/* ---------- Toolbar ---------- */
+.daw-container .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--daw-panel);
+    padding: var(--space-md) var(--space-lg);
+    border: 1px solid rgba(200, 166, 94, 0.2); /* ゴールドの極細ボーダー */
+    border-left: 4px solid var(--daw-accent);
+    margin-bottom: var(--space-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.daw-container .toolbar h1 {
+    font-family: var(--font-heading-ja);
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    color: var(--color-white);
+    margin: 0;
+    letter-spacing: 0.05em;
+}
+
+.daw-container .controls, 
+.daw-container .file-ops {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+}
+
+/* ---------- Buttons (DAW Override) ---------- */
+/* KAGAMIの .btn スタイルと競合しないよう上書き調整 */
+.daw-container .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--daw-text);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0; /* 加賀美らしいソリッドな直角 */
+    padding: 0.6rem 1.2rem;
+    font-family: var(--font-body-ja);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.daw-container .btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--daw-accent);
+    color: var(--daw-accent);
+}
+
+.daw-container .btn.primary {
+    background-color: var(--color-primary);
+    border-color: var(--daw-accent);
+    color: var(--color-white);
+}
+
+.daw-container .btn.primary:hover {
+    background-color: var(--color-primary-light);
+    box-shadow: 0 0 15px rgba(200, 166, 94, 0.3);
+}
+
+.daw-container .load-btn input { 
+    display: none; 
+}
+
+/* ---------- Inputs ---------- */
+.daw-container .tempo-control {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-en);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+}
+
+.daw-container input[type="number"] {
+    width: 70px;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--daw-text);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    font-family: var(--font-en);
+    font-size: 1rem;
+    text-align: center;
+    transition: border-color var(--transition-fast);
+}
+
+.daw-container input[type="number"]:focus {
+    outline: none;
+    border-color: var(--daw-accent);
+}
+
+/* ---------- Templates Area ---------- */
+.daw-container .templates-area {
+    background-color: var(--daw-panel);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    border: 1px solid rgba(200, 166, 94, 0.1);
+}
+
+.daw-container .templates-area h3 {
+    margin-top: 0; 
+    margin-bottom: var(--space-md);
+    font-family: var(--font-en);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--daw-accent);
+}
+
+/* ---------- Tracks & Sequencer ---------- */
+.daw-container .track {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin-bottom: 8px;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 2px solid rgba(255, 255, 255, 0.2);
+    transition: background-color var(--transition-fast);
+}
+
+.daw-container .track:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-left-color: var(--daw-accent);
+}
+
+.daw-container .track-info {
+    width: 160px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-right: var(--space-md);
+    letter-spacing: 0.05em;
+}
+
+/* ---------- Steps (Piano Roll) ---------- */
+.daw-container .steps {
+    display: flex;
+    gap: 4px;
+    flex: 1;
+}
+
+.daw-container .step {
+    flex: 1;
+    height: 48px;
+    background-color: var(--daw-step-off);
+    cursor: pointer;
+    transition: background-color 0.1s, transform 0.1s;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+/* 4拍ごとの区切り線を少し目立たせる（ゴールド） */
+.daw-container .step:nth-child(4n+1) { 
+    border-left: 2px solid rgba(200, 166, 94, 0.4); 
+}
+
+/* オンになったステップ（加賀美ゴールドに発光） */
+.daw-container .step.active { 
+    background-color: var(--daw-step-on); 
+    box-shadow: 0 0 12px rgba(200, 166, 94, 0.4); 
+    border-color: var(--daw-accent-light);
+}
+
+/* 再生中の現在位置（白枠でハイライト） */
+.daw-container .step.current-step { 
+    border: 2px solid var(--daw-step-current); 
+    transform: scale(1.05); 
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.daw-container .step.active.current-step {
+    background-color: var(--color-accent-light);
+}
+
+/* ---------- Responsive Adjustments ---------- */
+@media (max-width: 768px) {
+    .daw-container .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-md);
+    }
+    
+    .daw-container .controls {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    .daw-container .file-ops {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .daw-container .track {
+        flex-direction: column;
+        align-items: stretch;
+        padding: var(--space-md);
+        gap: var(--space-md);
+    }
+    
+    .daw-container .track-info {
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: var(--space-sm);
+    }
+    
+    .daw-container .step {
+        height: 35px;
+    }
+}
