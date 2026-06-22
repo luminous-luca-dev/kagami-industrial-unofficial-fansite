@@ -133,6 +133,14 @@ document.getElementById('employee-photo').addEventListener('change', function(e)
     reader.readAsDataURL(file);
 });
 
+// ----------------------------------------------------
+// 【新規追加】ページ滞在中の状態を保持する変数
+// ----------------------------------------------------
+
+let currentSessionId = null;
+let currentSessionName = '';
+let currentSessionReg = null;
+
 async function generateIdCard(name) {
     if (!name || !name.trim()) {
         alert('お名前を入力してください。');
@@ -149,51 +157,90 @@ async function generateIdCard(name) {
     const presidentNames = ['加賀美ハヤト', '加賀美隼人', '加賀美　ハヤト', '加賀美　隼人'];
     const isPresident = presidentNames.includes(name.trim());
 
+    const regChoiceObj = document.querySelector('input[name="registration-choice"]:checked');
+    const isRegistered = regChoiceObj ? (regChoiceObj.value === 'yes') : false;
+
     // 2. 部署・役職・社員番号をここで確定させる（上書き防止！）
     const dept = isPresident ? '加賀美インダストリアル' : getRandomItem(ID_CONFIG.departments);
     const rank = isPresident ? '代表取締役社長' : getRandomItem(ID_CONFIG.ranks);
 
 
-    // --- 2. 【ここを大幅修正】社員番号をSupabaseと連動させる ---
-    let empId = '';
-    if (isPresident) {
-        empId = 'KI-0001-BOSS'; 
-    } else {
-        try {
-            // 新しいユニークIDの生成を待つ
-            empId = await generateUniqueEmployeeId();
-            
-            // Supabaseの profiles テーブルに新規登録
-            const { error: insertError } = await _supabase
-                .from('profiles')
-                .insert([
-                    { 
-                        player_id: empId, 
-                        username: name.trim(), 
-                        perikan_rank: '', // 初期値は空（ミニゲームクリア時に上書きする用）
-                        perikan_score: 0, 
-                        orange_rank: '',
-                        orange_score: 0,
-                    }
-                ]);
-            
-            if (insertError) throw insertError;
+    // 3. 社員番号とデータベースの処理
+    // 【変更】名前のチェックを外し、「IDがまだない」または「登録モード（ラジオボタン）が変わった」場合のみ新規IDを発行
+    if (!currentSessionId || currentSessionReg !== isRegistered) {
+        
+        if (isPresident) {
+            currentSessionId = 'KI-0001-BOSS';
+        } else if (isRegistered) {
+            // ▼ 登録する場合のみSupabaseに新規追加 ▼
+            try {
+                currentSessionId = await generateUniqueEmployeeId();
+                
+                const { error: insertError } = await _supabase
+                    .from('profiles')
+                    .insert([
+                        {
+                            player_id: currentSessionId,
+                            username: name.trim(),
+                            perikan_rank: '',
+                            perikan_score: 0,
+                            orange_rank: '',
+                            orange_score: 0,
+                        }
+                    ]);
+                
+                if (insertError) throw insertError;
+                
+                localStorage.setItem('kagami_employee_id', currentSessionId);
 
-        } catch (err) {
-            console.error(err);
-            alert('データベースへの登録に失敗しました。もう一度お試しください。');
-            if (genBtn) {
-                genBtn.disabled = false;
-                genBtn.innerText = '社員証を発行する';
+            } catch (err) {
+                console.error(err);
+                alert('データベースへの登録に失敗しました。もう一度お試しください。');
+                if (genBtn) {
+                    genBtn.disabled = false;
+                    genBtn.innerText = '社員証を発行する';
+                }
+                return;
             }
-            return;
+        } else {
+            // ▼ 登録しない場合 ▼
+            const randomStr = Math.random().toString(36).substring(2, 6).toUpperCase();
+            currentSessionId = `KI-GUEST-${randomStr}`;
+            localStorage.removeItem('kagami_employee_id');
+        }
+
+        // 最初の状態を記憶
+        currentSessionName = name.trim();
+        currentSessionReg = isRegistered;
+
+    } else {
+        // 【新規追加】すでにIDがあり、登録モードのまま「名前だけが変わった」場合の処理
+        // IDは変えずに、データベースの既存レコードの名前だけを更新（UPDATE）する
+        if (isRegistered && currentSessionName !== name.trim() && !isPresident) {
+            try {
+                const { error: updateError } = await _supabase
+                    .from('profiles')
+                    .update({ username: name.trim() })
+                    .eq('player_id', currentSessionId);
+
+                if (updateError) throw updateError;
+                
+                // 記憶している名前を更新
+                currentSessionName = name.trim();
+            } catch (err) {
+                console.error(err);
+                alert('データベースの名前更新に失敗しました。');
+                if (genBtn) {
+                    genBtn.disabled = false;
+                    genBtn.innerText = '社員証を発行する';
+                }
+                return;
+            }
         }
     }
-    // --------------------------------------------------------
 
-    // 発行された社員IDをブラウザに保存して、即座にログイン状態にする
-    // （※ 'employeeId' の部分は、ログインページや掲示板で呼び出しているキー名と全く同じにしてください）
-    localStorage.setItem('kagami_employee_id', empId);
+    // 描画用のIDとして確定
+    const empId = currentSessionId;
 
     // （オプション）もし画面上に「〇〇としてログイン中」のような表示エリアがあれば、ここでテキストを更新してもOKです
     // document.getElementById('current-employee-id').innerText = empId;

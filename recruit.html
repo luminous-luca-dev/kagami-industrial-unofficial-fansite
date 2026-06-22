@@ -240,6 +240,24 @@
                         <img id="photo-preview-img" src="" alt="Preview">
                     </div>
 
+                    <div class="id-generator__registration" style="margin: var(--space-md) 0; padding: var(--space-md); background: rgba(0,0,0,0.2); border-radius: 4px; text-align: left;">
+                        <p style="color: var(--color-white); font-size: 0.85rem; margin-bottom: var(--space-md); line-height: 1.5;">
+                            <strong>【社員登録について】</strong><br>
+                            社員登録を行うとあなただけの社員IDが発行され、サイト内のサービスがより快適に使用できます。<br>
+                            登録しない場合はデータベースに保存されず、意味のないランダムなIDになります。
+                        </p>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <label style="color: var(--color-white); cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                <input type="radio" name="registration-choice" value="yes" checked style="accent-color: var(--color-accent); width: 16px; height: 16px;">
+                                <span>社員登録をする（固有IDを発行）</span>
+                            </label>
+                            <label style="color: rgba(255,255,255,0.7); cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                <input type="radio" name="registration-choice" value="no" style="accent-color: var(--color-accent); width: 16px; height: 16px;">
+                                <span>登録しない（ゲストIDを発行）</span>
+                            </label>
+                        </div>
+                    </div>
+
                         <button id="generate-id-btn" class="btn btn--accent">社員証を発行する</button>
                 </div>
 
