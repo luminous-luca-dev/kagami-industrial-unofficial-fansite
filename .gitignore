@@ -1,0 +1,8 @@
+# 依存関係（絶対にコミットしない）
+node_modules/
+
+# Mac環境で自動生成される不要ファイル
+.DS_Store
+
+# 環境変数ファイル（SupabaseのAPIキーなどを隠すため）
+.env

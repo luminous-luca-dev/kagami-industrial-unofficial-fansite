@@ -1,0 +1,36 @@
+name: CI for Vanilla JS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  code-quality-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. コードを取得
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. ツールを動かすためのNode.jsを準備
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    # 3. パッケージ（PrettierやESLintなど）のインストール
+    - name: Install dependencies
+      run: npm ci
+
+    # 4. フォーマットチェック（Prettier）
+    # ※整っていないファイルがあればCIを失敗させる
+    - name: Check Formatting
+      run: npx prettier --check "**/*.{js,css,html}"
+
+    # 5. 構文チェック（ESLint）
+    # ※Vanilla JSの怪しい書き方や未使用変数を検知
+    - name: Run Linter
+      run: npx eslint "**/*.js"
