@@ -4,6 +4,7 @@
   "tabWidth": 2,
   "useTabs": false,
   "trailingComma": "es5",
-  "printWidth": 120,
-  "bracketSameLine": true
+  "printWidth": 1000,
+  "bracketSameLine": true,
+  "htmlWhitespaceSensitivity": "ignore"
 }

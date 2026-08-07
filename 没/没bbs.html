@@ -1,373 +1,357 @@
 <!doctype html>
 <html lang="ja">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>社員専用掲示板 - 加賀美インダストリアル</title>
-		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-		<link rel="stylesheet" href="css/style.css" />
-		<style>
-			/* =========================================================
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>社員専用掲示板 - 加賀美インダストリアル</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* =========================================================
         BBS専用スタイル（メインサイトの style.css の変数を継承）
         ========================================================= */
 
-			/* ベースのコンテナレイアウト（style.cssの.containerと併用想定） */
-			.bbs-container {
-				max-width: 800px;
-				margin: 0 auto;
-			}
+      /* ベースのコンテナレイアウト（style.cssの.containerと併用想定） */
+      .bbs-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
 
-			/* 投稿フォーム */
-			.post-form-card {
-				background-color: var(--color-white);
-				border: 1px solid var(--color-border);
-				/* メインサイトのカードに合わせて丸みをなくし、シャドウで浮かせる */
-				border-radius: 0;
-				padding: var(--space-xl);
-				margin-bottom: var(--space-xl);
-				box-shadow: var(--shadow-sm);
-				transition: box-shadow var(--transition-base);
-			}
-			.post-form-card:hover {
-				box-shadow: var(--shadow-md);
-			}
+      /* 投稿フォーム */
+      .post-form-card {
+        background-color: var(--color-white);
+        border: 1px solid var(--color-border);
+        /* メインサイトのカードに合わせて丸みをなくし、シャドウで浮かせる */
+        border-radius: 0;
+        padding: var(--space-xl);
+        margin-bottom: var(--space-xl);
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow var(--transition-base);
+      }
+      .post-form-card:hover {
+        box-shadow: var(--shadow-md);
+      }
 
-			/* 返信中バッジ */
-			.reply-target-badge {
-				display: none;
-				background: var(--color-primary-light);
-				color: var(--color-white);
-				padding: var(--space-xs) var(--space-sm);
-				font-size: 0.8rem;
-				margin-bottom: var(--space-md);
-				width: fit-content;
-				font-family: var(--font-en);
-				letter-spacing: 0.05em;
-			}
-			.reply-target-badge span {
-				margin-left: 10px;
-				cursor: pointer;
-				font-weight: bold;
-				color: var(--color-accent-light);
-			}
+      /* 返信中バッジ */
+      .reply-target-badge {
+        display: none;
+        background: var(--color-primary-light);
+        color: var(--color-white);
+        padding: var(--space-xs) var(--space-sm);
+        font-size: 0.8rem;
+        margin-bottom: var(--space-md);
+        width: fit-content;
+        font-family: var(--font-en);
+        letter-spacing: 0.05em;
+      }
+      .reply-target-badge span {
+        margin-left: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        color: var(--color-accent-light);
+      }
 
-			/* テキストエリア */
-			textarea {
-				width: 100%;
-				height: 100px;
-				background-color: var(--color-bg);
-				border: 1px solid var(--color-border);
-				border-radius: 0;
-				color: var(--color-text);
-				padding: var(--space-md);
-				box-sizing: border-box;
-				resize: vertical;
-				font-family: var(--font-body-ja);
-				font-size: 0.95rem;
-				transition:
-					border-color var(--transition-fast),
-					box-shadow var(--transition-fast);
-			}
-			textarea:focus {
-				outline: none;
-				border-color: var(--color-accent);
-				box-shadow: 0 0 0 1px var(--color-accent); /* フォーカス時に上品なゴールドの枠 */
-			}
+      /* テキストエリア */
+      textarea {
+        width: 100%;
+        height: 100px;
+        background-color: var(--color-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 0;
+        color: var(--color-text);
+        padding: var(--space-md);
+        box-sizing: border-box;
+        resize: vertical;
+        font-family: var(--font-body-ja);
+        font-size: 0.95rem;
+        transition:
+          border-color var(--transition-fast),
+          box-shadow var(--transition-fast);
+      }
+      textarea:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 1px var(--color-accent); /* フォーカス時に上品なゴールドの枠 */
+      }
 
-			.form-footer {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-top: var(--space-md);
-			}
+      .form-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: var(--space-md);
+      }
 
-			.user-info-preview {
-				font-size: 0.85rem;
-				color: var(--color-text-muted);
-				font-family: var(--font-en);
-			}
+      .user-info-preview {
+        font-size: 0.85rem;
+        color: var(--color-text-muted);
+        font-family: var(--font-en);
+      }
 
-			/* 送信ボタン（メインサイトの .btn--accent を踏襲） */
-			.btn-submit {
-				background-color: var(--color-accent);
-				color: var(--color-white);
-				border: none;
-				padding: 0.85rem 2.5rem;
-				font-family: var(--font-en);
-				font-size: 0.85rem;
-				font-weight: 600;
-				letter-spacing: 0.1em;
-				text-transform: uppercase;
-				cursor: pointer;
-				transition: all var(--transition-base);
-				position: relative;
-				overflow: hidden;
-			}
-			.btn-submit:hover {
-				background-color: var(--color-accent-dark);
-				transform: translateY(-2px);
-				box-shadow: var(--shadow-md);
-			}
+      /* 送信ボタン（メインサイトの .btn--accent を踏襲） */
+      .btn-submit {
+        background-color: var(--color-accent);
+        color: var(--color-white);
+        border: none;
+        padding: 0.85rem 2.5rem;
+        font-family: var(--font-en);
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all var(--transition-base);
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-submit:hover {
+        background-color: var(--color-accent-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
 
-			/* タイムラインコンテナ */
-			.timeline {
-				display: flex;
-				flex-direction: column;
-				gap: var(--space-md);
-			}
+      /* タイムラインコンテナ */
+      .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+      }
 
-			/* 投稿カード */
-			.post-card {
-				background-color: var(--color-white);
-				border: 1px solid var(--color-border);
-				/* 左側にエレガントなゴールドのアクセントライン */
-				border-left: 4px solid var(--color-accent);
-				padding: var(--space-lg);
-				box-shadow: var(--shadow-sm);
-				transition:
-					transform var(--transition-base),
-					box-shadow var(--transition-base);
-			}
-			.post-card:hover {
-				transform: translateY(-2px);
-				box-shadow: var(--shadow-md);
-			}
+      /* 投稿カード */
+      .post-card {
+        background-color: var(--color-white);
+        border: 1px solid var(--color-border);
+        /* 左側にエレガントなゴールドのアクセントライン */
+        border-left: 4px solid var(--color-accent);
+        padding: var(--space-lg);
+        box-shadow: var(--shadow-sm);
+        transition:
+          transform var(--transition-base),
+          box-shadow var(--transition-base);
+      }
+      .post-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
 
-			/* 返信カード（インデント表示） */
-			.post-card.is-reply {
-				margin-left: var(--space-xl);
-				/* 返信は区別のためネイビーのライン＋薄いグレー背景 */
-				border-left: 4px solid var(--color-primary-light);
-				background-color: var(--color-bg);
-				padding: var(--space-md) var(--space-lg);
-			}
+      /* 返信カード（インデント表示） */
+      .post-card.is-reply {
+        margin-left: var(--space-xl);
+        /* 返信は区別のためネイビーのライン＋薄いグレー背景 */
+        border-left: 4px solid var(--color-primary-light);
+        background-color: var(--color-bg);
+        padding: var(--space-md) var(--space-lg);
+      }
 
-			.post-header {
-				display: flex;
-				justify-content: space-between;
-				align-items: flex-start;
-				margin-bottom: var(--space-sm);
-				flex-wrap: wrap;
-				gap: 5px;
-			}
+      .post-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: var(--space-sm);
+        flex-wrap: wrap;
+        gap: 5px;
+      }
 
-			.meta-left {
-				display: flex;
-				align-items: center;
-				gap: 12px;
-				flex-wrap: wrap;
-			}
+      .meta-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
 
-			/* 投稿者名に明朝体を適用してフォーマル感を演出 */
-			.author-name {
-				font-family: var(--font-heading-ja);
-				font-weight: 600;
-				color: var(--color-primary);
-				font-size: 1.1rem;
-			}
+      /* 投稿者名に明朝体を適用してフォーマル感を演出 */
+      .author-name {
+        font-family: var(--font-heading-ja);
+        font-weight: 600;
+        color: var(--color-primary);
+        font-size: 1.1rem;
+      }
 
-			.author-id {
-				color: var(--color-text-muted);
-				font-size: 0.75rem;
-				font-family: var(--font-en);
-				letter-spacing: 0.05em;
-			}
+      .author-id {
+        color: var(--color-text-muted);
+        font-size: 0.75rem;
+        font-family: var(--font-en);
+        letter-spacing: 0.05em;
+      }
 
-			.author-badges {
-				display: flex;
-				gap: 8px;
-				font-size: 0.75rem;
-			}
+      .author-badges {
+        display: flex;
+        gap: 8px;
+        font-size: 0.75rem;
+      }
 
-			/* 称号バッジ */
-			.badge {
-				background: rgba(200, 166, 94, 0.08); /* ゴールドの極薄背景 */
-				border: 1px solid rgba(200, 166, 94, 0.4);
-				color: var(--color-accent-dark);
-				padding: 2px 8px;
-				border-radius: 2px;
-				font-weight: 600;
-			}
-			.badge.orange {
-				/* もう一つのランクはネイビーベースで統一感を出す */
-				background: rgba(26, 61, 110, 0.05);
-				border: 1px solid rgba(26, 61, 110, 0.3);
-				color: var(--color-primary-light);
-			}
+      /* 称号バッジ */
+      .badge {
+        background: rgba(200, 166, 94, 0.08); /* ゴールドの極薄背景 */
+        border: 1px solid rgba(200, 166, 94, 0.4);
+        color: var(--color-accent-dark);
+        padding: 2px 8px;
+        border-radius: 2px;
+        font-weight: 600;
+      }
+      .badge.orange {
+        /* もう一つのランクはネイビーベースで統一感を出す */
+        background: rgba(26, 61, 110, 0.05);
+        border: 1px solid rgba(26, 61, 110, 0.3);
+        color: var(--color-primary-light);
+      }
 
-			.post-time {
-				color: var(--color-text-muted);
-				font-size: 0.75rem;
-				font-family: var(--font-en);
-				letter-spacing: 0.05em;
-			}
+      .post-time {
+        color: var(--color-text-muted);
+        font-size: 0.75rem;
+        font-family: var(--font-en);
+        letter-spacing: 0.05em;
+      }
 
-			/* 本文とモザイク */
-			.post-content {
-				font-size: 0.95rem;
-				line-height: 1.8;
-				color: var(--color-text);
-				white-space: pre-wrap;
-				margin-bottom: var(--space-md);
-				transition: filter 0.3s;
-			}
-			.post-content.mosaic-active {
-				filter: blur(6px);
-				user-select: none;
-				pointer-events: none;
-			}
+      /* 本文とモザイク */
+      .post-content {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: var(--color-text);
+        white-space: pre-wrap;
+        margin-bottom: var(--space-md);
+        transition: filter 0.3s;
+      }
+      .post-content.mosaic-active {
+        filter: blur(6px);
+        user-select: none;
+        pointer-events: none;
+      }
 
-			/* アクションボタン領域 */
-			.post-actions {
-				display: flex;
-				gap: var(--space-lg);
-				font-size: 0.8rem;
-				/* 本文とアクションボタンを上品な点線で区切る */
-				border-top: 1px dashed var(--color-border);
-				padding-top: var(--space-sm);
-			}
+      /* アクションボタン領域 */
+      .post-actions {
+        display: flex;
+        gap: var(--space-lg);
+        font-size: 0.8rem;
+        /* 本文とアクションボタンを上品な点線で区切る */
+        border-top: 1px dashed var(--color-border);
+        padding-top: var(--space-sm);
+      }
 
-			.action-btn {
-				background: none;
-				border: none;
-				color: var(--color-text-muted);
-				cursor: pointer;
-				padding: 0;
-				display: flex;
-				align-items: center;
-				gap: 6px;
-				transition: color var(--transition-fast);
-				font-family: var(--font-body-ja);
-			}
-			.action-btn:hover {
-				color: var(--color-accent);
-			}
+      .action-btn {
+        background: none;
+        border: none;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: color var(--transition-fast);
+        font-family: var(--font-body-ja);
+      }
+      .action-btn:hover {
+        color: var(--color-accent);
+      }
 
-			.action-btn.like-active {
-				color: #d94a4a; /* 上品な赤に変更 */
-				font-weight: bold;
-			}
+      .action-btn.like-active {
+        color: #d94a4a; /* 上品な赤に変更 */
+        font-weight: bold;
+      }
 
-			.action-btn.btn-hide-toggle {
-				margin-left: auto;
-			}
+      .action-btn.btn-hide-toggle {
+        margin-left: auto;
+      }
 
-			/* ログイン催促メッセージ */
-			.guest-message {
-				text-align: center;
-				color: var(--color-primary);
-				font-weight: 600;
-				font-size: 0.95rem;
-				padding: var(--space-md);
-				border: 1px solid var(--color-primary-light);
-				background-color: var(--color-bg);
-				border-radius: 0;
-				margin-bottom: var(--space-xl);
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<h1>KAGAMI INDUSTRIAL</h1>
-			<div class="subtitle">━ 社員専用マルチポータル掲示板 ━</div>
+      /* ログイン催促メッセージ */
+      .guest-message {
+        text-align: center;
+        color: var(--color-primary);
+        font-weight: 600;
+        font-size: 0.95rem;
+        padding: var(--space-md);
+        border: 1px solid var(--color-primary-light);
+        background-color: var(--color-bg);
+        border-radius: 0;
+        margin-bottom: var(--space-xl);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>KAGAMI INDUSTRIAL</h1>
+      <div class="subtitle">━ 社員専用マルチポータル掲示板 ━</div>
 
-			<div class="post-form-card" id="form-container">
-				<div class="reply-target-badge" id="reply-badge">
-					ユーザーへの返信中 <span onclick="cancelReply()">×</span>
-				</div>
-				<textarea
-					id="post-input"
-					placeholder="社内規定を遵守し、有意義な情報共有を行いましょう。"
-				></textarea>
-				<div class="form-footer">
-					<div class="user-info-preview" id="user-preview">
-						読み込み中...
-					</div>
-					<button class="btn-submit" onclick="submitPost()">
-						投稿する
-					</button>
-				</div>
-			</div>
+      <div class="post-form-card" id="form-container">
+        <div class="reply-target-badge" id="reply-badge">
+          ユーザーへの返信中
+          <span onclick="cancelReply()">×</span>
+        </div>
+        <textarea id="post-input" placeholder="社内規定を遵守し、有意義な情報共有を行いましょう。"></textarea>
+        <div class="form-footer">
+          <div class="user-info-preview" id="user-preview">読み込み中...</div>
+          <button class="btn-submit" onclick="submitPost()">投稿する</button>
+        </div>
+      </div>
 
-			<div class="timeline" id="timeline"></div>
-		</div>
+      <div class="timeline" id="timeline"></div>
+    </div>
 
-		<script>
-			// --- 初期設定とグローバル変数 ---
-			if (!window._supabase) {
-				const url = 'https://vcsnquepttevlmhgyeje.supabase.co';
-				const key = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
-				window._supabase = supabase.createClient(url, key);
-			}
-			const _supabase = window._supabase; // 既存の共通クライアントを参照
-			let currentUser = null;
-			let currentReplyParentId = null; // 返信先のID
+    <script>
+      // --- 初期設定とグローバル変数 ---
+      if (!window._supabase) {
+        const url = 'https://vcsnquepttevlmhgyeje.supabase.co';
+        const key = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
+        window._supabase = supabase.createClient(url, key);
+      }
+      const _supabase = window._supabase; // 既存の共通クライアントを参照
+      let currentUser = null;
+      let currentReplyParentId = null; // 返信先のID
 
-			// いいねした投稿をローカルに記憶する配列
-			let likedPosts =
-				JSON.parse(localStorage.getItem('bbs_liked_posts')) || [];
+      // いいねした投稿をローカルに記憶する配列
+      let likedPosts = JSON.parse(localStorage.getItem('bbs_liked_posts')) || [];
 
-			document.addEventListener('DOMContentLoaded', async () => {
-				await initBBS();
-			});
+      document.addEventListener('DOMContentLoaded', async () => {
+        await initBBS();
+      });
 
-			async function initBBS() {
-				const savedPlayerId =
-					localStorage.getItem('kagami_employee_id');
+      async function initBBS() {
+        const savedPlayerId = localStorage.getItem('kagami_employee_id');
 
-				if (!savedPlayerId) {
-					document.getElementById('form-container').innerHTML = `
+        if (!savedPlayerId) {
+          document.getElementById('form-container').innerHTML = `
                 <div class="guest-message">⚠ 投稿するには社員ログイン（IDの登録）が必要です。</div>
             `;
-				} else {
-					// profilesテーブルから現在のユーザー情報を引っ張ってくる
-					try {
-						const { data, error } = await _supabase
-							.from('profiles')
-							.select('*')
-							.eq('player_id', savedPlayerId)
-							.single();
+        } else {
+          // profilesテーブルから現在のユーザー情報を引っ張ってくる
+          try {
+            const { data, error } = await _supabase.from('profiles').select('*').eq('player_id', savedPlayerId).single();
 
-						if (!error && data) {
-							currentUser = data;
-							const maskedId = maskPlayerId(
-								currentUser.player_id
-							);
-							document.getElementById('user-preview').innerText =
-								`投稿者: ${currentUser.name || '名無し社員'} (${maskedId})`;
-						} else {
-							document.getElementById('user-preview').innerText =
-								`投稿者ID: ${maskPlayerId(savedPlayerId)}`;
-							currentUser = {
-								player_id: savedPlayerId,
-								name: '名無し社員',
-								perikan_rank: '未所属',
-								orange_rank: '未所属',
-							};
-						}
-					} catch (e) {
-						console.error(e);
-					}
-				}
+            if (!error && data) {
+              currentUser = data;
+              const maskedId = maskPlayerId(currentUser.player_id);
+              document.getElementById('user-preview').innerText = `投稿者: ${currentUser.name || '名無し社員'} (${maskedId})`;
+            } else {
+              document.getElementById('user-preview').innerText = `投稿者ID: ${maskPlayerId(savedPlayerId)}`;
+              currentUser = {
+                player_id: savedPlayerId,
+                name: '名無し社員',
+                perikan_rank: '未所属',
+                orange_rank: '未所属',
+              };
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }
 
-				// 投稿一覧の取得
-				await fetchTimeline();
-			}
+        // 投稿一覧の取得
+        await fetchTimeline();
+      }
 
-			// IDの下4桁を隠す便利関数
-			function maskPlayerId(id) {
-				if (!id) return '****';
-				return id.replace(/.{4}$/, '****');
-			}
+      // IDの下4桁を隠す便利関数
+      function maskPlayerId(id) {
+        if (!id) return '****';
+        return id.replace(/.{4}$/, '****');
+      }
 
-			// タイムライン取得処理
-			async function fetchTimeline() {
-				try {
-					// 全投稿を取得（新しい順）
-					const { data: posts, error } = await _supabase
-						.from('bbs_posts')
-						.select(
-							`
+      // タイムライン取得処理
+      async function fetchTimeline() {
+        try {
+          // 全投稿を取得（新しい順）
+          const { data: posts, error } = await _supabase
+            .from('bbs_posts')
+            .select(
+              `
                     *,
                     profiles:player_id (
                         username,
@@ -375,69 +359,62 @@
                         orange_rank
                     )
                 `
-						)
-						.order('created_at', { ascending: false });
+            )
+            .order('created_at', { ascending: false });
 
-					if (error) throw error;
+          if (error) throw error;
 
-					const timelineEl = document.getElementById('timeline');
-					timelineEl.innerHTML = '';
+          const timelineEl = document.getElementById('timeline');
+          timelineEl.innerHTML = '';
 
-					// 親投稿（parent_id が NULL のもの）と、返信投稿に分ける
-					const parentPosts = posts.filter((p) => !p.parent_id);
-					const replyPosts = posts.filter((p) => p.parent_id);
+          // 親投稿（parent_id が NULL のもの）と、返信投稿に分ける
+          const parentPosts = posts.filter((p) => !p.parent_id);
+          const replyPosts = posts.filter((p) => p.parent_id);
 
-					// 親投稿をループ処理（新着順に上から並べる）
-					parentPosts.forEach((post) => {
-						const postHtml = createPostCardHtml(post, false);
-						timelineEl.appendChild(postHtml);
+          // 親投稿をループ処理（新着順に上から並べる）
+          parentPosts.forEach((post) => {
+            const postHtml = createPostCardHtml(post, false);
+            timelineEl.appendChild(postHtml);
 
-						// この親に対する返信を古い順（会話の流れ順）に並び替えて直下に挿入
-						const repliesForThis = replyPosts
-							.filter((r) => r.parent_id === post.id)
-							.reverse();
+            // この親に対する返信を古い順（会話の流れ順）に並び替えて直下に挿入
+            const repliesForThis = replyPosts.filter((r) => r.parent_id === post.id).reverse();
 
-						repliesForThis.forEach((reply) => {
-							const replyHtml = createPostCardHtml(reply, true);
-							timelineEl.appendChild(replyHtml);
-						});
-					});
-				} catch (err) {
-					console.error('タイムライン取得エラー:', err);
-				}
-			}
+            repliesForThis.forEach((reply) => {
+              const replyHtml = createPostCardHtml(reply, true);
+              timelineEl.appendChild(replyHtml);
+            });
+          });
+        } catch (err) {
+          console.error('タイムライン取得エラー:', err);
+        }
+      }
 
-			// 投稿カードのHTML要素を生成する関数
-			function createPostCardHtml(post, isReply) {
-				const card = document.createElement('div');
-				card.className = `post-card ${isReply ? 'is-reply' : ''}`;
-				card.id = `post-${post.id}`;
+      // 投稿カードのHTML要素を生成する関数
+      function createPostCardHtml(post, isReply) {
+        const card = document.createElement('div');
+        card.className = `post-card ${isReply ? 'is-reply' : ''}`;
+        card.id = `post-${post.id}`;
 
-				const maskedId = maskPlayerId(post.player_id);
-				const formattedTime = new Date(post.created_at).toLocaleString(
-					'ja-JP',
-					{
-						month: '2-digit',
-						day: '2-digit',
-						hour: '2-digit',
-						minute: '2-digit',
-					}
-				);
+        const maskedId = maskPlayerId(post.player_id);
+        const formattedTime = new Date(post.created_at).toLocaleString('ja-JP', {
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
 
-				// いいね状態の判定
-				const isLiked = likedPosts.includes(post.id);
+        // いいね状態の判定
+        const isLiked = likedPosts.includes(post.id);
 
-				// 称号バッジの組み立て（データがあるときだけ薄く表示）
-				let displayName = '名無し社員';
-				let badgeHtml = '';
-				if (post.profiles) {
-					if (post.profiles.perikan_rank)
-						badgeHtml += `<span class="badge">🦆 ${post.profiles.perikan_rank}</span>`;
-					if (post.profiles.orange_rank)
-						badgeHtml += `<span class="badge orange">🍊 ${post.profiles.orange_rank}</span>`;
-				}
+        // 称号バッジの組み立て（データがあるときだけ薄く表示）
+        let displayName = '名無し社員';
+        let badgeHtml = '';
+        if (post.profiles) {
+          if (post.profiles.perikan_rank) badgeHtml += `<span class="badge">🦆 ${post.profiles.perikan_rank}</span>`;
+          if (post.profiles.orange_rank) badgeHtml += `<span class="badge orange">🍊 ${post.profiles.orange_rank}</span>`;
+        }
 
-				card.innerHTML = `
+        card.innerHTML = `
             <div class="post-header">
                 <div class="meta-left">
                     <span class="author-name" id="author-name-${post.id}">${escapeHtml(displayName)}</span>
@@ -455,118 +432,103 @@
                 <button class="action-btn btn-hide-toggle" onclick="toggleMosaic(${post.id}, this)">👁 隠す</button>
             </div>
         `;
-				return card;
-			}
+        return card;
+      }
 
-			// 投稿送信処理
-			async function submitPost() {
-				const inputEl = document.getElementById('post-input');
-				const content = inputEl.value.trim();
+      // 投稿送信処理
+      async function submitPost() {
+        const inputEl = document.getElementById('post-input');
+        const content = inputEl.value.trim();
 
-				if (!content) return;
-				if (!currentUser) {
-					alert('投稿権限がありません。');
-					return;
-				}
+        if (!content) return;
+        if (!currentUser) {
+          alert('投稿権限がありません。');
+          return;
+        }
 
-				try {
-					const { error } = await _supabase.from('bbs_posts').insert([
-						{
-							player_id: currentUser.player_id,
-							content: content,
-							parent_id: currentReplyParentId, // 返信なら親IDが入る
-						},
-					]);
+        try {
+          const { error } = await _supabase.from('bbs_posts').insert([
+            {
+              player_id: currentUser.player_id,
+              content: content,
+              parent_id: currentReplyParentId, // 返信なら親IDが入る
+            },
+          ]);
 
-					if (error) throw error;
+          if (error) throw error;
 
-					// フォームリセット
-					inputEl.value = '';
-					cancelReply();
+          // フォームリセット
+          inputEl.value = '';
+          cancelReply();
 
-					// 再読み込み
-					await fetchTimeline();
-				} catch (err) {
-					console.error('投稿エラー:', err);
-					alert('投稿の送信に失敗しました。');
-				}
-			}
+          // 再読み込み
+          await fetchTimeline();
+        } catch (err) {
+          console.error('投稿エラー:', err);
+          alert('投稿の送信に失敗しました。');
+        }
+      }
 
-			// 返信モードのセット（引数をIDのみに簡略化）
-			function setReplyTarget(postId) {
-				currentReplyParentId = postId;
-				const nameEl = document.getElementById(`author-name-${postId}`);
-				const name = nameEl ? nameEl.innerText : '社員';
-				const badge = document.getElementById('reply-badge');
-				badge.innerHTML = `👤 ${name} さんへの返信中 <span onclick="cancelReply()">×</span>`;
-				badge.style.display = 'block';
-				document.getElementById('post-input').focus();
-			}
+      // 返信モードのセット（引数をIDのみに簡略化）
+      function setReplyTarget(postId) {
+        currentReplyParentId = postId;
+        const nameEl = document.getElementById(`author-name-${postId}`);
+        const name = nameEl ? nameEl.innerText : '社員';
+        const badge = document.getElementById('reply-badge');
+        badge.innerHTML = `👤 ${name} さんへの返信中 <span onclick="cancelReply()">×</span>`;
+        badge.style.display = 'block';
+        document.getElementById('post-input').focus();
+      }
 
-			// 返信モードの解除
-			function cancelReply() {
-				currentReplyParentId = null;
-				document.getElementById('reply-badge').style.display = 'none';
-			}
+      // 返信モードの解除
+      function cancelReply() {
+        currentReplyParentId = null;
+        document.getElementById('reply-badge').style.display = 'none';
+      }
 
-			// いいねのトグル処理
-			async function toggleLike(postId, currentLikes) {
-				const likeBtn = document.querySelector(
-					`#post-${postId} .action-btn:first-child`
-				);
-				const countSpan = document.getElementById(
-					`like-count-${postId}`
-				);
+      // いいねのトグル処理
+      async function toggleLike(postId, currentLikes) {
+        const likeBtn = document.querySelector(`#post-${postId} .action-btn:first-child`);
+        const countSpan = document.getElementById(`like-count-${postId}`);
 
-				let newLikes = currentLikes;
+        let newLikes = currentLikes;
 
-				if (likedPosts.includes(postId)) {
-					// すでにいいね済みなら解除
-					likedPosts = likedPosts.filter((id) => id !== postId);
-					newLikes = Math.max(0, newLikes - 1);
-					likeBtn.classList.remove('like-active');
-				} else {
-					// 新規いいね
-					likedPosts.push(postId);
-					newLikes += 1;
-					likeBtn.classList.add('like-active');
-				}
+        if (likedPosts.includes(postId)) {
+          // すでにいいね済みなら解除
+          likedPosts = likedPosts.filter((id) => id !== postId);
+          newLikes = Math.max(0, newLikes - 1);
+          likeBtn.classList.remove('like-active');
+        } else {
+          // 新規いいね
+          likedPosts.push(postId);
+          newLikes += 1;
+          likeBtn.classList.add('like-active');
+        }
 
-				// ローカルストレージ保存
-				localStorage.setItem(
-					'bbs_liked_posts',
-					JSON.stringify(likedPosts)
-				);
-				countSpan.innerText = newLikes;
+        // ローカルストレージ保存
+        localStorage.setItem('bbs_liked_posts', JSON.stringify(likedPosts));
+        countSpan.innerText = newLikes;
 
-				// DB更新
-				await _supabase
-					.from('bbs_posts')
-					.update({ likes: newLikes })
-					.eq('id', postId);
-			}
+        // DB更新
+        await _supabase.from('bbs_posts').update({ likes: newLikes }).eq('id', postId);
+      }
 
-			// モザイクのトグル処理
-			function toggleMosaic(postId, btn) {
-				const contentEl = document.getElementById(`content-${postId}`);
-				if (contentEl.classList.contains('mosaic-active')) {
-					contentEl.classList.remove('mosaic-active');
-					btn.innerText = '👁 隠す';
-				} else {
-					contentEl.classList.add('mosaic-active');
-					btn.innerText = '👁 表示';
-				}
-			}
+      // モザイクのトグル処理
+      function toggleMosaic(postId, btn) {
+        const contentEl = document.getElementById(`content-${postId}`);
+        if (contentEl.classList.contains('mosaic-active')) {
+          contentEl.classList.remove('mosaic-active');
+          btn.innerText = '👁 隠す';
+        } else {
+          contentEl.classList.add('mosaic-active');
+          btn.innerText = '👁 表示';
+        }
+      }
 
-			// エスケープ処理（XSS対策）
-			function escapeHtml(str) {
-				return str
-					.replace(/&/g, '&amp;')
-					.replace(/</g, '&lt;')
-					.replace(/>/g, '&gt;')
-					.replace(/"/g, '&quot;')
-					.replace(/'/g, '&#039;');
-			}
-		</script>
-	</body>
+      // エスケープ処理（XSS対策）
+      function escapeHtml(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+      }
+    </script>
+  </body>
 </html>

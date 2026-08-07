@@ -1,493 +1,347 @@
 <!doctype html>
 <html lang="ja">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>社員ポータル | 加賀美インダストリアル 非公式ファンサイト</title>
-		<meta
-			name="description"
-			content="加賀美インダストリアル社員専用ポータルサイト。社員証IDを入力してログインすることで、社内システムや限定コンテンツへアクセスできます。"
-		/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>社員ポータル | 加賀美インダストリアル 非公式ファンサイト</title>
+    <meta name="description" content="加賀美インダストリアル社員専用ポータルサイト。社員証IDを入力してログインすることで、社内システムや限定コンテンツへアクセスできます。" />
 
-		<link rel="stylesheet" href="css/style.css" />
-		<link rel="stylesheet" href="css/components.css" />
-		<link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/home.css" />
 
-		<link
-			rel="apple-touch-icon"
-			sizes="180x180"
-			href="/apple-touch-icon.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="32x32"
-			href="/favicon-32x32.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="16x16"
-			href="/favicon-16x16.png"
-		/>
-		<link rel="manifest" href="/site.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-		<style>
-			.auth-card {
-				max-width: 550px;
-				margin: 0 auto;
-				background: var(--color-white);
-				border: 1px solid var(--color-border);
-				padding: var(--space-xl);
-				box-shadow: var(--shadow-md);
-				position: relative;
-			}
-			.auth-card::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 4px;
-				background: linear-gradient(
-					90deg,
-					var(--color-primary),
-					var(--color-accent)
-				);
-			}
-			.form-group {
-				margin-bottom: var(--space-lg);
-				text-align: left;
-			}
-			.form-label {
-				display: block;
-				font-family: var(--font-heading-ja);
-				font-weight: 600;
-				font-size: 0.95rem;
-				color: var(--color-primary);
-				margin-bottom: var(--space-sm);
-			}
-			.form-control {
-				width: 100%;
-				padding: 0.85rem 1rem;
-				font-family: var(--font-body-ja);
-				font-size: 1rem;
-				color: var(--color-text);
-				background-color: var(--color-bg);
-				border: 1px solid var(--color-border);
-				border-radius: 0;
-				transition:
-					border-color var(--transition-fast),
-					background-color var(--transition-fast);
-			}
-			.form-control:focus {
-				outline: none;
-				border-color: var(--color-accent);
-				background-color: var(--color-white);
-			}
-			.form-control::placeholder {
-				color: var(--color-text-muted);
-			}
-			.portal-status-list {
-				margin: var(--space-md) 0 var(--space-lg);
-				padding: var(--space-md);
-				background-color: var(--color-bg);
-				border-left: 3px solid var(--color-accent);
-			}
-			.portal-status-list li {
-				display: flex;
-				justify-content: space-between;
-				padding: var(--space-xs) 0;
-				border-bottom: 1px dashed var(--color-border);
-				font-size: 0.95rem;
-			}
-			.portal-status-list li:last-child {
-				border-bottom: none;
-			}
-			.portal-status-list .status-label {
-				color: var(--color-text-light);
-			}
-			.portal-status-list .status-value {
-				font-weight: 600;
-				color: var(--color-primary);
-			}
-			.badge-title {
-				padding: var(--space-xs) var(--space-sm);
-				font-size: 0.8rem;
-				background: var(--color-primary);
-				color: var(--color-white);
-			}
-			.badge-title.active {
-				background: var(--color-accent);
-			}
-		</style>
-	</head>
+    <style>
+      .auth-card {
+        max-width: 550px;
+        margin: 0 auto;
+        background: var(--color-white);
+        border: 1px solid var(--color-border);
+        padding: var(--space-xl);
+        box-shadow: var(--shadow-md);
+        position: relative;
+      }
+      .auth-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      }
+      .form-group {
+        margin-bottom: var(--space-lg);
+        text-align: left;
+      }
+      .form-label {
+        display: block;
+        font-family: var(--font-heading-ja);
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--color-primary);
+        margin-bottom: var(--space-sm);
+      }
+      .form-control {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        font-family: var(--font-body-ja);
+        font-size: 1rem;
+        color: var(--color-text);
+        background-color: var(--color-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 0;
+        transition:
+          border-color var(--transition-fast),
+          background-color var(--transition-fast);
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        background-color: var(--color-white);
+      }
+      .form-control::placeholder {
+        color: var(--color-text-muted);
+      }
+      .portal-status-list {
+        margin: var(--space-md) 0 var(--space-lg);
+        padding: var(--space-md);
+        background-color: var(--color-bg);
+        border-left: 3px solid var(--color-accent);
+      }
+      .portal-status-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: var(--space-xs) 0;
+        border-bottom: 1px dashed var(--color-border);
+        font-size: 0.95rem;
+      }
+      .portal-status-list li:last-child {
+        border-bottom: none;
+      }
+      .portal-status-list .status-label {
+        color: var(--color-text-light);
+      }
+      .portal-status-list .status-value {
+        font-weight: 600;
+        color: var(--color-primary);
+      }
+      .badge-title {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: 0.8rem;
+        background: var(--color-primary);
+        color: var(--color-white);
+      }
+      .badge-title.active {
+        background: var(--color-accent);
+      }
+    </style>
+  </head>
 
-	<body>
-		<header class="site-header">
-			<div class="container">
-				<a href="index.html" class="site-logo">
-					<div
-						class="site-logo__mark"
-						style="width: 40px; height: 40px; flex-shrink: 0"
-					>
-						<img
-							src="android-chrome-192x192.png"
-							alt="KI Logo"
-							style="
-								width: 100%;
-								height: 100%;
-								object-fit: contain;
-								vertical-align: middle;
-							"
-						/>
-					</div>
-					<div class="site-logo__text">
-						<div class="site-logo__title-row">
-							<span class="site-logo__name-ja"
-								>加賀美インダストリアル</span
-							>
-						</div>
-						<span class="site-logo__name-en"
-							>Kagami Industrial Inc.</span
-						>
-						<span class="site-logo__unofficial"
-							>非公式ファンサイト</span
-						>
-					</div>
-				</a>
-				<nav class="main-nav">
-					<ul class="main-nav__list">
-						<li class="main-nav__item">
-							<a href="index.html">Home</a>
-						</li>
-						<li class="main-nav__item">
-							<a href="about.html">About</a>
-						</li>
-						<li class="main-nav__item">
-							<a href="history.html">History</a>
-						</li>
-						<li class="main-nav__item">
-							<a href="business.html">Business</a>
-						</li>
-						<li class="main-nav__item">
-							<a href="technology.html">Technology</a>
-						</li>
-						<li class="main-nav__item">
-							<a href="sustainability.html">CSR</a>
-						</li>
-						<li class="main-nav__item">
-							<a href="recruit.html">Recruit</a>
-						</li>
-						<li class="main-nav__item"><a href="ir.html">IR</a></li>
-					</ul>
-				</nav>
-				<button class="hamburger" aria-label="メニュー">
-					<span></span><span></span><span></span>
-				</button>
-			</div>
-		</header>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a href="index.html" class="site-logo">
+          <div class="site-logo__mark" style="width: 40px; height: 40px; flex-shrink: 0">
+            <img src="android-chrome-192x192.png" alt="KI Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: middle" />
+          </div>
+          <div class="site-logo__text">
+            <div class="site-logo__title-row">
+              <span class="site-logo__name-ja">加賀美インダストリアル</span>
+            </div>
+            <span class="site-logo__name-en">Kagami Industrial Inc.</span>
+            <span class="site-logo__unofficial">非公式ファンサイト</span>
+          </div>
+        </a>
+        <nav class="main-nav">
+          <ul class="main-nav__list">
+            <li class="main-nav__item">
+              <a href="index.html">Home</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="about.html">About</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="history.html">History</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="business.html">Business</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="technology.html">Technology</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="sustainability.html">CSR</a>
+            </li>
+            <li class="main-nav__item">
+              <a href="recruit.html">Recruit</a>
+            </li>
+            <li class="main-nav__item"><a href="ir.html">IR</a></li>
+          </ul>
+        </nav>
+        <button class="hamburger" aria-label="メニュー">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
 
-		<div class="mobile-nav-overlay">
-			<ul class="mobile-nav__list">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="about.html">About Us</a></li>
-				<li><a href="history.html">History</a></li>
-				<li><a href="business.html">Business</a></li>
-				<li><a href="technology.html">Technology</a></li>
-				<li><a href="sustainability.html">Sustainability</a></li>
-				<li><a href="recruit.html">Recruit</a></li>
-				<li><a href="ir.html">IR</a></li>
-			</ul>
-		</div>
+    <div class="mobile-nav-overlay">
+      <ul class="mobile-nav__list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="business.html">Business</a></li>
+        <li><a href="technology.html">Technology</a></li>
+        <li><a href="sustainability.html">Sustainability</a></li>
+        <li><a href="recruit.html">Recruit</a></li>
+        <li><a href="ir.html">IR</a></li>
+      </ul>
+    </div>
 
-		<section class="page-header">
-			<div class="geo-line geo-line--1"></div>
-			<div class="geo-line geo-line--2"></div>
-			<div class="geo-line geo-line--3"></div>
-			<div class="page-header__content">
-				<p class="page-header__label en-text">Employee Portal</p>
-				<h1 class="page-header__title">社員ログイン</h1>
-				<p class="page-header__subtitle en-text">
-					Identity Authentication System
-				</p>
-			</div>
-		</section>
+    <section class="page-header">
+      <div class="geo-line geo-line--1"></div>
+      <div class="geo-line geo-line--2"></div>
+      <div class="geo-line geo-line--3"></div>
+      <div class="page-header__content">
+        <p class="page-header__label en-text">Employee Portal</p>
+        <h1 class="page-header__title">社員ログイン</h1>
+        <p class="page-header__subtitle en-text">Identity Authentication System</p>
+      </div>
+    </section>
 
-		<div class="breadcrumb">
-			<div class="container">
-				<a href="index.html">Home</a><span>&gt;</span
-				><span>社員ログイン</span>
-			</div>
-		</div>
+    <div class="breadcrumb">
+      <div class="container">
+        <a href="index.html">Home</a>
+        <span>&gt;</span>
+        <span>社員ログイン</span>
+      </div>
+    </div>
 
-		<section class="section section--alt">
-			<div class="container" style="text-align: center">
-				<div id="login-form" class="auth-card fade-in visible">
-					<span class="section-label">Authentication</span>
-					<h2
-						class="card__title"
-						style="
-							font-size: 1.5rem;
-							margin-bottom: var(--space-md);
-						"
-					>
-						社員証ID認証
-					</h2>
-					<p
-						class="card__text"
-						style="margin-bottom: var(--space-xl)"
-					>
-						本システムは、加賀美インダストリアル（非公式）の社員専用ポータルです。<br />
-						発行された社員ID（KI-xxxx-xxxx形式）を入力してください。
-					</p>
+    <section class="section section--alt">
+      <div class="container" style="text-align: center">
+        <div id="login-form" class="auth-card fade-in visible">
+          <span class="section-label">Authentication</span>
+          <h2 class="card__title" style="font-size: 1.5rem; margin-bottom: var(--space-md)">社員証ID認証</h2>
+          <p class="card__text" style="margin-bottom: var(--space-xl)">
+            本システムは、加賀美インダストリアル（非公式）の社員専用ポータルです。
+            <br />
+            発行された社員ID（KI-xxxx-xxxx形式）を入力してください。
+          </p>
 
-					<div class="form-group">
-						<label for="login-id-input" class="form-label"
-							>社員ID</label
-						>
-						<input
-							type="text"
-							id="login-id-input"
-							class="form-control"
-							placeholder="KI-abcd-0001"
-							autocomplete="off"
-						/>
-					</div>
+          <div class="form-group">
+            <label for="login-id-input" class="form-label">社員ID</label>
+            <input type="text" id="login-id-input" class="form-control" placeholder="KI-abcd-0001" autocomplete="off" />
+          </div>
 
-					<div style="margin-top: var(--space-xl)">
-						<button
-							id="login-submit-btn"
-							class="btn btn--primary"
-							style="width: 100%; justify-content: center"
-						>
-							認証を実行する
-						</button>
-					</div>
+          <div style="margin-top: var(--space-xl)">
+            <button id="login-submit-btn" class="btn btn--primary" style="width: 100%; justify-content: center">認証を実行する</button>
+          </div>
 
-					<p
-						class="card__text"
-						style="margin-top: var(--space-lg); font-size: 0.8rem"
-					>
-						※社員証をお持ちでない方は、先に<a
-							href="recruit.html"
-							style="color: var(--color-accent); font-weight: 600"
-							>採用エントリー（社員証発行）</a
-						>を行ってください。
-					</p>
-				</div>
+          <p class="card__text" style="margin-top: var(--space-lg); font-size: 0.8rem">
+            ※社員証をお持ちでない方は、先に
+            <a href="recruit.html" style="color: var(--color-accent); font-weight: 600">採用エントリー（社員証発行）</a>
+            を行ってください。
+          </p>
+        </div>
 
-				<div
-					id="user-status-area"
-					class="auth-card fade-in visible"
-					style="display: none"
-				>
-					<span class="section-label">Employee Profile</span>
-					<h2
-						class="card__title"
-						style="
-							font-size: 1.5rem;
-							margin-bottom: var(--space-md);
-						"
-					>
-						社員用マイポータル
-					</h2>
-					<p
-						class="card__text"
-						style="margin-bottom: var(--space-lg)"
-					>
-						お疲れ様です、<span
-							id="status-username"
-							style="
-								font-weight: 700;
-								color: var(--color-primary);
-							"
-						></span>
-						社員。
-					</p>
+        <div id="user-status-area" class="auth-card fade-in visible" style="display: none">
+          <span class="section-label">Employee Profile</span>
+          <h2 class="card__title" style="font-size: 1.5rem; margin-bottom: var(--space-md)">社員用マイポータル</h2>
+          <p class="card__text" style="margin-bottom: var(--space-lg)">
+            お疲れ様です、
+            <span id="status-username" style="font-weight: 700; color: var(--color-primary)"></span>
+            社員。
+          </p>
 
-					<ul class="portal-status-list">
-						<li>
-							<span class="status-label">所属番号（ID）</span>
-							<span
-								id="status-empid"
-								class="status-value en-text"
-							></span>
-						</li>
-						<li>
-							<span class="status-label">獲得称号：オレンジ</span>
-							<span
-								id="status-title-orange"
-								class="status-value"
-							></span>
-						</li>
-						<li>
-							<span class="status-label"
-								>獲得スコア：オレンジ</span
-							>
-							<span
-								id="status-score-orange"
-								class="status-value"
-							></span>
-						</li>
-						<li>
-							<span class="status-label">獲得称号：ペリカン</span>
-							<span
-								id="status-title-pelican"
-								class="status-value"
-							></span>
-						</li>
-						<li>
-							<span class="status-label"
-								>獲得スコア：ペリカン</span
-							>
-							<span
-								id="status-score-pelican"
-								class="status-value"
-							></span>
-						</li>
-					</ul>
+          <ul class="portal-status-list">
+            <li>
+              <span class="status-label">所属番号（ID）</span>
+              <span id="status-empid" class="status-value en-text"></span>
+            </li>
+            <li>
+              <span class="status-label">獲得称号：オレンジ</span>
+              <span id="status-title-orange" class="status-value"></span>
+            </li>
+            <li>
+              <span class="status-label">獲得スコア：オレンジ</span>
+              <span id="status-score-orange" class="status-value"></span>
+            </li>
+            <li>
+              <span class="status-label">獲得称号：ペリカン</span>
+              <span id="status-title-pelican" class="status-value"></span>
+            </li>
+            <li>
+              <span class="status-label">獲得スコア：ペリカン</span>
+              <span id="status-score-pelican" class="status-value"></span>
+            </li>
+          </ul>
 
-					<div
-						class="grid grid--2"
-						style="
-							margin-top: var(--space-lg);
-							gap: var(--space-md);
-						"
-					>
-						<a
-							href="enjoy.html"
-							class="btn btn--accent"
-							style="justify-content: center"
-							>休憩室（掲示板）へ</a
-						>
-						<button
-							id="logout-btn"
-							class="btn btn--outline"
-							style="
-								color: var(--color-primary);
-								border-color: var(--color-primary);
-								justify-content: center;
-							"
-						>
-							業務終了（ログアウト）
-						</button>
-					</div>
-				</div>
-			</div>
-		</section>
+          <div class="grid grid--2" style="margin-top: var(--space-lg); gap: var(--space-md)">
+            <a href="enjoy.html" class="btn btn--accent" style="justify-content: center">休憩室（掲示板）へ</a>
+            <button id="logout-btn" class="btn btn--outline" style="color: var(--color-primary); border-color: var(--color-primary); justify-content: center">業務終了（ログアウト）</button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-		<footer class="site-footer">
-			<div class="container">
-				<div class="footer-main">
-					<div class="footer-brand">
-						<div class="site-logo" style="pointer-events: none">
-							<div
-								class="site-logo__mark"
-								style="
-									width: 40px;
-									height: 40px;
-									flex-shrink: 0;
-								"
-							>
-								<img
-									src="android-chrome-192x192.png"
-									alt="KI Logo"
-									style="
-										width: 100%;
-										height: 100%;
-										object-fit: contain;
-										vertical-align: middle;
-									"
-								/>
-							</div>
-							<div class="site-logo__text">
-								<span class="site-logo__name-ja"
-									>加賀美インダストリアル</span
-								>
-								<span class="site-logo__name-en"
-									>Kagami Industrial Inc.</span
-								>
-							</div>
-						</div>
-						<p class="footer-brand__desc">
-							MATERIAL / HEAVY MACHINERY &amp; HOBBY /
-							ENTERTAINMENT<br />
-							鋼鉄の巨人も、掌のミニカーも。すべての情熱は等価である。
-						</p>
-					</div>
-					<div class="footer-nav">
-						<h4 class="footer-nav__title">Company</h4>
-						<ul class="footer-nav__list">
-							<li><a href="about.html">企業情報</a></li>
-							<li><a href="history.html">沿革</a></li>
-							<li><a href="business.html">事業紹介</a></li>
-							<li>
-								<a href="technology.html">技術・研究開発</a>
-							</li>
-						</ul>
-					</div>
-					<div class="footer-nav">
-						<h4 class="footer-nav__title">Information</h4>
-						<ul class="footer-nav__list">
-							<li><a href="sustainability.html">CSR活動</a></li>
-							<li><a href="recruit.html">採用情報</a></li>
-							<li><a href="ir.html">投資家情報</a></li>
-						</ul>
-					</div>
-					<div class="footer-nav">
-						<h4 class="footer-nav__title">Group</h4>
-						<ul class="footer-nav__list">
-							<li>
-								<a href="business.html#group">加賀美リゾート</a>
-							</li>
-							<li>
-								<a href="business.html#group">加賀美損保</a>
-							</li>
-							<li>
-								<a href="business.html#group">加賀美水道局</a>
-							</li>
-							<li>
-								<a href="business.html#group">加賀美不動産</a>
-							</li>
-						</ul>
-					</div>
-					<div class="footer-nav">
-						<h4 class="footer-nav__title">About</h4>
-						<ul class="footer-nav__list">
-							<li>
-								<a href="manager.html#manager">担当者紹介</a>
-							</li>
-							<li>
-								<a href="manager.html#policy">サイトポリシー</a>
-							</li>
-						</ul>
-					</div>
-					<div class="footer-nav">
-						<h4 class="footer-nav__title">ROOM</h4>
-						<ul class="footer-nav__list">
-							<li><a href="enjoy.html">休憩室</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="footer-bottom">
-					<p class="footer-copyright">
-						&copy; Kagami Industrial (Unofficial Fan Site)
-					</p>
-					<p class="footer-disclaimer">
-						【免責事項】<br />
-						本サイトは、ANYCOLOR株式会社所属バーチャルライバー「加賀美ハヤト」様のファンによる非公式ファンサイトです。<br />
-						実在の人物・団体・企業とは一切関係ありません。<br />
-						掲載されている情報は、公式配信およびWiki等の情報を元にしたフィクションを含みます。
-					</p>
-				</div>
-			</div>
-		</footer>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <div class="site-logo" style="pointer-events: none">
+              <div class="site-logo__mark" style="width: 40px; height: 40px; flex-shrink: 0">
+                <img src="android-chrome-192x192.png" alt="KI Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: middle" />
+              </div>
+              <div class="site-logo__text">
+                <span class="site-logo__name-ja">加賀美インダストリアル</span>
+                <span class="site-logo__name-en">Kagami Industrial Inc.</span>
+              </div>
+            </div>
+            <p class="footer-brand__desc">
+              MATERIAL / HEAVY MACHINERY &amp; HOBBY / ENTERTAINMENT
+              <br />
+              鋼鉄の巨人も、掌のミニカーも。すべての情熱は等価である。
+            </p>
+          </div>
+          <div class="footer-nav">
+            <h4 class="footer-nav__title">Company</h4>
+            <ul class="footer-nav__list">
+              <li><a href="about.html">企業情報</a></li>
+              <li><a href="history.html">沿革</a></li>
+              <li><a href="business.html">事業紹介</a></li>
+              <li>
+                <a href="technology.html">技術・研究開発</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-nav">
+            <h4 class="footer-nav__title">Information</h4>
+            <ul class="footer-nav__list">
+              <li><a href="sustainability.html">CSR活動</a></li>
+              <li><a href="recruit.html">採用情報</a></li>
+              <li><a href="ir.html">投資家情報</a></li>
+            </ul>
+          </div>
+          <div class="footer-nav">
+            <h4 class="footer-nav__title">Group</h4>
+            <ul class="footer-nav__list">
+              <li>
+                <a href="business.html#group">加賀美リゾート</a>
+              </li>
+              <li>
+                <a href="business.html#group">加賀美損保</a>
+              </li>
+              <li>
+                <a href="business.html#group">加賀美水道局</a>
+              </li>
+              <li>
+                <a href="business.html#group">加賀美不動産</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-nav">
+            <h4 class="footer-nav__title">About</h4>
+            <ul class="footer-nav__list">
+              <li>
+                <a href="manager.html#manager">担当者紹介</a>
+              </li>
+              <li>
+                <a href="manager.html#policy">サイトポリシー</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-nav">
+            <h4 class="footer-nav__title">ROOM</h4>
+            <ul class="footer-nav__list">
+              <li><a href="enjoy.html">休憩室</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copyright">&copy; Kagami Industrial (Unofficial Fan Site)</p>
+          <p class="footer-disclaimer">
+            【免責事項】
+            <br />
+            本サイトは、ANYCOLOR株式会社所属バーチャルライバー「加賀美ハヤト」様のファンによる非公式ファンサイトです。
+            <br />
+            実在の人物・団体・企業とは一切関係ありません。
+            <br />
+            掲載されている情報は、公式配信およびWiki等の情報を元にしたフィクションを含みます。
+          </p>
+        </div>
+      </div>
+    </footer>
 
-		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-		<script src="js/auth.js"></script>
+    <script src="js/auth.js"></script>
 
-		<script src="js/main.js"></script>
-	</body>
+    <script src="js/main.js"></script>
+  </body>
 </html>
