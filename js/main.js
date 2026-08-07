@@ -53,7 +53,7 @@ document.addEventListener(
     try {
       const a = e.target && e.target.closest ? e.target.closest('a') : null;
       __lastTouchAnchor = a;
-    } catch (err) {
+    } catch {
       __lastTouchAnchor = null;
     }
   },
