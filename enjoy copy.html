@@ -1,216 +1,219 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>生搾りオレンジジュースゲーム</title>
     <style>
-        body {
-            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        #game-area {
-            background-color: #333;
-            width: 300px;
-            height: 500px;
-            margin: 0 auto;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-        /* オレンジ */
-        #orange {
-            font-size: 80px;
-            margin-top: 20px;
-            transition: transform 0.1s;
-        }
-        /* コップのエリア */
-        #dispenser {
-            position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 200px;
-            background-color: #eee;
-            border-radius: 10px 10px 20px 20px;
-            border: 4px solid #999;
-            overflow: hidden;
-        }
-        /* ジュース */
-        #juice {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 0%;
-            background-color: #ff9900;
-            transition: height 0.1s linear;
-        }
-        /* 隠すための扉 */
-        #blind-door {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #555;
-            transform: translateY(-100%);
-            transition: transform 0.5s ease-in-out;
-            border-bottom: 5px solid #ffcc00;
-            color: white;
-            font-weight: bold;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding-bottom: 10px;
-            box-sizing: border-box;
-        }
-        /* 操作ボタン */
-        #pour-btn {
-            margin-top: 20px;
-            padding: 15px 40px;
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            background-color: #ff6600;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 5px 0 #cc5200;
-            user-select: none; /* テキスト選択防止 */
-            -webkit-user-select: none;
-        }
-        #pour-btn:active {
-            transform: translateY(5px);
-            box-shadow: none;
-        }
-        /* 結果表示 */
-        #result-area {
-            margin-top: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        #rank {
-            color: #ff3300;
-            font-size: 30px;
-            margin-top: 10px;
-        }
+      body {
+        font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+        text-align: center;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      #game-area {
+        background-color: #333;
+        width: 300px;
+        height: 500px;
+        margin: 0 auto;
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+      /* オレンジ */
+      #orange {
+        font-size: 80px;
+        margin-top: 20px;
+        transition: transform 0.1s;
+      }
+      /* コップのエリア */
+      #dispenser {
+        position: absolute;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 200px;
+        background-color: #eee;
+        border-radius: 10px 10px 20px 20px;
+        border: 4px solid #999;
+        overflow: hidden;
+      }
+      /* ジュース */
+      #juice {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 0%;
+        background-color: #ff9900;
+        transition: height 0.1s linear;
+      }
+      /* 隠すための扉 */
+      #blind-door {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #555;
+        transform: translateY(-100%);
+        transition: transform 0.5s ease-in-out;
+        border-bottom: 5px solid #ffcc00;
+        color: white;
+        font-weight: bold;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 10px;
+        box-sizing: border-box;
+      }
+      /* 操作ボタン */
+      #pour-btn {
+        margin-top: 20px;
+        padding: 15px 40px;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        background-color: #ff6600;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 0 5px 0 #cc5200;
+        user-select: none; /* テキスト選択防止 */
+        -webkit-user-select: none;
+      }
+      #pour-btn:active {
+        transform: translateY(5px);
+        box-shadow: none;
+      }
+      /* 結果表示 */
+      #result-area {
+        margin-top: 20px;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      #rank {
+        color: #ff3300;
+        font-size: 30px;
+        margin-top: 10px;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <h1>限界まで絞れ！</h1>
-    <p>ボタンを長押ししてジュースを注ごう。<br>100.00%ピッタリを狙え！</p>
+    <p>
+      ボタンを長押ししてジュースを注ごう。
+      <br />
+      100.00%ピッタリを狙え！
+    </p>
 
     <div id="game-area">
-        <div id="orange">🍊</div>
-        <div id="dispenser">
-            <div id="juice"></div>
-            <div id="blind-door">見えません！</div>
-        </div>
+      <div id="orange">🍊</div>
+      <div id="dispenser">
+        <div id="juice"></div>
+        <div id="blind-door">見えません！</div>
+      </div>
     </div>
 
-    <button id="pour-btn" 
-            onmousedown="startPouring()" onmouseup="stopPouring()" onmouseleave="stopPouring()"
-            ontouchstart="startPouring(event)" ontouchend="stopPouring(event)">
-        押して絞る！
-    </button>
+    <button id="pour-btn" onmousedown="startPouring()" onmouseup="stopPouring()" onmouseleave="stopPouring()" ontouchstart="startPouring(event)" ontouchend="stopPouring(event)">押して絞る！</button>
 
     <div id="result-area">
-        <div>現在の量: <span id="percent-display">0.00</span>%</div>
-        <div id="rank"></div>
+      <div>
+        現在の量:
+        <span id="percent-display">0.00</span>
+        %
+      </div>
+      <div id="rank"></div>
     </div>
 
     <script>
-        let juiceAmount = 0;
-        let isPouring = false;
-        let timer;
-        const juiceElement = document.getElementById('juice');
-        const orangeElement = document.getElementById('orange');
-        const doorElement = document.getElementById('blind-door');
-        const displayElement = document.getElementById('percent-display');
-        const rankElement = document.getElementById('rank');
-        const btnElement = document.getElementById('pour-btn');
+      let juiceAmount = 0;
+      let isPouring = false;
+      let timer;
+      const juiceElement = document.getElementById('juice');
+      const orangeElement = document.getElementById('orange');
+      const doorElement = document.getElementById('blind-door');
+      const displayElement = document.getElementById('percent-display');
+      const rankElement = document.getElementById('rank');
+      const btnElement = document.getElementById('pour-btn');
 
-        // 注ぐスピード（この数値を調整すると難易度が変わります）
-        const pourSpeed = 0.85; 
+      // 注ぐスピード（この数値を調整すると難易度が変わります）
+      const pourSpeed = 0.85;
 
-        function startPouring(e) {
-            if (e) e.preventDefault(); // スマホでの画面スクロールなどを防ぐ
-            
-            // リセット処理
-            if (juiceAmount > 0 && !isPouring) {
-                juiceAmount = 0;
-                rankElement.innerText = '';
-                doorElement.style.transform = 'translateY(-100%)'; // 扉を開ける
-                btnElement.innerText = '押して絞る！';
-            }
+      function startPouring(e) {
+        if (e) e.preventDefault(); // スマホでの画面スクロールなどを防ぐ
 
-            isPouring = true;
-            timer = setInterval(() => {
-                juiceAmount += pourSpeed;
-                updateVisuals();
-            }, 30); // 30ミリ秒ごとに更新
+        // リセット処理
+        if (juiceAmount > 0 && !isPouring) {
+          juiceAmount = 0;
+          rankElement.innerText = '';
+          doorElement.style.transform = 'translateY(-100%)'; // 扉を開ける
+          btnElement.innerText = '押して絞る！';
         }
 
-        function stopPouring(e) {
-            if (e) e.preventDefault();
-            if (!isPouring) return;
-            
-            isPouring = false;
-            clearInterval(timer);
-            judgeResult();
-            btnElement.innerText = 'もう一度プレイ';
-            
-            // 結果発表時に扉を開ける
-            doorElement.style.transform = 'translateY(-100%)';
+        isPouring = true;
+        timer = setInterval(() => {
+          juiceAmount += pourSpeed;
+          updateVisuals();
+        }, 30); // 30ミリ秒ごとに更新
+      }
+
+      function stopPouring(e) {
+        if (e) e.preventDefault();
+        if (!isPouring) return;
+
+        isPouring = false;
+        clearInterval(timer);
+        judgeResult();
+        btnElement.innerText = 'もう一度プレイ';
+
+        // 結果発表時に扉を開ける
+        doorElement.style.transform = 'translateY(-100%)';
+      }
+
+      function updateVisuals() {
+        // 表示の更新（最大でも110%くらいで止める）
+        if (juiceAmount > 110) juiceAmount = 110;
+
+        displayElement.innerText = juiceAmount.toFixed(2);
+        juiceElement.style.height = Math.min(juiceAmount, 100) + '%'; // 100%以上はコップから溢れる表現にしても良い
+
+        // オレンジが絞られる（潰れる）アニメーション
+        // 押している間、少しずつ横長・縦短になる
+        const squeezeScale = 1 - juiceAmount * 0.005;
+        orangeElement.style.transform = `scale(${Math.max(squeezeScale, 0.5)}, ${Math.max(squeezeScale + 0.2, 0.5)})`;
+
+        // 60%を超えたら扉が閉まって見えなくなるギミック
+        if (juiceAmount > 60) {
+          doorElement.style.transform = 'translateY(0)';
+        }
+      }
+
+      function judgeResult() {
+        // 誤差を計算
+        const diff = Math.abs(100 - juiceAmount);
+        let rankText = '';
+
+        if (juiceAmount > 100) {
+          rankText = 'こぼれた！大惨事！😭';
+        } else if (diff === 0) {
+          rankText = '👑 神の感覚！ 100%ピッタリ！ 👑';
+        } else if (diff <= 1.0) {
+          rankText = '達人級！すばらしい！✨';
+        } else if (diff <= 5.0) {
+          rankText = 'プロの店員！👍';
+        } else if (diff <= 15.0) {
+          rankText = '見習いレベル🍊';
+        } else {
+          rankText = 'もっと練習が必要だね…';
         }
 
-        function updateVisuals() {
-            // 表示の更新（最大でも110%くらいで止める）
-            if (juiceAmount > 110) juiceAmount = 110;
-
-            displayElement.innerText = juiceAmount.toFixed(2);
-            juiceElement.style.height = Math.min(juiceAmount, 100) + '%'; // 100%以上はコップから溢れる表現にしても良い
-
-            // オレンジが絞られる（潰れる）アニメーション
-            // 押している間、少しずつ横長・縦短になる
-            const squeezeScale = 1 - (juiceAmount * 0.005);
-            orangeElement.style.transform = `scale(${Math.max(squeezeScale, 0.5)}, ${Math.max(squeezeScale + 0.2, 0.5)})`;
-
-            // 60%を超えたら扉が閉まって見えなくなるギミック
-            if (juiceAmount > 60) {
-                doorElement.style.transform = 'translateY(0)';
-            }
-        }
-
-        function judgeResult() {
-            // 誤差を計算
-            const diff = Math.abs(100 - juiceAmount);
-            let rankText = "";
-
-            if (juiceAmount > 100) {
-                rankText = "こぼれた！大惨事！😭";
-            } else if (diff === 0) {
-                rankText = "👑 神の感覚！ 100%ピッタリ！ 👑";
-            } else if (diff <= 1.00) {
-                rankText = "達人級！すばらしい！✨";
-            } else if (diff <= 5.00) {
-                rankText = "プロの店員！👍";
-            } else if (diff <= 15.00) {
-                rankText = "見習いレベル🍊";
-            } else {
-                rankText = "もっと練習が必要だね…";
-            }
-
-            rankElement.innerText = rankText;
-            orangeElement.style.transform = 'scale(1, 1)'; // オレンジを元の形に戻す
-        }
+        rankElement.innerText = rankText;
+        orangeElement.style.transform = 'scale(1, 1)'; // オレンジを元の形に戻す
+      }
     </script>
-</body>
+  </body>
 </html>

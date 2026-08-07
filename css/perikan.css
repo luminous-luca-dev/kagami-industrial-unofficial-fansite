@@ -1,70 +1,82 @@
 /* ミニゲーム全体の装飾 */
 .minigame-wrapper {
-    background: rgba(18, 44, 79, 0.8); /* 社長カラーのネイビー */
-    border: 1px solid rgba(200, 166, 94, 0.4);
-    padding: 2rem;
-    border-radius: 12px;
-    text-align: center;
-    max-width: 600px;
-    margin: 20px auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: rgba(18, 44, 79, 0.8); /* 社長カラーのネイビー */
+  border: 1px solid rgba(200, 166, 94, 0.4);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* ゲーム画面（コンテナ） */
 #game-screen {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 20px;
-    background: #0a192f;
-    border: 3px solid #C8A65E;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 5rem;
-    transition: all 0.3s ease;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px;
+  background: #0a192f;
+  border: 3px solid #c8a65e;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  transition: all 0.3s ease;
 }
 
 /* ボタンが選択された時の光る演出 */
 .btn-choice {
-    transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .btn-choice.selected {
-    background-color: #C8A65E !important;
-    color: #122C4F !important;
-    box-shadow: 0 0 15px #C8A65E;
-    transform: translateY(-2px);
+  background-color: #c8a65e !important;
+  color: #122c4f !important;
+  box-shadow: 0 0 15px #c8a65e;
+  transform: translateY(-2px);
 }
 
 /* 正解・不正解のフィードバックアニメーション */
 @keyframes pop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .feedback-animate {
-    animation: pop 0.3s ease-out;
+  animation: pop 0.3s ease-out;
 }
 
 /* ボタンが選択された時のスタイル（ID指定で確実に当てる） */
 #btn-select-left.selected,
 #btn-select-right.selected {
-    background-color: #C8A65E !important;
-    color: #122C4F !important;
-    box-shadow: 0 0 15px #C8A65E;
-    transform: translateY(-2px);
-    border-color: #C8A65E;
+  background-color: #c8a65e !important;
+  color: #122c4f !important;
+  box-shadow: 0 0 15px #c8a65e;
+  transform: translateY(-2px);
+  border-color: #c8a65e;
 }
 
 /* 決定ボタン（次の問題へ）のスタイル */
 #btn-next-round {
-    margin-bottom: 10px;
-    animation: fadeIn 0.3s ease;
+  margin-bottom: 10px;
+  animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
