@@ -1,645 +1,1286 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+	<head>
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-DYB1GGHVZ4"
+		></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
 
-<head>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYB1GGHVZ4"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
+			gtag('config', 'G-DYB1GGHVZ4');
+		</script>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>お遊び | 非公式 | 加賀美インダストリアル</title>
+		<meta
+			name="description"
+			content="加賀美インダストリアル非公式ファンサイトの運営者情報およびサイトポリシーについて。"
+		/>
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/components.css" />
+		<link rel="stylesheet" href="css/home.css" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="/site.webmanifest" />
+		<meta name="theme-color" content="#1B222C" />
+		<meta
+			property="og:title"
+			content="【非公式】加賀美インダストリアル ファンサイト"
+		/>
+		<meta
+			property="og:description"
+			content="加賀美ハヤト様の活動を応援する非公式ファンメイドサイトです。"
+		/>
+		<meta
+			property="og:image"
+			content="https://kagami-industrial-unofficial-fansite.pages.dev/android-chrome-192x192.png"
+		/>
 
-		gtag('config', 'G-DYB1GGHVZ4');
-	</script>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>お遊び | 非公式 | 加賀美インダストリアル</title>
-	<meta name="description" content="加賀美インダストリアル非公式ファンサイトの運営者情報およびサイトポリシーについて。">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/home.css">	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link rel="manifest" href="/site.webmanifest">
-	<meta name="theme-color" content="#1B222C">
-<meta property="og:title" content="【非公式】加賀美インダストリアル ファンサイト">
-    <meta property="og:description" content="加賀美ハヤト様の活動を応援する非公式ファンメイドサイトです。">
-    <meta property="og:image" content="https://kagami-industrial-unofficial-fansite.pages.dev/android-chrome-192x192.png">
-		
-	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-	
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/perikan.css">
-	<script src="js/perikan.js"></script>
-	<script src="js/ranking-display.js"></script>
-	<script src="js/orange-ranking-display.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-</head>
+		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<body>
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/perikan.css" />
+		<script src="js/perikan.js"></script>
+		<script src="js/ranking-display.js"></script>
+		<script src="js/orange-ranking-display.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+	</head>
 
-	<header class="site-header">
+	<body>
+		<header class="site-header">
+			<div class="container">
+				<a href="index.html" class="site-logo">
+					<div
+						class="site-logo__mark"
+						style="width: 40px; height: 40px; flex-shrink: 0"
+					>
+						<img
+							src="android-chrome-192x192.png"
+							alt="KI Logo"
+							style="
+								width: 100%;
+								height: 100%;
+								object-fit: contain;
+								vertical-align: middle;
+							"
+						/>
+					</div>
+					<div class="site-logo__text">
+						<div class="site-logo__title-row">
+							<span class="site-logo__name-ja"
+								>加賀美インダストリアル</span
+							>
+						</div>
+						<span class="site-logo__name-en"
+							>Kagami Industrial Inc.</span
+						>
+						<span class="site-logo__unofficial"
+							>非公式ファンサイト</span
+						>
+					</div>
+				</a>
+				<nav class="main-nav">
+					<ul class="main-nav__list">
+						<li class="main-nav__item">
+							<a href="index.html">Home</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="about.html">About</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="history.html">History</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="business.html">Business</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="technology.html">Technology</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="sustainability.html">CSR</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="recruit.html">Recruit</a>
+						</li>
+						<li class="main-nav__item"><a href="ir.html">IR</a></li>
+					</ul>
+				</nav>
+				<button class="hamburger" aria-label="メニュー">
+					<span></span><span></span><span></span>
+				</button>
+			</div>
+		</header>
+
+		<div class="mobile-nav-overlay">
+			<ul class="mobile-nav__list">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="about.html">About Us</a></li>
+				<li><a href="history.html">History</a></li>
+				<li><a href="business.html">Business</a></li>
+				<li><a href="technology.html">Technology</a></li>
+				<li><a href="sustainability.html">Sustainability</a></li>
+				<li><a href="recruit.html">Recruit</a></li>
+				<li><a href="ir.html">IR</a></li>
+			</ul>
+		</div>
+
+		<div class="page-header" style="margin-top: var(--header-height)">
+			<div class="geo-line geo-line--1"></div>
+			<div class="geo-line geo-line--2"></div>
+			<div class="geo-line geo-line--3"></div>
+			<div class="page-header__content">
+				<p class="page-header__label">ROOM</p>
+				<h1 class="page-header__title">休憩室</h1>
+				<p class="page-header__subtitle">Break room</p>
+			</div>
+		</div>
+
 		<div class="container">
-			<a href="index.html" class="site-logo">
-				<div class="site-logo__mark" style="width: 40px; height: 40px; flex-shrink: 0;">
-                    <img src="android-chrome-192x192.png" alt="KI Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: middle;">
-                </div>
-				<div class="site-logo__text">
-                <div class="site-logo__title-row">
-                    <span class="site-logo__name-ja">加賀美インダストリアル</span>
-                </div>
-				<span class="site-logo__name-en">Kagami Industrial Inc.</span>
-				<span class="site-logo__unofficial">非公式ファンサイト</span>
-            </div>
-			</a>
-			<nav class="main-nav">
-				<ul class="main-nav__list">
-					<li class="main-nav__item"><a href="index.html">Home</a></li>
-					<li class="main-nav__item"><a href="about.html">About</a></li>
-					<li class="main-nav__item"><a href="history.html">History</a></li>
-					<li class="main-nav__item"><a href="business.html">Business</a></li>
-					<li class="main-nav__item"><a href="technology.html">Technology</a></li>
-					<li class="main-nav__item"><a href="sustainability.html">CSR</a></li>
-					<li class="main-nav__item"><a href="recruit.html">Recruit</a></li>
-					<li class="main-nav__item"><a href="ir.html">IR</a></li>
-				</ul>
-			</nav>
-			<button class="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
+			<div class="breadcrumb">
+				<a href="index.html">HOME</a><span>›</span><span>ROOM</span>
+			</div>
 		</div>
-	</header>
 
-
-
-	<div class="mobile-nav-overlay">
-		<ul class="mobile-nav__list">
-			<li><a href="index.html">Home</a></li>
-			<li><a href="about.html">About Us</a></li>
-			<li><a href="history.html">History</a></li>
-			<li><a href="business.html">Business</a></li>
-			<li><a href="technology.html">Technology</a></li>
-			<li><a href="sustainability.html">Sustainability</a></li>
-			<li><a href="recruit.html">Recruit</a></li>
-			<li><a href="ir.html">IR</a></li>
-		</ul>
-	</div>
-
-	<div class="page-header" style="margin-top: var(--header-height);">
-		<div class="geo-line geo-line--1"></div>
-		<div class="geo-line geo-line--2"></div>
-		<div class="geo-line geo-line--3"></div>
-		<div class="page-header__content">
-			<p class="page-header__label">ROOM</p>
-			<h1 class="page-header__title">休憩室</h1>
-			<p class="page-header__subtitle">Break room</p>
-		</div>
-	</div>
-
-	<div class="container">
-		<div class="breadcrumb">
-			<a href="index.html">HOME</a><span>›</span><span>ROOM</span>
-		</div>
-	</div>
-	
-	<section class="section section--dark" id="mini-game">
-    <div class="container">
-        <div class="minigame-wrapper" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(200, 166, 94, 0.2); padding: var(--space-xl); border-radius: 8px; text-align: center; max-width: 600px; margin: 0 auto;">
-            
-            <span class="section-label" style="color: var(--color-accent-light);">MINI GAME 01</span>
-            <h2 style="color: var(--color-white); margin-bottom: var(--space-sm);">シュレディンガーのペリカン</h2>
-            <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: var(--space-lg);">
-                コンテナの中に隠されたペリカンが「右」「左」どちらを向いているか予測してください。<br>
-                連続正解数に応じて、あなたの社内階級が上昇します。
-            </p>
-			<p style="color: rgba(255,255,255,0.5); font-size: 0.6rem; margin-bottom: var(--space-lg);">
-                ※このゲームは1/256の壁を越える、無慈悲な運試し（クソゲー）です。
-            </p>
-
-            <div class="minigame-stats" style="display: flex; justify-content: space-around; margin-bottom: var(--space-md); font-weight: bold; color: var(--color-accent);">
-                <div>SCORE: <span id="game-score" style="font-size: 1.5rem; color: #fff;">0</span></div>
-                <div>CLASS: <span id="game-rank" style="font-size: 1.5rem; color: #fff;">アルバイト級</span></div>
-            </div>
-
-            <div id="game-screen" style="width: 200px; height: 200px; margin: 0 auto var(--space-md); background: #122C4F; border: 2px solid var(--color-border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4rem;">
-                📦 </div>
-
-            <div id="game-controls">
-                <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: var(--space-md);">
-                    <button class="btn btn--outline" id="btn-select-left" style="flex: 1; max-width: 120px;">👈 左</button>
-                    <button class="btn btn--outline" id="btn-select-right" style="flex: 1; max-width: 120px;">右 👉</button>
-                </div>
-                <button class="btn btn--accent" id="btn-next" style="display: none; width: 100%; max-width: 250px; margin: 0 auto;">次に進む</button>
-                <div id="game-feedback" style="margin-top: 15px; font-weight: bold; height: 24px;"></div>
-            </div>
-
-            <div id="game-over-screen" style="display: none; margin-top: var(--space-md);">
-                <h3 style="color: #ff4a4a; margin-bottom: 10px;">ペリカン　逃亡（不正解）</h3>
-                <p style="color: #fff; margin-bottom: var(--space-md);">あなたの最終階級は「<span id="final-rank" style="color: var(--color-accent); font-weight:bold;"></span>」です。</p>
-                
-                <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-					<button class="btn btn--outline" id="btn-retry" style="width: 100%; max-width: 250px;">🔄 もう一度挑戦する</button>
-					<button class="btn btn--accent" id="btn-ranking" style="width: 100%; max-width: 250px;">🏆 ランキングに登録する</button>
-					<p style="font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 15px; text-align: left; line-height: 1.5;">
-						※【ランキング登録に関する注意事項】<br>
-						・公序良俗に反する名前、特定の個人や団体を誹謗中傷する名前での登録は固く禁じます。<br>
-						・管理者（当サイト運営者）の判断により、不適切とみなされたデータは予告なく削除する場合があります。<br>
-						・本機能はファンコミュニティの親睦を目的としたものであり、ANYCOLOR株式会社様とは一切関係ありません。
+		<section class="section section--dark" id="mini-game">
+			<div class="container">
+				<div
+					class="minigame-wrapper"
+					style="
+						background: rgba(255, 255, 255, 0.05);
+						border: 1px solid rgba(200, 166, 94, 0.2);
+						padding: var(--space-xl);
+						border-radius: 8px;
+						text-align: center;
+						max-width: 600px;
+						margin: 0 auto;
+					"
+				>
+					<span
+						class="section-label"
+						style="color: var(--color-accent-light)"
+						>MINI GAME 01</span
+					>
+					<h2
+						style="
+							color: var(--color-white);
+							margin-bottom: var(--space-sm);
+						"
+					>
+						シュレディンガーのペリカン
+					</h2>
+					<p
+						style="
+							color: rgba(255, 255, 255, 0.5);
+							font-size: 0.9rem;
+							margin-bottom: var(--space-lg);
+						"
+					>
+						コンテナの中に隠されたペリカンが「右」「左」どちらを向いているか予測してください。<br />
+						連続正解数に応じて、あなたの社内階級が上昇します。
 					</p>
-				</div>
-            </div>
-			<p style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; margin-bottom: var(--space-lg);">
-                素材提供：フリーペンシル（<a href="https://iconbu.com/">https://iconbu.com</a>）
-            </p>
-        </div>
-		
-    </div>
-</section>
+					<p
+						style="
+							color: rgba(255, 255, 255, 0.5);
+							font-size: 0.6rem;
+							margin-bottom: var(--space-lg);
+						"
+					>
+						※このゲームは1/256の壁を越える、無慈悲な運試し（クソゲー）です。
+					</p>
 
-
-<section class="section section--dark" id="online-ranking-board">
-    <div class="container">
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(200, 166, 94, 0.15); padding: var(--space-lg); border-radius: 4px; max-width: 500px; margin: 0 auto;">
-            
-            <div style="text-align: center; margin-bottom: var(--space-md);">
-                <span class="section-label" style="color: var(--color-accent-light); font-size: 0.7rem; letter-spacing: 0.2em;">CONFIDENTIAL</span>
-                <h3 style="color: var(--color-white); font-size: 1.2rem; margin-top: 5px;">名誉ペリカン社員　名簿</h3>
-            </div>
-
-            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; color: #fff;">
-                <thead>
-                    <tr style="border-bottom: 1px solid rgba(200, 166, 94, 0.3); color: var(--color-accent);">
-                        <th style="padding: 10px 5px; text-align: left; font-weight: normal;">RANK</th>
-                        <th style="padding: 10px 5px; text-align: left; font-weight: normal;">NAME / CLASS</th>
-                        <th style="padding: 10px 5px; text-align: right; font-weight: normal;">SCORE</th>
-                    </tr>
-                </thead>
-                <tbody id="global-ranking-body">
-                    <tr>
-                        <td colspan="3" style="padding: 20px; text-align: center; color: rgba(255,255,255,0.3);">名簿を照会中...</td>
-                    </tr>
-                </tbody>
-			</table>
-        </div>
-    </div>
-
-	<p style="font-size: 0.65rem; color: rgba(255,255,255,0.3); margin-top: 10px; text-align: center;">
-		※不適切な名称は予告なく削除されます。また、本名簿は一定期間ごとにリセットされる場合があります。
-	</p>
-</section>
-
-<section class="section section--dark" id="orange-game">
-    <div class="container">
-        <div class="minigame-wrapper" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(200, 166, 94, 0.2); padding: var(--space-xl); border-radius: 8px; text-align: center; max-width: 600px; margin: 40px auto;">
-            
-            <span class="section-label" style="color: var(--color-accent-light);">MINI GAME 02</span>
-            <h2 style="color: var(--color-white); margin-bottom: var(--space-sm);">オレンジ生搾り</h2>
-            <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: var(--space-lg);">
-                オレンジを限界まで絞り、社長のコップを満たしてください。<br>
-                100.00%に近いほど、あなたの「社内事務階級」が上昇します。
-            </p>
-			<p style="color: rgba(255, 255, 255, 0.5); font-size: 0.7rem; margin-top: var(--space-lg);">
-                ※ 100.01%を超えると、コップは社長により破壊されます。<br>　
-            </p>
-
-            <div class="minigame-stats" style="display: flex; justify-content: space-around; margin-bottom: var(--space-md); font-weight: bold; color: var(--color-accent);">
-                <div>AMOUNT: <span id="juice-percent" style="font-size: 1.5rem; color: #fff;">0.00</span>%</div>
-                <div>CLASS: <span id="orange-rank" style="font-size: 1.5rem; color: #fff;">バイト級</span></div>
-            </div>
-
-            <div id="orange-game-screen" style="width: 200px; height: 260px; margin: 0 auto var(--space-md); background: #122C4F; border: 2px solid var(--color-border); border-radius: 8px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 20px 0;">
-                
-                <div id="target-orange" style="font-size: 4rem; transition: transform 0.1s;">🍊</div>
-
-                <div id="cup-container" style="width: 80px; height: 120px; border: 3px solid rgba(255,255,255,0.3); border-top: none; border-radius: 0 0 10px 10px; position: relative; overflow: hidden; background: rgba(255,255,255,0.05);">
-                    <div id="juice-fill" style="position: absolute; bottom: 0; width: 100%; height: 0%; background: #FF9F1C; box-shadow: 0 0 15px #FF9F1C;"></div>
-                    <div id="orange-shutter" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #122C4F; transform: translateY(-100%); transition: transform 0.4s ease; border-bottom: 2px solid var(--color-accent); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--color-accent);">CLOSED</div>
-                </div>
-            </div>
-
-            <div id="orange-controls">
-                <button class="btn btn--accent" id="btn-orange-pour" style="width: 100%; max-width: 250px; margin: 0 auto; user-select: none;">
-                    手で搾り出す（長押し）
-                </button>
-                <div id="orange-feedback" style="margin-top: 15px; font-weight: bold; height: 24px; color: #ffffff;"></div>
-                <button class="btn btn--outline" id="btn-orange-retry" style="display: none; width: 100%; max-width: 250px; margin: 10px auto 0;">もう一度挑戦</button>
-				<button class="btn btn--accent" id="btn-orange-ranking" style="display: none; width: 100%; max-width: 250px;">🏆 ランキングに登録する</button>
-            </div>
-            <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; margin-bottom: var(--space-lg);">
-                Inspired by （<a href="https://pheniki-games.com/girigirimilk/">ギリギリまで牛乳を注ぐゲーム</a>）
-            </p>
-        </div>
-    </div>
-</section>
-
-<script>
-(function() {
-	document.addEventListener('DOMContentLoaded', () => {
-	const _supabase = window._supabase;
-    let amount = 0;
-    let isActive = false;
-    let timer;
-    
-    const juiceFill = document.getElementById('juice-fill');
-    const percentDisp = document.getElementById('juice-percent');
-    const shutter = document.getElementById('orange-shutter');
-    const orange = document.getElementById('target-orange');
-    const rankDisp = document.getElementById('orange-rank');
-    const pourBtn = document.getElementById('btn-orange-pour');
-    const retryBtn = document.getElementById('btn-orange-retry');
-    const feedback = document.getElementById('orange-feedback');
-
-    const pourSpeed = 0.78; // スピード微調整
-
-    function startAction(e) {
-        // スマホでの画面スクロール等の誤作動を防ぐ
-        if (e && e.cancelable) e.preventDefault();
-        if (amount > 0 && !isActive) return; // 終了後の誤作動防止
-
-        isActive = true;
-        feedback.innerText = "";
-        retryBtn.style.display = "none";
-        
-        timer = setInterval(() => {
-            amount += pourSpeed;
-            if (amount > 120) stopAction(); // 限界突破
-            updateUI();
-        }, 30);
-    }
-
-    function stopAction(e) {
-        if (e && e.cancelable) e.preventDefault();
-        if (!isActive) return;
-
-        isActive = false;
-        clearInterval(timer);
-        shutter.style.transform = 'translateY(-100%)'; // 扉を開ける
-        judgeResult();
-        pourBtn.style.display = "none";
-        retryBtn.style.display = "inline-block";
-    }
-
-    function updateUI() {
-        percentDisp.innerText = amount.toFixed(2);
-        juiceFill.style.height = Math.min(amount, 100) + '%';
-        
-        // オレンジの変形
-        const squeeze = 1 - (amount * 0.006);
-        orange.style.transform = `scale(${Math.max(squeeze, 0.4)}, ${Math.max(squeeze + 0.2, 0.5)})`;
-        
-        // 【追加】70%を超えたらスコア表示をフェードアウト
-        if (amount >= 70) {
-            // transitionを効かせるためにstyleで制御
-            percentDisp.parentElement.style.opacity = "0";
-            percentDisp.parentElement.style.transition = "opacity 0.5s ease";
-        }
-
-        // 扉の開閉
-        if (amount > 65) {
-            shutter.style.transform = 'translateY(0)';
-        }
-    }
-
-    function judgeResult() {
-        // 【追加】スコアを再表示させる
-        percentDisp.parentElement.style.opacity = "1";
-
-        // 【追加】リザルトが出たらランキングボタンを表示
-        document.getElementById('btn-orange-ranking').style.display = "inline-block";
-    
-        pourBtn.style.display = "none";
-        retryBtn.style.display = "inline-block";
-
-        const diff = Math.abs(100 - amount);
-        let rank = "";
-        let msg = "";
-
-        if (amount > 100) {
-            rank = "始末書級";
-            msg = "溢れました。「あらららら...」ﾊﾞｷｯ";
-        } else if (diff <= 0.16) { 
-			amount = 100.00;
-			percentDisp.innerText = "100.00";
-			percentDisp.style.color = "#FFD700"; // 金色にする
-            percentDisp.style.fontWeight = "bold";
-            rank = "ねむねむにゃんこ級";
-            msg = "奇跡の100.00%！！「夜遊びしてくる！」";
-            
-            // --- 🚨修正：存在しないIDによるエラー（ペリカンが死ぬ原因）を回避 ---
-            const gameContainer = document.getElementById('orange-game-screen'); 
-            if (gameContainer) {
-                gameContainer.classList.add('shake-animation'); // CSSで定義
-            }
-
-            // --- 演出：花吹雪を飛ばす ---
-            // エラーにならないよう typeof で存在チェックを追加
-            if (typeof confetti !== 'undefined') {
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#FFD700', '#FFA500', '#FFFFFF'] // 金・オレンジ・白
-                });
-            }
-        } else if (diff <= 1.0) {
-            rank = "社長の右腕級";
-            msg = "表面張力を感じます！「これすごくないですか!?」";
-        } else if (diff <= 5.0) {
-            rank = "社長秘書級";
-            msg = "素晴らしい！「よくこぼれませんでしたね!?」";
-        } else if (diff <= 10.0) {
-            rank = "秘書級";
-            msg = "絶妙な力加減です。「さすがですね！」";
-        } else if (diff <= 15.0) {
-            rank = "ベテラン事務員級";
-            msg = "いい握力です。「お！ありがとうございます！」";
-        } else if (diff <= 30.0) {
-            rank = "事務員級";
-            msg = "GOOD。「いただきます！」";
-        } else {
-            rank = "バイト級";
-            msg = "より強欲にいきましょう。「少なくないですか？」";
-        }
-
-        rankDisp.innerText = rank;
-        feedback.innerText = msg;
-
-        // ★【追加：リザルト確定時に自動保存を実行】
-        // amountの値を小数点第2位までの数値にして、確定したrankと一緒に送る
-        const finalScore = parseFloat(amount.toFixed(2));
-        saveOrangeGameScore(finalScore, rank);
-    }
-
-    // --- Supabaseにオレンジミニゲームのハイスコアを自動保存する関数 ---
-    async function saveOrangeGameScore(finalScore, finalRank) {
-        const savedPlayerId = localStorage.getItem('kagami_employee_id');
-        
-        if (!savedPlayerId) {
-            console.log('orange: 未ログイン状態のため、スコアの自動保存をスキップしました。');
-            return;
-        }
-
-        const _supabase = window._supabase;
-        if (!_supabase) {
-            console.error('orange: Supabaseクライアントが初期化されていないため、保存できません。');
-            return;
-        }
-
-        // 今回のスコアが100を超えていたら（溢れていたら）、ハイスコア更新の対象外にする
-        if (finalScore > 100) {
-            console.log('orange: 100%を超えて溢れたため、ハイスコア更新の対象外です。');
-            return;
-        }
-
-        try {
-            // 1. 現在のDBに保存されているスコアを取得する
-            const { data: currentProfile, error: fetchError } = await _supabase
-                .from('profiles')
-                .select('orange_score')
-                .eq('player_id', savedPlayerId)
-                .single();
-
-            if (fetchError) {
-                console.error('orange: 現在のスコア取得に失敗しました:', fetchError);
-                return;
-            }
-
-            const dbScore = currentProfile && currentProfile.orange_score ? currentProfile.orange_score : 0;
-
-            // 2. 今回のスコアが、過去のハイスコアより高い場合のみ更新する
-            if (finalScore > dbScore) {
-                const { error: updateError } = await _supabase
-                    .from('profiles')
-                    .update({ 
-                        orange_score: finalScore,
-                        orange_rank: finalRank
-                    })
-                    .eq('player_id', savedPlayerId);
-
-                if (updateError) {
-                    console.error('orange: 社員ステータスの更新に失敗しました:', updateError);
-                } else {
-                    console.log(`orange: ハイスコア更新！ (${dbScore}% -> ${finalScore}%)`);
-                }
-            } else {
-                console.log(`orange: 今回のスコア(${finalScore}%)はハイスコア(${dbScore}%)以下のため、保存をスキップしました。`);
-            }
-        } catch (err) {
-            console.error('orange: スコア保存中に通信例外が発生しました:', err);
-        }
-    }
-
-    function resetGame(e) {
-        if (e && e.cancelable) e.preventDefault();
-        amount = 0;
-        isActive = false;
-
-        // 【追加】リセット時はランキングボタンを隠す
-        document.getElementById('btn-orange-ranking').style.display = "none";
-    
-        pourBtn.style.display = "inline-block";
-        retryBtn.style.display = "none";
-        
-        // 【追加】透明度をリセット
-        percentDisp.parentElement.style.opacity = "1";
-        percentDisp.parentElement.style.transition = "none";
-        percentDisp.innerText = "0.00";
-        juiceFill.style.height = "0%";
-        orange.style.transform = "scale(1)";
-        shutter.style.transform = 'translateY(-100%)';
-        rankDisp.innerText = "バイト級";
-        feedback.innerText = "";
-        pourBtn.style.display = "inline-block";
-        retryBtn.style.display = "none";
-    }
-
-    // --- 🚨修正：スマホイベント対応強化（もう一度ボタンが押せない原因を解消） ---
-    const isTouch = 'ontouchstart' in window;
-
-    pourBtn.addEventListener('mousedown', startAction);
-    pourBtn.addEventListener('touchstart', startAction);
-    window.addEventListener('mouseup', stopAction);
-    window.addEventListener('touchend', stopAction);
-    
-    // リトライボタンにタッチイベントを追加
-    retryBtn.addEventListener('click', resetGame);
-    if (isTouch) retryBtn.addEventListener('touchstart', resetGame);
-
-    // ランキング登録ボタンにタッチイベントを追加
-    const rankingBtn = document.getElementById('btn-orange-ranking');
-    const rankingAction = async (e) => {
-        if (e && e.cancelable) e.preventDefault();
-        try {
-            if (amount === 0) {
-                alert("オレンジを絞ってから登録してください！");
-                return;
-            }
-
-            const NG_WORDS = ["死ね", "馬鹿", "ハゲ", "カス"]; 
-            const inputName = prompt("ランキングに登録する名前を10文字以内で入力してください:", "名無し社員");
-            
-            // 【重要】スマホでのキャンセル・空欄対策
-            if (inputName === null) return; 
-            const playerName = inputName.trim();
-            if (playerName === "") return;
-
-            // バリデーション
-            if (NG_WORDS.some(word => playerName.includes(word))) {
-                alert("不適切な表現が含まれているため、登録できません。");
-                return;
-            }
-            if (playerName.length > 10) {
-                alert("社内規定により、氏名は10文字以内でお願いします。");
-                return;
-            }
-
-            // --- 1. データベースへ保存 ---
-            const finalScore = parseFloat(amount.toFixed(2));
-            const currentRank = rankDisp.innerText;
-
-            const { error: insertError } = await _supabase
-                .from('orange-ranking')
-                .insert([{ name: playerName, score: finalScore, rank: currentRank }]);
-
-            if (insertError) {
-                console.error('保存エラー:', insertError);
-                alert('登録に失敗しました。');
-                return;
-            }
-
-            // --- 2. 最新ランキングを取得 ---
-            const { data: topPlayers, error: fetchError } = await _supabase
-                .from('orange-ranking')
-                .select('*')
-                .lte('score', 100)
-                .order('score', { ascending: false })
-                .limit(10);
-
-            if (fetchError) {
-                alert('ランキングの取得に失敗しました。');
-            } else {
-                let rankingTable = "🏆 【オンライン TOP 10】\n";
-                topPlayers.forEach((entry, index) => {
-                    rankingTable += `${index + 1}位: ${entry.name} - ${entry.score}% (${entry.rank})\n`;
-                });
-                // スマホのキーボードが閉じるのを待つために少しだけ遅延させる
-                setTimeout(() => { alert(rankingTable); }, 200);
-            }
-
-        } catch (err) {
-            console.error('致命的なエラー:', err);
-            alert('通信エラーが発生しました。');
-        }
-    };
-
-    rankingBtn.addEventListener('click', rankingAction);
-    if (isTouch) rankingBtn.addEventListener('touchstart', rankingAction);
-	});
-})();
-</script>
-
-<section class="section section--dark" id="online-orange-ranking-board">
-    <div class="container">
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(200, 166, 94, 0.15); padding: var(--space-lg); border-radius: 4px; max-width: 500px; margin: 0 auto;">
-            
-            <div style="text-align: center; margin-bottom: var(--space-md);">
-                <span class="section-label" style="color: var(--color-accent-light); font-size: 0.7rem; letter-spacing: 0.2em;">CONFIDENTIAL</span>
-                <h3 style="color: var(--color-white); font-size: 1.2rem; margin-top: 5px;">名誉生搾り社員　名簿</h3>
-            </div>
-
-            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; color: #fff;">
-                <thead>
-                    <tr style="border-bottom: 1px solid rgba(200, 166, 94, 0.3); color: var(--color-accent);">
-                        <th style="padding: 10px 5px; text-align: left; font-weight: normal;">RANK</th>
-                        <th style="padding: 10px 5px; text-align: left; font-weight: normal;">NAME / CLASS</th>
-                        <th style="padding: 10px 5px; text-align: right; font-weight: normal;">SCORE</th>
-                    </tr>
-                </thead>
-                <tbody id="global-orange-ranking-body">
-                    <tr>
-                        <td colspan="3" style="padding: 20px; text-align: center; color: rgba(255,255,255,0.3);">名簿を照会中...</td>
-                    </tr>
-                </tbody>
-			</table>
-        </div>
-    </div>
-
-	<p style="font-size: 0.65rem; color: rgba(255,255,255,0.3); margin-top: 10px; text-align: center;">
-		※不適切な名称は予告なく削除されます。また、本名簿は一定期間ごとにリセットされる場合があります。
-	</p>
-</section>
-
-	<footer class="site-footer">
-		<div class="container">
-			<div class="footer-main">
-				<div class="footer-brand">
-					<div class="site-logo" style="pointer-events: none;">
-						<div class="site-logo__mark" style="width: 40px; height: 40px; flex-shrink: 0;">
-                    <img src="android-chrome-192x192.png" alt="KI Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: middle;">
-                </div>
-						<div class="site-logo__text">
-							<span class="site-logo__name-ja">加賀美インダストリアル</span>
-							<span class="site-logo__name-en">Kagami Industrial Inc.</span>
+					<div
+						class="minigame-stats"
+						style="
+							display: flex;
+							justify-content: space-around;
+							margin-bottom: var(--space-md);
+							font-weight: bold;
+							color: var(--color-accent);
+						"
+					>
+						<div>
+							SCORE:
+							<span
+								id="game-score"
+								style="font-size: 1.5rem; color: #fff"
+								>0</span
+							>
+						</div>
+						<div>
+							CLASS:
+							<span
+								id="game-rank"
+								style="font-size: 1.5rem; color: #fff"
+								>アルバイト級</span
+							>
 						</div>
 					</div>
-					<p class="footer-brand__desc">MATERIAL / HEAVY MACHINERY &amp; HOBBY / ENTERTAINMENT</p>
-				</div>
-				<div class="footer-nav">
-					<h4 class="footer-nav__title">Company</h4>
-					<ul class="footer-nav__list">
-						<li><a href="about.html">企業情報</a></li>
-						<li><a href="history.html">沿革</a></li>
-						<li><a href="business.html">事業紹介</a></li>
-						<li><a href="technology.html">技術・研究開発</a></li>
-					</ul>
-				</div>
-				<div class="footer-nav">
-					<h4 class="footer-nav__title">Information</h4>
-					<ul class="footer-nav__list">
-						<li><a href="sustainability.html">CSR活動</a></li>
-						<li><a href="recruit.html">採用情報</a></li>
-						<li><a href="ir.html">投資家情報</a></li>
-					</ul>
-				</div>
-				<div class="footer-nav">
-					<h4 class="footer-nav__title">Group</h4>
-					<ul class="footer-nav__list">
-						<li><a href="business.html#group">加賀美リゾート</a></li>
-						<li><a href="business.html#group">加賀美損保</a></li>
-						<li><a href="business.html#group">加賀美水道局</a></li>
-						<li><a href="business.html#group">加賀美不動産</a></li>
-					</ul>
-				</div>
-				<div class="footer-nav">
-					<h4 class="footer-nav__title">About</h4>
-					<ul class="footer-nav__list">
-						<li><a href="manager.html#manager">担当者紹介</a></li>
-						<li><a href="manager.html#policy">サイトポリシー</a></li>
-					</ul>
-				</div>
 
-				<div class="footer-nav">
-					<h4 class="footer-nav__title">ROOM</h4>
-					<ul class="footer-nav__list">
-						<li><a href="enjoy.html">休憩室</a></li>
-					</ul>
-				</div>
+					<div
+						id="game-screen"
+						style="
+							width: 200px;
+							height: 200px;
+							margin: 0 auto var(--space-md);
+							background: #122c4f;
+							border: 2px solid var(--color-border);
+							border-radius: 8px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							font-size: 4rem;
+						"
+					>
+						📦
+					</div>
 
+					<div id="game-controls">
+						<div
+							style="
+								display: flex;
+								gap: 10px;
+								justify-content: center;
+								margin-bottom: var(--space-md);
+							"
+						>
+							<button
+								class="btn btn--outline"
+								id="btn-select-left"
+								style="flex: 1; max-width: 120px"
+							>
+								👈 左
+							</button>
+							<button
+								class="btn btn--outline"
+								id="btn-select-right"
+								style="flex: 1; max-width: 120px"
+							>
+								右 👉
+							</button>
+						</div>
+						<button
+							class="btn btn--accent"
+							id="btn-next"
+							style="
+								display: none;
+								width: 100%;
+								max-width: 250px;
+								margin: 0 auto;
+							"
+						>
+							次に進む
+						</button>
+						<div
+							id="game-feedback"
+							style="
+								margin-top: 15px;
+								font-weight: bold;
+								height: 24px;
+							"
+						></div>
+					</div>
+
+					<div
+						id="game-over-screen"
+						style="display: none; margin-top: var(--space-md)"
+					>
+						<h3 style="color: #ff4a4a; margin-bottom: 10px">
+							ペリカン　逃亡（不正解）
+						</h3>
+						<p style="color: #fff; margin-bottom: var(--space-md)">
+							あなたの最終階級は「<span
+								id="final-rank"
+								style="
+									color: var(--color-accent);
+									font-weight: bold;
+								"
+							></span
+							>」です。
+						</p>
+
+						<div
+							style="
+								display: flex;
+								flex-direction: column;
+								gap: 10px;
+								align-items: center;
+							"
+						>
+							<button
+								class="btn btn--outline"
+								id="btn-retry"
+								style="width: 100%; max-width: 250px"
+							>
+								🔄 もう一度挑戦する
+							</button>
+							<button
+								class="btn btn--accent"
+								id="btn-ranking"
+								style="width: 100%; max-width: 250px"
+							>
+								🏆 ランキングに登録する
+							</button>
+							<p
+								style="
+									font-size: 0.7rem;
+									color: rgba(255, 255, 255, 0.4);
+									margin-top: 15px;
+									text-align: left;
+									line-height: 1.5;
+								"
+							>
+								※【ランキング登録に関する注意事項】<br />
+								・公序良俗に反する名前、特定の個人や団体を誹謗中傷する名前での登録は固く禁じます。<br />
+								・管理者（当サイト運営者）の判断により、不適切とみなされたデータは予告なく削除する場合があります。<br />
+								・本機能はファンコミュニティの親睦を目的としたものであり、ANYCOLOR株式会社様とは一切関係ありません。
+							</p>
+						</div>
+					</div>
+					<p
+						style="
+							color: rgba(255, 255, 255, 0.5);
+							font-size: 0.9rem;
+							margin-bottom: var(--space-lg);
+						"
+					>
+						素材提供：フリーペンシル（<a href="https://iconbu.com/"
+							>https://iconbu.com</a
+						>）
+					</p>
+				</div>
 			</div>
-			<div class="footer-bottom">
-				<p class="footer-copyright">&copy; Kagami Industrial (Unofficial Fan Site)</p>
-				<p class="footer-disclaimer">
-					【免責事項】本サイトは、ANYCOLOR株式会社所属バーチャルライバー「加賀美ハヤト」様のファンによる非公式ファンサイトです。実在の人物・団体・企業とは一切関係ありません。掲載されている情報は、公式配信およびWiki等の情報を元にしたフィクションを含みます。
-				</p>
+		</section>
+
+		<section class="section section--dark" id="online-ranking-board">
+			<div class="container">
+				<div
+					style="
+						background: rgba(255, 255, 255, 0.03);
+						border: 1px solid rgba(200, 166, 94, 0.15);
+						padding: var(--space-lg);
+						border-radius: 4px;
+						max-width: 500px;
+						margin: 0 auto;
+					"
+				>
+					<div
+						style="
+							text-align: center;
+							margin-bottom: var(--space-md);
+						"
+					>
+						<span
+							class="section-label"
+							style="
+								color: var(--color-accent-light);
+								font-size: 0.7rem;
+								letter-spacing: 0.2em;
+							"
+							>CONFIDENTIAL</span
+						>
+						<h3
+							style="
+								color: var(--color-white);
+								font-size: 1.2rem;
+								margin-top: 5px;
+							"
+						>
+							名誉ペリカン社員　名簿
+						</h3>
+					</div>
+
+					<table
+						style="
+							width: 100%;
+							border-collapse: collapse;
+							font-size: 0.85rem;
+							color: #fff;
+						"
+					>
+						<thead>
+							<tr
+								style="
+									border-bottom: 1px solid
+										rgba(200, 166, 94, 0.3);
+									color: var(--color-accent);
+								"
+							>
+								<th
+									style="
+										padding: 10px 5px;
+										text-align: left;
+										font-weight: normal;
+									"
+								>
+									RANK
+								</th>
+								<th
+									style="
+										padding: 10px 5px;
+										text-align: left;
+										font-weight: normal;
+									"
+								>
+									NAME / CLASS
+								</th>
+								<th
+									style="
+										padding: 10px 5px;
+										text-align: right;
+										font-weight: normal;
+									"
+								>
+									SCORE
+								</th>
+							</tr>
+						</thead>
+						<tbody id="global-ranking-body">
+							<tr>
+								<td
+									colspan="3"
+									style="
+										padding: 20px;
+										text-align: center;
+										color: rgba(255, 255, 255, 0.3);
+									"
+								>
+									名簿を照会中...
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
-	</footer>
 
-	<script src="js/main.js"></script>
+			<p
+				style="
+					font-size: 0.65rem;
+					color: rgba(255, 255, 255, 0.3);
+					margin-top: 10px;
+					text-align: center;
+				"
+			>
+				※不適切な名称は予告なく削除されます。また、本名簿は一定期間ごとにリセットされる場合があります。
+			</p>
+		</section>
 
-	<style>
-		@media (max-width: 768px) {
-			.profile-grid {
-				grid-template-columns: 1fr !important;
+		<section class="section section--dark" id="orange-game">
+			<div class="container">
+				<div
+					class="minigame-wrapper"
+					style="
+						background: rgba(255, 255, 255, 0.05);
+						border: 1px solid rgba(200, 166, 94, 0.2);
+						padding: var(--space-xl);
+						border-radius: 8px;
+						text-align: center;
+						max-width: 600px;
+						margin: 40px auto;
+					"
+				>
+					<span
+						class="section-label"
+						style="color: var(--color-accent-light)"
+						>MINI GAME 02</span
+					>
+					<h2
+						style="
+							color: var(--color-white);
+							margin-bottom: var(--space-sm);
+						"
+					>
+						オレンジ生搾り
+					</h2>
+					<p
+						style="
+							color: rgba(255, 255, 255, 0.5);
+							font-size: 0.9rem;
+							margin-bottom: var(--space-lg);
+						"
+					>
+						オレンジを限界まで絞り、社長のコップを満たしてください。<br />
+						100.00%に近いほど、あなたの「社内事務階級」が上昇します。
+					</p>
+					<p
+						style="
+							color: rgba(255, 255, 255, 0.5);
+							font-size: 0.7rem;
+							margin-top: var(--space-lg);
+						"
+					>
+						※ 100.01%を超えると、コップは社長により破壊されます。<br />　
+					</p>
+
+					<div
+						class="minigame-stats"
+						style="
+							display: flex;
+							justify-content: space-around;
+							margin-bottom: var(--space-md);
+							font-weight: bold;
+							color: var(--color-accent);
+						"
+					>
+						<div>
+							AMOUNT:
+							<span
+								id="juice-percent"
+								style="font-size: 1.5rem; color: #fff"
+								>0.00</span
+							>%
+						</div>
+						<div>
+							CLASS:
+							<span
+								id="orange-rank"
+								style="font-size: 1.5rem; color: #fff"
+								>バイト級</span
+							>
+						</div>
+					</div>
+
+					<div
+						id="orange-game-screen"
+						style="
+							width: 200px;
+							height: 260px;
+							margin: 0 auto var(--space-md);
+							background: #122c4f;
+							border: 2px solid var(--color-border);
+							border-radius: 8px;
+							position: relative;
+							overflow: hidden;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							justify-content: space-between;
+							padding: 20px 0;
+						"
+					>
+						<div
+							id="target-orange"
+							style="font-size: 4rem; transition: transform 0.1s"
+						>
+							🍊
+						</div>
+
+						<div
+							id="cup-container"
+							style="
+								width: 80px;
+								height: 120px;
+								border: 3px solid rgba(255, 255, 255, 0.3);
+								border-top: none;
+								border-radius: 0 0 10px 10px;
+								position: relative;
+								overflow: hidden;
+								background: rgba(255, 255, 255, 0.05);
+							"
+						>
+							<div
+								id="juice-fill"
+								style="
+									position: absolute;
+									bottom: 0;
+									width: 100%;
+									height: 0%;
+									background: #ff9f1c;
+									box-shadow: 0 0 15px #ff9f1c;
+								"
+							></div>
+							<div
+								id="orange-shutter"
+								style="
+									position: absolute;
+									top: 0;
+									left: 0;
+									width: 100%;
+									height: 100%;
+									background: #122c4f;
+									transform: translateY(-100%);
+									transition: transform 0.4s ease;
+									border-bottom: 2px solid var(--color-accent);
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									font-size: 0.8rem;
+									color: var(--color-accent);
+								"
+							>
+								CLOSED
+							</div>
+						</div>
+					</div>
+
+					<div id="orange-controls">
+						<button
+							class="btn btn--accent"
+							id="btn-orange-pour"
+							style="
+								width: 100%;
+								max-width: 250px;
+								margin: 0 auto;
+								user-select: none;
+							"
+						>
+							手で搾り出す（長押し）
+						</button>
+						<div
+							id="orange-feedback"
+							style="
+								margin-top: 15px;
+								font-weight: bold;
+								height: 24px;
+								color: #ffffff;
+							"
+						></div>
+						<button
+							class="btn btn--outline"
+							id="btn-orange-retry"
+							style="
+								display: none;
+								width: 100%;
+								max-width: 250px;
+								margin: 10px auto 0;
+							"
+						>
+							もう一度挑戦
+						</button>
+						<button
+							class="btn btn--accent"
+							id="btn-orange-ranking"
+							style="display: none; width: 100%; max-width: 250px"
+						>
+							🏆 ランキングに登録する
+						</button>
+					</div>
+					<p
+						style="
+							color: rgba(255, 255, 255, 0.5);
+							font-size: 0.9rem;
+							margin-bottom: var(--space-lg);
+						"
+					>
+						Inspired by （<a
+							href="https://pheniki-games.com/girigirimilk/"
+							>ギリギリまで牛乳を注ぐゲーム</a
+						>）
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<script>
+			(function () {
+				document.addEventListener('DOMContentLoaded', () => {
+					const _supabase = window._supabase;
+					let amount = 0;
+					let isActive = false;
+					let timer;
+
+					const juiceFill = document.getElementById('juice-fill');
+					const percentDisp =
+						document.getElementById('juice-percent');
+					const shutter = document.getElementById('orange-shutter');
+					const orange = document.getElementById('target-orange');
+					const rankDisp = document.getElementById('orange-rank');
+					const pourBtn = document.getElementById('btn-orange-pour');
+					const retryBtn =
+						document.getElementById('btn-orange-retry');
+					const feedback = document.getElementById('orange-feedback');
+
+					const pourSpeed = 0.78; // スピード微調整
+
+					function startAction(e) {
+						// スマホでの画面スクロール等の誤作動を防ぐ
+						if (e && e.cancelable) e.preventDefault();
+						if (amount > 0 && !isActive) return; // 終了後の誤作動防止
+
+						isActive = true;
+						feedback.innerText = '';
+						retryBtn.style.display = 'none';
+
+						timer = setInterval(() => {
+							amount += pourSpeed;
+							if (amount > 120) stopAction(); // 限界突破
+							updateUI();
+						}, 30);
+					}
+
+					function stopAction(e) {
+						if (e && e.cancelable) e.preventDefault();
+						if (!isActive) return;
+
+						isActive = false;
+						clearInterval(timer);
+						shutter.style.transform = 'translateY(-100%)'; // 扉を開ける
+						judgeResult();
+						pourBtn.style.display = 'none';
+						retryBtn.style.display = 'inline-block';
+					}
+
+					function updateUI() {
+						percentDisp.innerText = amount.toFixed(2);
+						juiceFill.style.height = Math.min(amount, 100) + '%';
+
+						// オレンジの変形
+						const squeeze = 1 - amount * 0.006;
+						orange.style.transform = `scale(${Math.max(squeeze, 0.4)}, ${Math.max(squeeze + 0.2, 0.5)})`;
+
+						// 【追加】70%を超えたらスコア表示をフェードアウト
+						if (amount >= 70) {
+							// transitionを効かせるためにstyleで制御
+							percentDisp.parentElement.style.opacity = '0';
+							percentDisp.parentElement.style.transition =
+								'opacity 0.5s ease';
+						}
+
+						// 扉の開閉
+						if (amount > 65) {
+							shutter.style.transform = 'translateY(0)';
+						}
+					}
+
+					function judgeResult() {
+						// 【追加】スコアを再表示させる
+						percentDisp.parentElement.style.opacity = '1';
+
+						// 【追加】リザルトが出たらランキングボタンを表示
+						document.getElementById(
+							'btn-orange-ranking'
+						).style.display = 'inline-block';
+
+						pourBtn.style.display = 'none';
+						retryBtn.style.display = 'inline-block';
+
+						const diff = Math.abs(100 - amount);
+						let rank = '';
+						let msg = '';
+
+						if (amount > 100) {
+							rank = '始末書級';
+							msg = '溢れました。「あらららら...」ﾊﾞｷｯ';
+						} else if (diff <= 0.16) {
+							amount = 100.0;
+							percentDisp.innerText = '100.00';
+							percentDisp.style.color = '#FFD700'; // 金色にする
+							percentDisp.style.fontWeight = 'bold';
+							rank = 'ねむねむにゃんこ級';
+							msg = '奇跡の100.00%！！「夜遊びしてくる！」';
+
+							// --- 🚨修正：存在しないIDによるエラー（ペリカンが死ぬ原因）を回避 ---
+							const gameContainer =
+								document.getElementById('orange-game-screen');
+							if (gameContainer) {
+								gameContainer.classList.add('shake-animation'); // CSSで定義
+							}
+
+							// --- 演出：花吹雪を飛ばす ---
+							// エラーにならないよう typeof で存在チェックを追加
+							if (typeof confetti !== 'undefined') {
+								confetti({
+									particleCount: 150,
+									spread: 70,
+									origin: { y: 0.6 },
+									colors: ['#FFD700', '#FFA500', '#FFFFFF'], // 金・オレンジ・白
+								});
+							}
+						} else if (diff <= 1.0) {
+							rank = '社長の右腕級';
+							msg =
+								'表面張力を感じます！「これすごくないですか!?」';
+						} else if (diff <= 5.0) {
+							rank = '社長秘書級';
+							msg = '素晴らしい！「よくこぼれませんでしたね!?」';
+						} else if (diff <= 10.0) {
+							rank = '秘書級';
+							msg = '絶妙な力加減です。「さすがですね！」';
+						} else if (diff <= 15.0) {
+							rank = 'ベテラン事務員級';
+							msg =
+								'いい握力です。「お！ありがとうございます！」';
+						} else if (diff <= 30.0) {
+							rank = '事務員級';
+							msg = 'GOOD。「いただきます！」';
+						} else {
+							rank = 'バイト級';
+							msg =
+								'より強欲にいきましょう。「少なくないですか？」';
+						}
+
+						rankDisp.innerText = rank;
+						feedback.innerText = msg;
+
+						// ★【追加：リザルト確定時に自動保存を実行】
+						// amountの値を小数点第2位までの数値にして、確定したrankと一緒に送る
+						const finalScore = parseFloat(amount.toFixed(2));
+						saveOrangeGameScore(finalScore, rank);
+					}
+
+					// --- Supabaseにオレンジミニゲームのハイスコアを自動保存する関数 ---
+					async function saveOrangeGameScore(finalScore, finalRank) {
+						const savedPlayerId =
+							localStorage.getItem('kagami_employee_id');
+
+						if (!savedPlayerId) {
+							console.log(
+								'orange: 未ログイン状態のため、スコアの自動保存をスキップしました。'
+							);
+							return;
+						}
+
+						const _supabase = window._supabase;
+						if (!_supabase) {
+							console.error(
+								'orange: Supabaseクライアントが初期化されていないため、保存できません。'
+							);
+							return;
+						}
+
+						// 今回のスコアが100を超えていたら（溢れていたら）、ハイスコア更新の対象外にする
+						if (finalScore > 100) {
+							console.log(
+								'orange: 100%を超えて溢れたため、ハイスコア更新の対象外です。'
+							);
+							return;
+						}
+
+						try {
+							// 1. 現在のDBに保存されているスコアを取得する
+							const { data: currentProfile, error: fetchError } =
+								await _supabase
+									.from('profiles')
+									.select('orange_score')
+									.eq('player_id', savedPlayerId)
+									.single();
+
+							if (fetchError) {
+								console.error(
+									'orange: 現在のスコア取得に失敗しました:',
+									fetchError
+								);
+								return;
+							}
+
+							const dbScore =
+								currentProfile && currentProfile.orange_score
+									? currentProfile.orange_score
+									: 0;
+
+							// 2. 今回のスコアが、過去のハイスコアより高い場合のみ更新する
+							if (finalScore > dbScore) {
+								const { error: updateError } = await _supabase
+									.from('profiles')
+									.update({
+										orange_score: finalScore,
+										orange_rank: finalRank,
+									})
+									.eq('player_id', savedPlayerId);
+
+								if (updateError) {
+									console.error(
+										'orange: 社員ステータスの更新に失敗しました:',
+										updateError
+									);
+								} else {
+									console.log(
+										`orange: ハイスコア更新！ (${dbScore}% -> ${finalScore}%)`
+									);
+								}
+							} else {
+								console.log(
+									`orange: 今回のスコア(${finalScore}%)はハイスコア(${dbScore}%)以下のため、保存をスキップしました。`
+								);
+							}
+						} catch (err) {
+							console.error(
+								'orange: スコア保存中に通信例外が発生しました:',
+								err
+							);
+						}
+					}
+
+					function resetGame(e) {
+						if (e && e.cancelable) e.preventDefault();
+						amount = 0;
+						isActive = false;
+
+						// 【追加】リセット時はランキングボタンを隠す
+						document.getElementById(
+							'btn-orange-ranking'
+						).style.display = 'none';
+
+						pourBtn.style.display = 'inline-block';
+						retryBtn.style.display = 'none';
+
+						// 【追加】透明度をリセット
+						percentDisp.parentElement.style.opacity = '1';
+						percentDisp.parentElement.style.transition = 'none';
+						percentDisp.innerText = '0.00';
+						juiceFill.style.height = '0%';
+						orange.style.transform = 'scale(1)';
+						shutter.style.transform = 'translateY(-100%)';
+						rankDisp.innerText = 'バイト級';
+						feedback.innerText = '';
+						pourBtn.style.display = 'inline-block';
+						retryBtn.style.display = 'none';
+					}
+
+					// --- 🚨修正：スマホイベント対応強化（もう一度ボタンが押せない原因を解消） ---
+					const isTouch = 'ontouchstart' in window;
+
+					pourBtn.addEventListener('mousedown', startAction);
+					pourBtn.addEventListener('touchstart', startAction);
+					window.addEventListener('mouseup', stopAction);
+					window.addEventListener('touchend', stopAction);
+
+					// リトライボタンにタッチイベントを追加
+					retryBtn.addEventListener('click', resetGame);
+					if (isTouch)
+						retryBtn.addEventListener('touchstart', resetGame);
+
+					// ランキング登録ボタンにタッチイベントを追加
+					const rankingBtn =
+						document.getElementById('btn-orange-ranking');
+					const rankingAction = async (e) => {
+						if (e && e.cancelable) e.preventDefault();
+						try {
+							if (amount === 0) {
+								alert('オレンジを絞ってから登録してください！');
+								return;
+							}
+
+							const NG_WORDS = ['死ね', '馬鹿', 'ハゲ', 'カス'];
+							const inputName = prompt(
+								'ランキングに登録する名前を10文字以内で入力してください:',
+								'名無し社員'
+							);
+
+							// 【重要】スマホでのキャンセル・空欄対策
+							if (inputName === null) return;
+							const playerName = inputName.trim();
+							if (playerName === '') return;
+
+							// バリデーション
+							if (
+								NG_WORDS.some((word) =>
+									playerName.includes(word)
+								)
+							) {
+								alert(
+									'不適切な表現が含まれているため、登録できません。'
+								);
+								return;
+							}
+							if (playerName.length > 10) {
+								alert(
+									'社内規定により、氏名は10文字以内でお願いします。'
+								);
+								return;
+							}
+
+							// --- 1. データベースへ保存 ---
+							const finalScore = parseFloat(amount.toFixed(2));
+							const currentRank = rankDisp.innerText;
+
+							const { error: insertError } = await _supabase
+								.from('orange-ranking')
+								.insert([
+									{
+										name: playerName,
+										score: finalScore,
+										rank: currentRank,
+									},
+								]);
+
+							if (insertError) {
+								console.error('保存エラー:', insertError);
+								alert('登録に失敗しました。');
+								return;
+							}
+
+							// --- 2. 最新ランキングを取得 ---
+							const { data: topPlayers, error: fetchError } =
+								await _supabase
+									.from('orange-ranking')
+									.select('*')
+									.lte('score', 100)
+									.order('score', { ascending: false })
+									.limit(10);
+
+							if (fetchError) {
+								alert('ランキングの取得に失敗しました。');
+							} else {
+								let rankingTable = '🏆 【オンライン TOP 10】\n';
+								topPlayers.forEach((entry, index) => {
+									rankingTable += `${index + 1}位: ${entry.name} - ${entry.score}% (${entry.rank})\n`;
+								});
+								// スマホのキーボードが閉じるのを待つために少しだけ遅延させる
+								setTimeout(() => {
+									alert(rankingTable);
+								}, 200);
+							}
+						} catch (err) {
+							console.error('致命的なエラー:', err);
+							alert('通信エラーが発生しました。');
+						}
+					};
+
+					rankingBtn.addEventListener('click', rankingAction);
+					if (isTouch)
+						rankingBtn.addEventListener(
+							'touchstart',
+							rankingAction
+						);
+				});
+			})();
+		</script>
+
+		<section class="section section--dark" id="online-orange-ranking-board">
+			<div class="container">
+				<div
+					style="
+						background: rgba(255, 255, 255, 0.03);
+						border: 1px solid rgba(200, 166, 94, 0.15);
+						padding: var(--space-lg);
+						border-radius: 4px;
+						max-width: 500px;
+						margin: 0 auto;
+					"
+				>
+					<div
+						style="
+							text-align: center;
+							margin-bottom: var(--space-md);
+						"
+					>
+						<span
+							class="section-label"
+							style="
+								color: var(--color-accent-light);
+								font-size: 0.7rem;
+								letter-spacing: 0.2em;
+							"
+							>CONFIDENTIAL</span
+						>
+						<h3
+							style="
+								color: var(--color-white);
+								font-size: 1.2rem;
+								margin-top: 5px;
+							"
+						>
+							名誉生搾り社員　名簿
+						</h3>
+					</div>
+
+					<table
+						style="
+							width: 100%;
+							border-collapse: collapse;
+							font-size: 0.85rem;
+							color: #fff;
+						"
+					>
+						<thead>
+							<tr
+								style="
+									border-bottom: 1px solid
+										rgba(200, 166, 94, 0.3);
+									color: var(--color-accent);
+								"
+							>
+								<th
+									style="
+										padding: 10px 5px;
+										text-align: left;
+										font-weight: normal;
+									"
+								>
+									RANK
+								</th>
+								<th
+									style="
+										padding: 10px 5px;
+										text-align: left;
+										font-weight: normal;
+									"
+								>
+									NAME / CLASS
+								</th>
+								<th
+									style="
+										padding: 10px 5px;
+										text-align: right;
+										font-weight: normal;
+									"
+								>
+									SCORE
+								</th>
+							</tr>
+						</thead>
+						<tbody id="global-orange-ranking-body">
+							<tr>
+								<td
+									colspan="3"
+									style="
+										padding: 20px;
+										text-align: center;
+										color: rgba(255, 255, 255, 0.3);
+									"
+								>
+									名簿を照会中...
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<p
+				style="
+					font-size: 0.65rem;
+					color: rgba(255, 255, 255, 0.3);
+					margin-top: 10px;
+					text-align: center;
+				"
+			>
+				※不適切な名称は予告なく削除されます。また、本名簿は一定期間ごとにリセットされる場合があります。
+			</p>
+		</section>
+
+		<footer class="site-footer">
+			<div class="container">
+				<div class="footer-main">
+					<div class="footer-brand">
+						<div class="site-logo" style="pointer-events: none">
+							<div
+								class="site-logo__mark"
+								style="
+									width: 40px;
+									height: 40px;
+									flex-shrink: 0;
+								"
+							>
+								<img
+									src="android-chrome-192x192.png"
+									alt="KI Logo"
+									style="
+										width: 100%;
+										height: 100%;
+										object-fit: contain;
+										vertical-align: middle;
+									"
+								/>
+							</div>
+							<div class="site-logo__text">
+								<span class="site-logo__name-ja"
+									>加賀美インダストリアル</span
+								>
+								<span class="site-logo__name-en"
+									>Kagami Industrial Inc.</span
+								>
+							</div>
+						</div>
+						<p class="footer-brand__desc">
+							MATERIAL / HEAVY MACHINERY &amp; HOBBY /
+							ENTERTAINMENT
+						</p>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">Company</h4>
+						<ul class="footer-nav__list">
+							<li><a href="about.html">企業情報</a></li>
+							<li><a href="history.html">沿革</a></li>
+							<li><a href="business.html">事業紹介</a></li>
+							<li>
+								<a href="technology.html">技術・研究開発</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">Information</h4>
+						<ul class="footer-nav__list">
+							<li><a href="sustainability.html">CSR活動</a></li>
+							<li><a href="recruit.html">採用情報</a></li>
+							<li><a href="ir.html">投資家情報</a></li>
+						</ul>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">Group</h4>
+						<ul class="footer-nav__list">
+							<li>
+								<a href="business.html#group">加賀美リゾート</a>
+							</li>
+							<li>
+								<a href="business.html#group">加賀美損保</a>
+							</li>
+							<li>
+								<a href="business.html#group">加賀美水道局</a>
+							</li>
+							<li>
+								<a href="business.html#group">加賀美不動産</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">About</h4>
+						<ul class="footer-nav__list">
+							<li>
+								<a href="manager.html#manager">担当者紹介</a>
+							</li>
+							<li>
+								<a href="manager.html#policy">サイトポリシー</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">ROOM</h4>
+						<ul class="footer-nav__list">
+							<li><a href="enjoy.html">休憩室</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="footer-bottom">
+					<p class="footer-copyright">
+						&copy; Kagami Industrial (Unofficial Fan Site)
+					</p>
+					<p class="footer-disclaimer">
+						【免責事項】本サイトは、ANYCOLOR株式会社所属バーチャルライバー「加賀美ハヤト」様のファンによる非公式ファンサイトです。実在の人物・団体・企業とは一切関係ありません。掲載されている情報は、公式配信およびWiki等の情報を元にしたフィクションを含みます。
+					</p>
+				</div>
+			</div>
+		</footer>
+
+		<script src="js/main.js"></script>
+
+		<style>
+			@media (max-width: 768px) {
+				.profile-grid {
+					grid-template-columns: 1fr !important;
+				}
 			}
-		}
-	</style>
-</body>
+		</style>
+	</body>
 </html>

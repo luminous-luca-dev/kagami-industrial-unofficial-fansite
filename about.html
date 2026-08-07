@@ -1,407 +1,891 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+	<head>
+		<!-- Google tag (gtag.js) -->
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-DYB1GGHVZ4"
+		></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
 
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYB1GGHVZ4"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-    
-        gtag('config', 'G-DYB1GGHVZ4');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>企業情報・社長挨拶 | 非公式 | 加賀美インダストリアル</title>
-    <meta name="description" content="加賀美インダストリアル代表取締役社長 加賀美隼人からのメッセージ。創業の経緯から現在に至るまでの歩み。">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/home.css">    <link rel="stylesheet" href="css/home.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta property="og:title" content="【非公式】加賀美インダストリアル ファンサイト">
-    <meta property="og:description" content="加賀美ハヤト様の活動を応援する非公式ファンメイドサイトです。">
-    <meta property="og:image" content="https://kagami-industrial-unofficial-fansite.pages.dev/android-chrome-192x192.png">
-</head>
+			gtag('config', 'G-DYB1GGHVZ4');
+		</script>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>企業情報・社長挨拶 | 非公式 | 加賀美インダストリアル</title>
+		<meta
+			name="description"
+			content="加賀美インダストリアル代表取締役社長 加賀美隼人からのメッセージ。創業の経緯から現在に至るまでの歩み。"
+		/>
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/components.css" />
+		<link rel="stylesheet" href="css/home.css" />
+		<link rel="stylesheet" href="css/home.css" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="/site.webmanifest" />
+		<meta
+			property="og:title"
+			content="【非公式】加賀美インダストリアル ファンサイト"
+		/>
+		<meta
+			property="og:description"
+			content="加賀美ハヤト様の活動を応援する非公式ファンメイドサイトです。"
+		/>
+		<meta
+			property="og:image"
+			content="https://kagami-industrial-unofficial-fansite.pages.dev/android-chrome-192x192.png"
+		/>
+	</head>
 
-<body>
-
-    <!-- HEADER -->
-    <header class="site-header">
-    <div class="container">
-        <a href="index.html" class="site-logo">
-            <div class="site-logo__mark" style="width: 40px; height: 40px; flex-shrink: 0;">
-                <img src="android-chrome-192x192.png" alt="KI Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: middle;">
-            </div>
-            <div class="site-logo__text">
-                <div class="site-logo__title-row">
-                    <span class="site-logo__name-ja">加賀美インダストリアル</span>
-                </div>
-				<span class="site-logo__name-en">Kagami Industrial Inc.</span>
-				<span class="site-logo__unofficial">非公式ファンサイト</span>
-            </div>
-        </a>
-        <nav class="main-nav">
-            <ul class="main-nav__list">
-                <li class="main-nav__item"><a href="index.html">Home</a></li>
-                <li class="main-nav__item"><a href="about.html" class="active">About</a></li>
-                <li class="main-nav__item"><a href="history.html">History</a></li>
-                <li class="main-nav__item"><a href="business.html">Business</a></li>
-                <li class="main-nav__item"><a href="technology.html">Technology</a></li>
-                <li class="main-nav__item"><a href="sustainability.html">CSR</a></li>
-                <li class="main-nav__item"><a href="recruit.html">Recruit</a></li>
-                <li class="main-nav__item"><a href="ir.html">IR</a></li>
-            </ul>
-        </nav>
-        <button class="hamburger" aria-label="メニュー">
-            <span></span><span></span><span></span>
-        </button>
-    </div>
-	</header>
-
-
-
-    <div class="mobile-nav-overlay">
-        <ul class="mobile-nav__list">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="history.html">History</a></li>
-            <li><a href="business.html">Business</a></li>
-            <li><a href="technology.html">Technology</a></li>
-            <li><a href="sustainability.html">Sustainability</a></li>
-            <li><a href="recruit.html">Recruit</a></li>
-            <li><a href="ir.html">IR</a></li>
-        </ul>
-    </div>
-    <!-- PAGE HEADER -->
-    <div class="page-header" style="margin-top: var(--header-height);">
-        <div class="geo-line geo-line--1"></div>
-        <div class="geo-line geo-line--2"></div>
-        <div class="geo-line geo-line--3"></div>
-        <div class="page-header__content">
-            <p class="page-header__label">About Us</p>
-            <h1 class="page-header__title">企業情報</h1>
-            <p class="page-header__subtitle">Corporate Information &amp; CEO Message</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">HOME</a><span>›</span><span>企業情報</span>
-        </div>
-    </div>
-
-    <!-- CEO MESSAGE -->
-    <section class="section">
-        <div class="container">
-            <span class="section-label">CEO Message</span>
-            <h2 class="section-title">社長挨拶</h2>
-                <h2 style="color: #888888; font-weight: normal; font-size: 1.3em; margin-top: -10px; margin-bottom: 20px;">
-                    （非公式アーカイブ：ファンによる構成案）
-                </h2>
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-3xl); align-items: start;"
-                class="ceo-grid">
-            
-                <!-- CEO Image Area -->
-                <div class="fade-in-left" style="position: relative;">
-    <div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-        
-        <div style="text-align: center; z-index: 2;">
-            <a href="https://x.com/H_KAGAMI2434" target="_blank" style="text-decoration: none; display: block; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                <div style="position: relative; width: 150px; height: 150px; margin: 0 auto var(--space-md);">
-                    <img src="https://unavatar.io/twitter/H_KAGAMI2434" 
-                        alt="Kagami Hayato Official" 
-                        style="width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--color-accent); box-shadow: 0 0 30px rgba(0,0,0,0.5); position: relative; z-index: 3;">
-                    <div style="position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 50%; z-index: 1;"></div>
-                </div>
-                <div style="font-family: var(--font-en); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: bold;">
-                    公式Xの引用表示（サーバー保存なし）
-                </div>
-            </a>
-        </div>
-
-        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(to top, rgba(18, 44, 79, 0.8), transparent); z-index: 1;">
-        </div>
-    </div>
-
-    <div style="background: var(--color-primary); padding: var(--space-md) var(--space-lg); color: var(--color-white); position: relative; z-index: 2;">
-        <div style="font-family: var(--font-heading-ja); font-size: 1.2rem; margin-bottom: var(--space-xs);">
-            加賀美 隼人</div>
-        <div style="font-family: var(--font-en); font-size: 0.7rem; letter-spacing: 0.15em; color: var(--color-accent);">
-            HAYATO KAGAMI</div>
-        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: var(--space-xs);">
-            代表取締役社長 / CEO</div>
-    </div>
-</div>
-
-                <!-- CEO Message Text -->
-                <div class="fade-in-right">
-                    <div class="ceo-quote" style="margin-bottom: var(--space-xl);">
-                        遊びに本気になれない者が、良い仕事などできるはずがない。
-                    </div>
-
-                    <div style="font-size: 0.95rem; line-height: 2.2; color: var(--color-text-light);">
-                        <h3
-                            style="font-size: 1.1rem; color: var(--color-primary); margin-bottom: var(--space-md); margin-top: var(--space-xl);">
-                            創業の礎</h3>
-                        <p style="margin-bottom: var(--space-lg);">
-                            加賀美インダストリアルは、私の父が起業した会社です。産業用ロボット、マテリアル、重機――インダストリアルの名の通り、父は日本のものづくりの最前線で「鋼鉄」と向き合い続けてきました。その背中を見て育った私にとって、この会社はただの事業体ではなく、一族の誇りそのものです。
-                        </p>
-
-                        <h3 style="font-size: 1.1rem; color: var(--color-primary); margin-bottom: var(--space-md);">
-                            意図せざる転機</h3>
-                        <p style="margin-bottom: var(--space-lg);">
-                            転機は、ある企業イベントで訪れました。ディーラーや株主の方々へのノベルティとして制作したダイキャスト製ミニカーが、予想を遥かに超える熱狂的な人気を呼んだのです。重工業の精密加工技術で作り込まれたミニカーの完成度に多くの方々が魅了され、量産化の要望が殺到しました。<br><br>
-                            結果としてホビー事業を立ち上げることになり、ホビー好きの私が担当に。「好き」が仕事になった瞬間でした。
-                        </p>
-
-                        <h3 style="font-size: 1.1rem; color: var(--color-primary); margin-bottom: var(--space-md);">
-                            三つの顔</h3>
-                        <p style="margin-bottom: var(--space-lg);">
-                            社長として――私は誠実さと礼節を大切にしております。どんな相手にも敬意を持って接し、視野の広い判断を心がけています。<br><br>
-                            音楽人として――歌や音響に対する強いこだわりがあります。ひとたびマイクを握れば、爽やかな声はどこへやら。力強い歌声に交じるシャウトの音圧は、凄まじいの一言です。<br><br>
-                            少年として――面白そうな玩具やゲーム、大きなメカや強い相手を前にすると、私はただの小学生男子に戻ります。ひたすらにかっこよさを追求し、義理人情に厚い熱血漢。その少年の心こそが、私の最大の武器です。
-                        </p>
-
-                        <h3 style="font-size: 1.1rem; color: var(--color-primary); margin-bottom: var(--space-md);">
-                            新たなる挑戦</h3>
-                        <p>
-                            ANYCOLOR株式会社との広報パートナーシップは、にじさんじの常設オーディションに自ら応募したことがきっかけでした。自社製品のPRのため、代表取締役である私自身がバーチャルライバーとしてデビューするという前代未聞の広報戦略。「リスナーを楽しませること」を基本行動理念に、娯楽コンテンツとしてのエンタテインメントを追求してまいります。<br><br>
-                            鋼鉄の巨人も、掌のミニカーも。すべての情熱は等価である。<br>
-                            この信念のもと、株主の皆様と共に歩んでいく所存です。
-                        </p>
-
-                        <div
-                            style="text-align: right; margin-top: var(--space-xl); font-family: var(--font-heading-ja); color: var(--color-primary);">
-                            <div style="font-size: 1.1rem;">代表取締役社長</div>
-                            <div style="font-size: 1.5rem; margin-top: var(--space-xs); font-weight: 700;">加賀美 隼人</div>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-            <p style="color: #888888; font-size: 0.8rem; margin-top: 10px; line-height: 1.4;">
-                ※本テキストは広報担当（ファン）による取材・構成案であり、代表取締役の実際の発言を記録したものではありません。
-            </p>
-        </div>
-    </section>
-
-    <!-- COMPANY OVERVIEW -->
-    <section class="section section--alt">
-        <div class="container">
-            <span class="section-label">Company Overview</span>
-            <h2 class="section-title">会社概要</h2>
-
-            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;" class="company-table">
-                <tbody>
-                    <tr>
-                        <th
-                            style="padding: var(--space-md) var(--space-lg); text-align: left; background: var(--color-primary); color: var(--color-white); width: 180px; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            社名</th>
-                        <td
-                            style="padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-border);">
-                            加賀美インダストリアル株式会社<br><span
-                                style="font-family: var(--font-en); font-size: 0.8rem; color: var(--color-text-muted);">KAGAMI
-                                INDUSTRIAL Inc.</span></td>
-                    </tr>
-                    <tr>
-                        <th
-                            style="padding: var(--space-md) var(--space-lg); text-align: left; background: var(--color-primary); color: var(--color-white); width: 180px; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            設立</th>
-                        <td
-                            style="padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-border);">
-                            19XX年（先代社長により創業）</td>
-                    </tr>
-                    <tr>
-                        <th
-                            style="padding: var(--space-md) var(--space-lg); text-align: left; background: var(--color-primary); color: var(--color-white); width: 180px; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            代表者</th>
-                        <td
-                            style="padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-border);">
-                            代表取締役社長　加賀美 隼人</td>
-                    </tr>
-                    <tr>
-                        <th
-                            style="padding: var(--space-md) var(--space-lg); text-align: left; background: var(--color-primary); color: var(--color-white); width: 180px; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            事業内容</th>
-                        <td
-                            style="padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-border);">
-                            産業用ロボット・建設機械の開発製造<br>精密ダイキャスト玩具の企画・製造・販売<br>トレーディングカードゲーム（TCG）事業<br>エンタテインメント事業</td>
-                    </tr>
-                    <tr>
-                        <th
-                            style="padding: var(--space-md) var(--space-lg); text-align: left; background: var(--color-primary); color: var(--color-white); width: 180px; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            関連企業</th>
-                        <td
-                            style="padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-border);">
-                            加賀美リゾート / 加賀美損保 / 加賀美水道局 / 加賀美不動産 / 加賀美重工 / 加賀美電機 / 加賀美ホールディングス / 西麻布加賀美セレモニーホール /
-                            加賀美ホームコンサルティング</td>
-                    </tr>
-                    <tr>
-                        <th
-                            style="padding: var(--space-md) var(--space-lg); text-align: left; background: var(--color-primary); color: var(--color-white); width: 180px; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            広報パートナー</th>
-                        <td
-                            style="padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-border);">
-                            ANYCOLOR株式会社（Virtual YouTuber事業における戦略的広報パートナーシップ）</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- CEO PROFILE -->
-    <section class="section">
-        <div class="container">
-            <span class="section-label">CEO Profile</span>
-            <h2 class="section-title">社長プロフィール</h2>
-
-            <div class="grid grid--3" style="gap: var(--space-xl);">
-                <div class="card fade-in" style="text-align: center;">
-                    <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">🎴</div>
-                    <h3 class="card__title">好きなTCG</h3>
-                    <p class="card__text" style="font-size: 0.85rem;">
-                        遊戯王（闇属性レベル7ドラゴン族・真紅眼の黒竜）、デュエルマスターズ（無双竜機ボルバルザーク）、MTG（グリクシスカラー）。デュエルマスターズプレイスは継続的にプレイ中。
-                    </p>
-                </div>
-                <div class="card fade-in" style="text-align: center;">
-                    <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">🤖</div>
-                    <h3 class="card__title">好きなメカ・ホビー</h3>
-                    <p class="card__text" style="font-size: 0.85rem;">
-                        ジェノブレイカー（ゾイド）、Ex-Sガンダム、ティエレン（ガンダム00）、マジンカイザー、トライピオ。プラモデル組み立て配信も実施。
-                    </p>
-                </div>
-                <div class="card fade-in" style="text-align: center;">
-                    <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">🎮</div>
-                    <h3 class="card__title">好きなゲーム</h3>
-                    <p class="card__text" style="font-size: 0.85rem;">
-                        スターオーシャン セカンドストーリー（総プレイ3,400時間超）、如くスタジオ作品、フロムゲー。長編シリーズを並行プレイするスタイル。
-                    </p>
-                </div>
-                <div class="card fade-in" style="text-align: center;">
-                    <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">🎤</div>
-                    <h3 class="card__title">音楽</h3>
-                    <p class="card__text" style="font-size: 0.85rem;">
-                        初配信でオリジナル曲を披露。好きなアーティストはTHE BACK HORN、BRAHMAN。3Dライブでのステージパフォーマンスも要注目。
-                    </p>
-                </div>
-                <div class="card fade-in" style="text-align: center;">
-                    <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">📚</div>
-                    <h3 class="card__title">好きな漫画</h3>
-                    <p class="card__text" style="font-size: 0.85rem;">
-                        ブラックジャック、トライガン、アクメツ、HUNTER×HUNTER、バキ、魔人探偵脳噛ネウロ。義理人情と熱血を愛する漫画遍歴。
-                    </p>
-                </div>
-                <div class="card fade-in" style="text-align: center;">
-                    <div style="font-size: 2.5rem; margin-bottom: var(--space-md);">🐱</div>
-                    <h3 class="card__title">その他</h3>
-                    <p class="card__text" style="font-size: 0.85rem;">
-                        猫派（長毛種全般）。好きな食べ物はチョコレート、そば、明太子、豚骨ラーメン。性格診断はENTP-A（討論者）。好きな花はパンジーとポピー。
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div style="margin-top: var(--space-3xl); text-align: center;">
-                <p style="margin-bottom: var(--space-md); color: var(--color-text-muted); font-size: 0.9rem;">
-                    加賀美隼人の最新の活動・配信はこちらから
-                </p>
-                <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
-                    
-                    <a href="https://www.youtube.com/@KagamiHayato" target="_blank" class="btn" 
-                        style="background-color: #c4302b; color: #fff; padding: 1rem 2rem; border-radius: 4px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.3s;"
-                        onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-                        <span style="font-weight: bold; letter-spacing: 0.05em;">Official YouTube</span>
-                    </a>
-
-                    <a href="https://x.com/H_KAGAMI2434" target="_blank" class="btn" 
-                        style="background-color: #000; color: #fff; padding: 1rem 2rem; border-radius: 4px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.3s;"
-                        onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-                        <span style="font-weight: bold; letter-spacing: 0.05em;">Official X</span>
-                    </a>
-
-                </div>
-            </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-main">
-                <div class="footer-brand">
-                    <div class="site-logo" style="pointer-events: none;">
-                        <div class="site-logo__mark" style="width: 40px; height: 40px; flex-shrink: 0;">
-                    <img src="android-chrome-192x192.png" alt="KI Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: middle;">
-                </div>
-                        <div class="site-logo__text">
-                            <span class="site-logo__name-ja">加賀美インダストリアル</span>
-                            <span class="site-logo__name-en">Kagami Industrial Inc.</span>
-                        </div>
-                    </div>
-                    <p class="footer-brand__desc">MATERIAL / HEAVY MACHINERY &amp; HOBBY / ENTERTAINMENT</p>
-                </div>
-                <div class="footer-nav">
-                    <h4 class="footer-nav__title">Company</h4>
-                    <ul class="footer-nav__list">
-                        <li><a href="about.html">企業情報</a></li>
-                        <li><a href="history.html">沿革</a></li>
-                        <li><a href="business.html">事業紹介</a></li>
-                        <li><a href="technology.html">技術・研究開発</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav">
-                    <h4 class="footer-nav__title">Information</h4>
-                    <ul class="footer-nav__list">
-                        <li><a href="sustainability.html">CSR活動</a></li>
-                        <li><a href="recruit.html">採用情報</a></li>
-                        <li><a href="ir.html">投資家情報</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav">
-                    <h4 class="footer-nav__title">Group</h4>
-                    <ul class="footer-nav__list">
-                        <li><a href="business.html#group">加賀美リゾート</a></li>
-                        <li><a href="business.html#group">加賀美損保</a></li>
-                        <li><a href="business.html#group">加賀美水道局</a></li>
-                        <li><a href="business.html#group">加賀美不動産</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav">
-					<h4 class="footer-nav__title">About</h4>
-					<ul class="footer-nav__list">
-						<li><a href="manager.html#manager">担当者紹介</a></li>
-						<li><a href="manager.html#policy">サイトポリシー</a></li>
+	<body>
+		<!-- HEADER -->
+		<header class="site-header">
+			<div class="container">
+				<a href="index.html" class="site-logo">
+					<div
+						class="site-logo__mark"
+						style="width: 40px; height: 40px; flex-shrink: 0"
+					>
+						<img
+							src="android-chrome-192x192.png"
+							alt="KI Logo"
+							style="
+								width: 100%;
+								height: 100%;
+								object-fit: contain;
+								vertical-align: middle;
+							"
+						/>
+					</div>
+					<div class="site-logo__text">
+						<div class="site-logo__title-row">
+							<span class="site-logo__name-ja"
+								>加賀美インダストリアル</span
+							>
+						</div>
+						<span class="site-logo__name-en"
+							>Kagami Industrial Inc.</span
+						>
+						<span class="site-logo__unofficial"
+							>非公式ファンサイト</span
+						>
+					</div>
+				</a>
+				<nav class="main-nav">
+					<ul class="main-nav__list">
+						<li class="main-nav__item">
+							<a href="index.html">Home</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="about.html" class="active">About</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="history.html">History</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="business.html">Business</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="technology.html">Technology</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="sustainability.html">CSR</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="recruit.html">Recruit</a>
+						</li>
+						<li class="main-nav__item"><a href="ir.html">IR</a></li>
 					</ul>
+				</nav>
+				<button class="hamburger" aria-label="メニュー">
+					<span></span><span></span><span></span>
+				</button>
+			</div>
+		</header>
+
+		<div class="mobile-nav-overlay">
+			<ul class="mobile-nav__list">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="about.html">About Us</a></li>
+				<li><a href="history.html">History</a></li>
+				<li><a href="business.html">Business</a></li>
+				<li><a href="technology.html">Technology</a></li>
+				<li><a href="sustainability.html">Sustainability</a></li>
+				<li><a href="recruit.html">Recruit</a></li>
+				<li><a href="ir.html">IR</a></li>
+			</ul>
+		</div>
+		<!-- PAGE HEADER -->
+		<div class="page-header" style="margin-top: var(--header-height)">
+			<div class="geo-line geo-line--1"></div>
+			<div class="geo-line geo-line--2"></div>
+			<div class="geo-line geo-line--3"></div>
+			<div class="page-header__content">
+				<p class="page-header__label">About Us</p>
+				<h1 class="page-header__title">企業情報</h1>
+				<p class="page-header__subtitle">
+					Corporate Information &amp; CEO Message
+				</p>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="breadcrumb">
+				<a href="index.html">HOME</a><span>›</span><span>企業情報</span>
+			</div>
+		</div>
+
+		<!-- CEO MESSAGE -->
+		<section class="section">
+			<div class="container">
+				<span class="section-label">CEO Message</span>
+				<h2 class="section-title">社長挨拶</h2>
+				<h2
+					style="
+						color: #888888;
+						font-weight: normal;
+						font-size: 1.3em;
+						margin-top: -10px;
+						margin-bottom: 20px;
+					"
+				>
+					（非公式アーカイブ：ファンによる構成案）
+				</h2>
+				<div
+					style="
+						display: grid;
+						grid-template-columns: 1fr 2fr;
+						gap: var(--space-3xl);
+						align-items: start;
+					"
+					class="ceo-grid"
+				>
+					<!-- CEO Image Area -->
+					<div class="fade-in-left" style="position: relative">
+						<div
+							style="
+								background: linear-gradient(
+									135deg,
+									var(--color-primary) 0%,
+									var(--color-primary-light) 100%
+								);
+								aspect-ratio: 3/4;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								position: relative;
+								overflow: hidden;
+							"
+						>
+							<div style="text-align: center; z-index: 2">
+								<a
+									href="https://x.com/H_KAGAMI2434"
+									target="_blank"
+									style="
+										text-decoration: none;
+										display: block;
+										transition: transform 0.3s ease;
+									"
+									onmouseover="
+										this.style.transform = 'scale(1.05)'
+									"
+									onmouseout="
+										this.style.transform = 'scale(1)'
+									"
+								>
+									<div
+										style="
+											position: relative;
+											width: 150px;
+											height: 150px;
+											margin: 0 auto var(--space-md);
+										"
+									>
+										<img
+											src="https://unavatar.io/twitter/H_KAGAMI2434"
+											alt="Kagami Hayato Official"
+											style="
+												width: 100%;
+												height: 100%;
+												border-radius: 50%;
+												border: 3px solid
+													var(--color-accent);
+												box-shadow: 0 0 30px
+													rgba(0, 0, 0, 0.5);
+												position: relative;
+												z-index: 3;
+											"
+										/>
+										<div
+											style="
+												position: absolute;
+												top: -10px;
+												left: -10px;
+												right: -10px;
+												bottom: -10px;
+												border: 1px solid
+													rgba(212, 175, 55, 0.3);
+												border-radius: 50%;
+												z-index: 1;
+											"
+										></div>
+									</div>
+									<div
+										style="
+											font-family: var(--font-en);
+											font-size: 0.7rem;
+											letter-spacing: 0.2em;
+											text-transform: uppercase;
+											color: rgba(255, 255, 255, 0.5);
+											font-weight: bold;
+										"
+									>
+										公式Xの引用表示（サーバー保存なし）
+									</div>
+								</a>
+							</div>
+
+							<div
+								style="
+									position: absolute;
+									bottom: 0;
+									left: 0;
+									right: 0;
+									height: 60%;
+									background: linear-gradient(
+										to top,
+										rgba(18, 44, 79, 0.8),
+										transparent
+									);
+									z-index: 1;
+								"
+							></div>
+						</div>
+
+						<div
+							style="
+								background: var(--color-primary);
+								padding: var(--space-md) var(--space-lg);
+								color: var(--color-white);
+								position: relative;
+								z-index: 2;
+							"
+						>
+							<div
+								style="
+									font-family: var(--font-heading-ja);
+									font-size: 1.2rem;
+									margin-bottom: var(--space-xs);
+								"
+							>
+								加賀美 隼人
+							</div>
+							<div
+								style="
+									font-family: var(--font-en);
+									font-size: 0.7rem;
+									letter-spacing: 0.15em;
+									color: var(--color-accent);
+								"
+							>
+								HAYATO KAGAMI
+							</div>
+							<div
+								style="
+									font-size: 0.75rem;
+									color: rgba(255, 255, 255, 0.5);
+									margin-top: var(--space-xs);
+								"
+							>
+								代表取締役社長 / CEO
+							</div>
+						</div>
+					</div>
+
+					<!-- CEO Message Text -->
+					<div class="fade-in-right">
+						<div
+							class="ceo-quote"
+							style="margin-bottom: var(--space-xl)"
+						>
+							遊びに本気になれない者が、良い仕事などできるはずがない。
+						</div>
+
+						<div
+							style="
+								font-size: 0.95rem;
+								line-height: 2.2;
+								color: var(--color-text-light);
+							"
+						>
+							<h3
+								style="
+									font-size: 1.1rem;
+									color: var(--color-primary);
+									margin-bottom: var(--space-md);
+									margin-top: var(--space-xl);
+								"
+							>
+								創業の礎
+							</h3>
+							<p style="margin-bottom: var(--space-lg)">
+								加賀美インダストリアルは、私の父が起業した会社です。産業用ロボット、マテリアル、重機――インダストリアルの名の通り、父は日本のものづくりの最前線で「鋼鉄」と向き合い続けてきました。その背中を見て育った私にとって、この会社はただの事業体ではなく、一族の誇りそのものです。
+							</p>
+
+							<h3
+								style="
+									font-size: 1.1rem;
+									color: var(--color-primary);
+									margin-bottom: var(--space-md);
+								"
+							>
+								意図せざる転機
+							</h3>
+							<p style="margin-bottom: var(--space-lg)">
+								転機は、ある企業イベントで訪れました。ディーラーや株主の方々へのノベルティとして制作したダイキャスト製ミニカーが、予想を遥かに超える熱狂的な人気を呼んだのです。重工業の精密加工技術で作り込まれたミニカーの完成度に多くの方々が魅了され、量産化の要望が殺到しました。<br /><br />
+								結果としてホビー事業を立ち上げることになり、ホビー好きの私が担当に。「好き」が仕事になった瞬間でした。
+							</p>
+
+							<h3
+								style="
+									font-size: 1.1rem;
+									color: var(--color-primary);
+									margin-bottom: var(--space-md);
+								"
+							>
+								三つの顔
+							</h3>
+							<p style="margin-bottom: var(--space-lg)">
+								社長として――私は誠実さと礼節を大切にしております。どんな相手にも敬意を持って接し、視野の広い判断を心がけています。<br /><br />
+								音楽人として――歌や音響に対する強いこだわりがあります。ひとたびマイクを握れば、爽やかな声はどこへやら。力強い歌声に交じるシャウトの音圧は、凄まじいの一言です。<br /><br />
+								少年として――面白そうな玩具やゲーム、大きなメカや強い相手を前にすると、私はただの小学生男子に戻ります。ひたすらにかっこよさを追求し、義理人情に厚い熱血漢。その少年の心こそが、私の最大の武器です。
+							</p>
+
+							<h3
+								style="
+									font-size: 1.1rem;
+									color: var(--color-primary);
+									margin-bottom: var(--space-md);
+								"
+							>
+								新たなる挑戦
+							</h3>
+							<p>
+								ANYCOLOR株式会社との広報パートナーシップは、にじさんじの常設オーディションに自ら応募したことがきっかけでした。自社製品のPRのため、代表取締役である私自身がバーチャルライバーとしてデビューするという前代未聞の広報戦略。「リスナーを楽しませること」を基本行動理念に、娯楽コンテンツとしてのエンタテインメントを追求してまいります。<br /><br />
+								鋼鉄の巨人も、掌のミニカーも。すべての情熱は等価である。<br />
+								この信念のもと、株主の皆様と共に歩んでいく所存です。
+							</p>
+
+							<div
+								style="
+									text-align: right;
+									margin-top: var(--space-xl);
+									font-family: var(--font-heading-ja);
+									color: var(--color-primary);
+								"
+							>
+								<div style="font-size: 1.1rem">
+									代表取締役社長
+								</div>
+								<div
+									style="
+										font-size: 1.5rem;
+										margin-top: var(--space-xs);
+										font-weight: 700;
+									"
+								>
+									加賀美 隼人
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
+				<p
+					style="
+						color: #888888;
+						font-size: 0.8rem;
+						margin-top: 10px;
+						line-height: 1.4;
+					"
+				>
+					※本テキストは広報担当（ファン）による取材・構成案であり、代表取締役の実際の発言を記録したものではありません。
+				</p>
+			</div>
+		</section>
 
-				<div class="footer-nav">
-					<h4 class="footer-nav__title">ROOM</h4>
-					<ul class="footer-nav__list">
-						<li><a href="enjoy.html">休憩室</a></li>
-					</ul>
+		<!-- COMPANY OVERVIEW -->
+		<section class="section section--alt">
+			<div class="container">
+				<span class="section-label">Company Overview</span>
+				<h2 class="section-title">会社概要</h2>
+
+				<table
+					style="
+						width: 100%;
+						border-collapse: collapse;
+						font-size: 0.9rem;
+					"
+					class="company-table"
+				>
+					<tbody>
+						<tr>
+							<th
+								style="
+									padding: var(--space-md) var(--space-lg);
+									text-align: left;
+									background: var(--color-primary);
+									color: var(--color-white);
+									width: 180px;
+									font-weight: 500;
+									border-bottom: 1px solid
+										rgba(255, 255, 255, 0.1);
+								"
+							>
+								社名
+							</th>
+							<td
+								style="
+									padding: var(--space-md) var(--space-lg);
+									border-bottom: 1px solid var(--color-border);
+								"
+							>
+								加賀美インダストリアル株式会社<br /><span
+									style="
+										font-family: var(--font-en);
+										font-size: 0.8rem;
+										color: var(--color-text-muted);
+									"
+									>KAGAMI INDUSTRIAL Inc.</span
+								>
+							</td>
+						</tr>
+						<tr>
+							<th
+								style="
+									padding: var(--space-md) var(--space-lg);
+									text-align: left;
+									background: var(--color-primary);
+									color: var(--color-white);
+									width: 180px;
+									font-weight: 500;
+									border-bottom: 1px solid
+										rgba(255, 255, 255, 0.1);
+								"
+							>
+								設立
+							</th>
+							<td
+								style="
+									padding: var(--space-md) var(--space-lg);
+									border-bottom: 1px solid var(--color-border);
+								"
+							>
+								19XX年（先代社長により創業）
+							</td>
+						</tr>
+						<tr>
+							<th
+								style="
+									padding: var(--space-md) var(--space-lg);
+									text-align: left;
+									background: var(--color-primary);
+									color: var(--color-white);
+									width: 180px;
+									font-weight: 500;
+									border-bottom: 1px solid
+										rgba(255, 255, 255, 0.1);
+								"
+							>
+								代表者
+							</th>
+							<td
+								style="
+									padding: var(--space-md) var(--space-lg);
+									border-bottom: 1px solid var(--color-border);
+								"
+							>
+								代表取締役社長　加賀美 隼人
+							</td>
+						</tr>
+						<tr>
+							<th
+								style="
+									padding: var(--space-md) var(--space-lg);
+									text-align: left;
+									background: var(--color-primary);
+									color: var(--color-white);
+									width: 180px;
+									font-weight: 500;
+									border-bottom: 1px solid
+										rgba(255, 255, 255, 0.1);
+								"
+							>
+								事業内容
+							</th>
+							<td
+								style="
+									padding: var(--space-md) var(--space-lg);
+									border-bottom: 1px solid var(--color-border);
+								"
+							>
+								産業用ロボット・建設機械の開発製造<br />精密ダイキャスト玩具の企画・製造・販売<br />トレーディングカードゲーム（TCG）事業<br />エンタテインメント事業
+							</td>
+						</tr>
+						<tr>
+							<th
+								style="
+									padding: var(--space-md) var(--space-lg);
+									text-align: left;
+									background: var(--color-primary);
+									color: var(--color-white);
+									width: 180px;
+									font-weight: 500;
+									border-bottom: 1px solid
+										rgba(255, 255, 255, 0.1);
+								"
+							>
+								関連企業
+							</th>
+							<td
+								style="
+									padding: var(--space-md) var(--space-lg);
+									border-bottom: 1px solid var(--color-border);
+								"
+							>
+								加賀美リゾート / 加賀美損保 / 加賀美水道局 /
+								加賀美不動産 / 加賀美重工 / 加賀美電機 /
+								加賀美ホールディングス /
+								西麻布加賀美セレモニーホール /
+								加賀美ホームコンサルティング
+							</td>
+						</tr>
+						<tr>
+							<th
+								style="
+									padding: var(--space-md) var(--space-lg);
+									text-align: left;
+									background: var(--color-primary);
+									color: var(--color-white);
+									width: 180px;
+									font-weight: 500;
+									border-bottom: 1px solid
+										rgba(255, 255, 255, 0.1);
+								"
+							>
+								広報パートナー
+							</th>
+							<td
+								style="
+									padding: var(--space-md) var(--space-lg);
+									border-bottom: 1px solid var(--color-border);
+								"
+							>
+								ANYCOLOR株式会社（Virtual
+								YouTuber事業における戦略的広報パートナーシップ）
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<!-- CEO PROFILE -->
+		<section class="section">
+			<div class="container">
+				<span class="section-label">CEO Profile</span>
+				<h2 class="section-title">社長プロフィール</h2>
+
+				<div class="grid grid--3" style="gap: var(--space-xl)">
+					<div class="card fade-in" style="text-align: center">
+						<div
+							style="
+								font-size: 2.5rem;
+								margin-bottom: var(--space-md);
+							"
+						>
+							🎴
+						</div>
+						<h3 class="card__title">好きなTCG</h3>
+						<p class="card__text" style="font-size: 0.85rem">
+							遊戯王（闇属性レベル7ドラゴン族・真紅眼の黒竜）、デュエルマスターズ（無双竜機ボルバルザーク）、MTG（グリクシスカラー）。デュエルマスターズプレイスは継続的にプレイ中。
+						</p>
+					</div>
+					<div class="card fade-in" style="text-align: center">
+						<div
+							style="
+								font-size: 2.5rem;
+								margin-bottom: var(--space-md);
+							"
+						>
+							🤖
+						</div>
+						<h3 class="card__title">好きなメカ・ホビー</h3>
+						<p class="card__text" style="font-size: 0.85rem">
+							ジェノブレイカー（ゾイド）、Ex-Sガンダム、ティエレン（ガンダム00）、マジンカイザー、トライピオ。プラモデル組み立て配信も実施。
+						</p>
+					</div>
+					<div class="card fade-in" style="text-align: center">
+						<div
+							style="
+								font-size: 2.5rem;
+								margin-bottom: var(--space-md);
+							"
+						>
+							🎮
+						</div>
+						<h3 class="card__title">好きなゲーム</h3>
+						<p class="card__text" style="font-size: 0.85rem">
+							スターオーシャン
+							セカンドストーリー（総プレイ3,400時間超）、如くスタジオ作品、フロムゲー。長編シリーズを並行プレイするスタイル。
+						</p>
+					</div>
+					<div class="card fade-in" style="text-align: center">
+						<div
+							style="
+								font-size: 2.5rem;
+								margin-bottom: var(--space-md);
+							"
+						>
+							🎤
+						</div>
+						<h3 class="card__title">音楽</h3>
+						<p class="card__text" style="font-size: 0.85rem">
+							初配信でオリジナル曲を披露。好きなアーティストはTHE
+							BACK
+							HORN、BRAHMAN。3Dライブでのステージパフォーマンスも要注目。
+						</p>
+					</div>
+					<div class="card fade-in" style="text-align: center">
+						<div
+							style="
+								font-size: 2.5rem;
+								margin-bottom: var(--space-md);
+							"
+						>
+							📚
+						</div>
+						<h3 class="card__title">好きな漫画</h3>
+						<p class="card__text" style="font-size: 0.85rem">
+							ブラックジャック、トライガン、アクメツ、HUNTER×HUNTER、バキ、魔人探偵脳噛ネウロ。義理人情と熱血を愛する漫画遍歴。
+						</p>
+					</div>
+					<div class="card fade-in" style="text-align: center">
+						<div
+							style="
+								font-size: 2.5rem;
+								margin-bottom: var(--space-md);
+							"
+						>
+							🐱
+						</div>
+						<h3 class="card__title">その他</h3>
+						<p class="card__text" style="font-size: 0.85rem">
+							猫派（長毛種全般）。好きな食べ物はチョコレート、そば、明太子、豚骨ラーメン。性格診断はENTP-A（討論者）。好きな花はパンジーとポピー。
+						</p>
+					</div>
 				</div>
-            </div>
-            <div class="footer-bottom">
-                <p class="footer-copyright">&copy; Kagami Industrial (Unofficial Fan Site)</p>
-                <p class="footer-disclaimer">
-                    【免責事項】本サイトは、ANYCOLOR株式会社所属バーチャルライバー「加賀美ハヤト」様のファンによる非公式ファンサイトです。実在の人物・団体・企業とは一切関係ありません。掲載されている情報は、公式配信およびWiki等の情報を元にしたフィクションを含みます。
-                </p>
-            </div>
-        </div>
-    </footer>
+			</div>
+			<div style="margin-top: var(--space-3xl); text-align: center">
+				<p
+					style="
+						margin-bottom: var(--space-md);
+						color: var(--color-text-muted);
+						font-size: 0.9rem;
+					"
+				>
+					加賀美隼人の最新の活動・配信はこちらから
+				</p>
+				<div
+					style="
+						display: flex;
+						gap: var(--space-md);
+						justify-content: center;
+						flex-wrap: wrap;
+					"
+				>
+					<a
+						href="https://www.youtube.com/@KagamiHayato"
+						target="_blank"
+						class="btn"
+						style="
+							background-color: #c4302b;
+							color: #fff;
+							padding: 1rem 2rem;
+							border-radius: 4px;
+							text-decoration: none;
+							display: inline-flex;
+							align-items: center;
+							gap: 0.5rem;
+							transition: opacity 0.3s;
+						"
+						onmouseover="this.style.opacity = '0.8'"
+						onmouseout="this.style.opacity = '1'"
+					>
+						<span style="font-weight: bold; letter-spacing: 0.05em"
+							>Official YouTube</span
+						>
+					</a>
 
-    <script src="js/main.js"></script>
+					<a
+						href="https://x.com/H_KAGAMI2434"
+						target="_blank"
+						class="btn"
+						style="
+							background-color: #000;
+							color: #fff;
+							padding: 1rem 2rem;
+							border-radius: 4px;
+							text-decoration: none;
+							display: inline-flex;
+							align-items: center;
+							gap: 0.5rem;
+							transition: opacity 0.3s;
+						"
+						onmouseover="this.style.opacity = '0.8'"
+						onmouseout="this.style.opacity = '1'"
+					>
+						<span style="font-weight: bold; letter-spacing: 0.05em"
+							>Official X</span
+						>
+					</a>
+				</div>
+			</div>
+		</section>
 
-    <style>
-        @media (max-width: 768px) {
-            .ceo-grid {
-                grid-template-columns: 1fr !important;
-            }
-        }
-    </style>
-</body>
+		<!-- FOOTER -->
+		<footer class="site-footer">
+			<div class="container">
+				<div class="footer-main">
+					<div class="footer-brand">
+						<div class="site-logo" style="pointer-events: none">
+							<div
+								class="site-logo__mark"
+								style="
+									width: 40px;
+									height: 40px;
+									flex-shrink: 0;
+								"
+							>
+								<img
+									src="android-chrome-192x192.png"
+									alt="KI Logo"
+									style="
+										width: 100%;
+										height: 100%;
+										object-fit: contain;
+										vertical-align: middle;
+									"
+								/>
+							</div>
+							<div class="site-logo__text">
+								<span class="site-logo__name-ja"
+									>加賀美インダストリアル</span
+								>
+								<span class="site-logo__name-en"
+									>Kagami Industrial Inc.</span
+								>
+							</div>
+						</div>
+						<p class="footer-brand__desc">
+							MATERIAL / HEAVY MACHINERY &amp; HOBBY /
+							ENTERTAINMENT
+						</p>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">Company</h4>
+						<ul class="footer-nav__list">
+							<li><a href="about.html">企業情報</a></li>
+							<li><a href="history.html">沿革</a></li>
+							<li><a href="business.html">事業紹介</a></li>
+							<li>
+								<a href="technology.html">技術・研究開発</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">Information</h4>
+						<ul class="footer-nav__list">
+							<li><a href="sustainability.html">CSR活動</a></li>
+							<li><a href="recruit.html">採用情報</a></li>
+							<li><a href="ir.html">投資家情報</a></li>
+						</ul>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">Group</h4>
+						<ul class="footer-nav__list">
+							<li>
+								<a href="business.html#group">加賀美リゾート</a>
+							</li>
+							<li>
+								<a href="business.html#group">加賀美損保</a>
+							</li>
+							<li>
+								<a href="business.html#group">加賀美水道局</a>
+							</li>
+							<li>
+								<a href="business.html#group">加賀美不動産</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">About</h4>
+						<ul class="footer-nav__list">
+							<li>
+								<a href="manager.html#manager">担当者紹介</a>
+							</li>
+							<li>
+								<a href="manager.html#policy">サイトポリシー</a>
+							</li>
+						</ul>
+					</div>
 
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">ROOM</h4>
+						<ul class="footer-nav__list">
+							<li><a href="enjoy.html">休憩室</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="footer-bottom">
+					<p class="footer-copyright">
+						&copy; Kagami Industrial (Unofficial Fan Site)
+					</p>
+					<p class="footer-disclaimer">
+						【免責事項】本サイトは、ANYCOLOR株式会社所属バーチャルライバー「加賀美ハヤト」様のファンによる非公式ファンサイトです。実在の人物・団体・企業とは一切関係ありません。掲載されている情報は、公式配信およびWiki等の情報を元にしたフィクションを含みます。
+					</p>
+				</div>
+			</div>
+		</footer>
 
+		<script src="js/main.js"></script>
+
+		<style>
+			@media (max-width: 768px) {
+				.ceo-grid {
+					grid-template-columns: 1fr !important;
+				}
+			}
+		</style>
+	</body>
 </html>

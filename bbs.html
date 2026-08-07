@@ -1,242 +1,400 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+	<head>
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-DYB1GGHVZ4"
+		></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
 
-<head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYB1GGHVZ4"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-        
-            gtag('config', 'G-DYB1GGHVZ4');
-        </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>社員掲示板 | 加賀美インダストリアル | 非公式</title>
-    <meta name="description" content="加賀美インダストリアル社員専用の社内掲示板です。">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/bbs.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta property="og:title" content="社員掲示板 | 【非公式】加賀美インダストリアル">
-    <meta property="og:description" content="加賀美インダストリアルの社内専用ポータル掲示板です。">
-    <meta property="og:image" content="https://kagami-industrial-unofficial-fansite.pages.dev/android-chrome-192x192.png">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <style>
-        /* 掲示板特有の簡易スタイル（必要に応じてCSSファイルに移行してください） */
-        .breadcrumb {
-            list-style: none;
-            display: flex;
-            gap: 10px;
-            padding: 15px 0;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-        .breadcrumb li { display: inline; }
-        .breadcrumb li + li::before {
-            content: ">";
-            margin-right: 10px;
-            color: rgba(255, 255, 255, 0.4);
-        }
-        .breadcrumb a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .breadcrumb a:hover { color: #d4af37; /* ゴールド系 */ }
-        
-        .page-header-simple {
-            padding: 60px 0 30px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 30px;
-        }
-        .form-input, .form-textarea {
-            width: 100%;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            border-radius: 4px;
-            font-family: inherit;
-        }
-        .form-input:focus, .form-textarea:focus {
-            outline: none;
-            border-color: #d4af37;
-        }
-    </style>
-</head>
+			gtag('config', 'G-DYB1GGHVZ4');
+		</script>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>社員掲示板 | 加賀美インダストリアル | 非公式</title>
+		<meta
+			name="description"
+			content="加賀美インダストリアル社員専用の社内掲示板です。"
+		/>
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/components.css" />
+		<link rel="stylesheet" href="css/bbs.css" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="/site.webmanifest" />
+		<meta
+			property="og:title"
+			content="社員掲示板 | 【非公式】加賀美インダストリアル"
+		/>
+		<meta
+			property="og:description"
+			content="加賀美インダストリアルの社内専用ポータル掲示板です。"
+		/>
+		<meta
+			property="og:image"
+			content="https://kagami-industrial-unofficial-fansite.pages.dev/android-chrome-192x192.png"
+		/>
+		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<body>
+		<style>
+			/* 掲示板特有の簡易スタイル（必要に応じてCSSファイルに移行してください） */
+			.breadcrumb {
+				list-style: none;
+				display: flex;
+				gap: 10px;
+				padding: 15px 0;
+				font-size: 0.85rem;
+				color: rgba(255, 255, 255, 0.6);
+			}
+			.breadcrumb li {
+				display: inline;
+			}
+			.breadcrumb li + li::before {
+				content: '>';
+				margin-right: 10px;
+				color: rgba(255, 255, 255, 0.4);
+			}
+			.breadcrumb a {
+				color: rgba(255, 255, 255, 0.6);
+				text-decoration: none;
+				transition: color 0.3s;
+			}
+			.breadcrumb a:hover {
+				color: #d4af37; /* ゴールド系 */
+			}
 
-    <header class="site-header">
-    <div class="container">
-        <a href="index.html" class="site-logo">
-            <div class="site-logo__mark" style="width: 40px; height: 40px; flex-shrink: 0;">
-                <img src="android-chrome-192x192.png" alt="KI Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: middle;">
-            </div>
-            <div class="site-logo__text">
-                <div class="site-logo__title-row">
-                    <span class="site-logo__name-ja">加賀美インダストリアル</span>
-                </div>
-                <span class="site-logo__name-en">Kagami Industrial Inc.</span>
-                <span class="site-logo__unofficial">非公式ファンサイト</span>
-            </div>
-        </a>
-        <nav class="main-nav">
-            <ul class="main-nav__list">
-                <li class="main-nav__item"><a href="index.html">Home</a></li>
-                <li class="main-nav__item"><a href="about.html">About</a></li>
-                <li class="main-nav__item"><a href="history.html">History</a></li>
-                <li class="main-nav__item"><a href="business.html">Business</a></li>
-                <li class="main-nav__item"><a href="technology.html">Technology</a></li>
-                <li class="main-nav__item"><a href="sustainability.html">CSR</a></li>
-                <li class="main-nav__item"><a href="recruit.html">Recruit</a></li>
-                <li class="main-nav__item"><a href="ir.html">IR</a></li>
-            </ul>
-        </nav>
-        <button class="hamburger" aria-label="メニュー">
-            <span></span><span></span><span></span>
-        </button>
-    </div>
-    </header>
+			.page-header-simple {
+				padding: 60px 0 30px;
+				text-align: center;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+				margin-bottom: 30px;
+			}
+			.form-input,
+			.form-textarea {
+				width: 100%;
+				padding: 12px;
+				background: rgba(255, 255, 255, 0.05);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				color: #fff;
+				border-radius: 4px;
+				font-family: inherit;
+			}
+			.form-input:focus,
+			.form-textarea:focus {
+				outline: none;
+				border-color: #d4af37;
+			}
+		</style>
+	</head>
 
-    <div class="mobile-nav-overlay">
-        <ul class="mobile-nav__list">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="history.html">History</a></li>
-            <li><a href="business.html">Business</a></li>
-            <li><a href="technology.html">Technology</a></li>
-            <li><a href="sustainability.html">Sustainability</a></li>
-            <li><a href="recruit.html">Recruit</a></li>
-            <li><a href="ir.html">IR</a></li>
-        </ul>
-    </div>
+	<body>
+		<header class="site-header">
+			<div class="container">
+				<a href="index.html" class="site-logo">
+					<div
+						class="site-logo__mark"
+						style="width: 40px; height: 40px; flex-shrink: 0"
+					>
+						<img
+							src="android-chrome-192x192.png"
+							alt="KI Logo"
+							style="
+								width: 100%;
+								height: 100%;
+								object-fit: contain;
+								vertical-align: middle;
+							"
+						/>
+					</div>
+					<div class="site-logo__text">
+						<div class="site-logo__title-row">
+							<span class="site-logo__name-ja"
+								>加賀美インダストリアル</span
+							>
+						</div>
+						<span class="site-logo__name-en"
+							>Kagami Industrial Inc.</span
+						>
+						<span class="site-logo__unofficial"
+							>非公式ファンサイト</span
+						>
+					</div>
+				</a>
+				<nav class="main-nav">
+					<ul class="main-nav__list">
+						<li class="main-nav__item">
+							<a href="index.html">Home</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="about.html">About</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="history.html">History</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="business.html">Business</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="technology.html">Technology</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="sustainability.html">CSR</a>
+						</li>
+						<li class="main-nav__item">
+							<a href="recruit.html">Recruit</a>
+						</li>
+						<li class="main-nav__item"><a href="ir.html">IR</a></li>
+					</ul>
+				</nav>
+				<button class="hamburger" aria-label="メニュー">
+					<span></span><span></span><span></span>
+				</button>
+			</div>
+		</header>
 
-    <main style="padding-top: 80px;"> <div class="container">
-            <ul class="breadcrumb fade-in">
-                <li><a href="index.html">HOME</a></li>
-                <li><a href="enjoy.html">休憩室 (ROOM)</a></li>
-                <li>社内掲示板</li>
-            </ul>
+		<div class="mobile-nav-overlay">
+			<ul class="mobile-nav__list">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="about.html">About Us</a></li>
+				<li><a href="history.html">History</a></li>
+				<li><a href="business.html">Business</a></li>
+				<li><a href="technology.html">Technology</a></li>
+				<li><a href="sustainability.html">Sustainability</a></li>
+				<li><a href="recruit.html">Recruit</a></li>
+				<li><a href="ir.html">IR</a></li>
+			</ul>
+		</div>
 
-            <div class="page-header-simple fade-in">
-                <span class="section-label">Bulletin Board</span>
-                <h1 class="section-title">社内掲示板</h1>
-                <p style="color: rgba(255, 255, 255, 0.6); margin-top: 5px;">業務連絡から日々の息抜きまで、社員間の交流にご活用ください。</p>
-            </div>
+		<main style="padding-top: 80px">
+			<div class="container">
+				<ul class="breadcrumb fade-in">
+					<li><a href="index.html">HOME</a></li>
+					<li><a href="enjoy.html">休憩室 (ROOM)</a></li>
+					<li>社内掲示板</li>
+				</ul>
 
-            <section class="section" style="max-width: 800px; margin: 0 auto; padding-top: 0;">
+				<div class="page-header-simple fade-in">
+					<span class="section-label">Bulletin Board</span>
+					<h1 class="section-title">社内掲示板</h1>
+					<p style="color: rgba(255, 255, 255, 0.6); margin-top: 5px">
+						業務連絡から日々の息抜きまで、社員間の交流にご活用ください。
+					</p>
+				</div>
 
-                <div id="bbs-section" class="bbs-container fade-in">
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px;">
-                        <div class="user-info-preview">
-                            <span style="color: rgba(255,255,255,0.6);">接続者: </span>
-                            <strong id="user-preview" style="font-family: var(--font-heading-ja, serif); font-size: 1.1rem; color: #fff;"></strong>
-                            <span style="margin-left: 15px; color: rgba(255,255,255,0.6);">ID: </span>
-                            <strong id="current-employee-id" style="font-family: var(--font-en, sans-serif); color: #d4af37; font-size: 1.1rem; letter-spacing: 0.05em;"></strong>
-                        </div>
-                        <button id="logout-btn" class="action-btn" onclick="logoutBBS()">ログアウト</button>
-                    </div>
+				<section
+					class="section"
+					style="max-width: 800px; margin: 0 auto; padding-top: 0"
+				>
+					<div id="bbs-section" class="bbs-container fade-in">
+						<div
+							style="
+								display: flex;
+								justify-content: space-between;
+								align-items: flex-end;
+								margin-bottom: 20px;
+								border-bottom: 1px solid
+									rgba(255, 255, 255, 0.1);
+								padding-bottom: 10px;
+							"
+						>
+							<div class="user-info-preview">
+								<span style="color: rgba(255, 255, 255, 0.6)"
+									>接続者:
+								</span>
+								<strong
+									id="user-preview"
+									style="
+										font-family: var(
+											--font-heading-ja,
+											serif
+										);
+										font-size: 1.1rem;
+										color: #fff;
+									"
+								></strong>
+								<span
+									style="
+										margin-left: 15px;
+										color: rgba(255, 255, 255, 0.6);
+									"
+									>ID:
+								</span>
+								<strong
+									id="current-employee-id"
+									style="
+										font-family: var(--font-en, sans-serif);
+										color: #d4af37;
+										font-size: 1.1rem;
+										letter-spacing: 0.05em;
+									"
+								></strong>
+							</div>
+							<button
+								id="logout-btn"
+								class="action-btn"
+								onclick="logoutBBS()"
+							>
+								ログアウト
+							</button>
+						</div>
 
-                    <div id="reply-badge" class="reply-target-badge"></div>
+						<div id="reply-badge" class="reply-target-badge"></div>
 
-                    <div class="post-form-card">
-                        <textarea id="post-content" placeholder="業務連絡、日報、または息抜きの雑談を入力してください..."></textarea>
-                        <div class="form-footer">
-                            <span style="font-size: 0.8rem; color: var(--color-text-muted);">※加賀美インダストリアル社内規定を遵守してご利用ください。</span>
-                            <button id="post-btn" class="btn-submit">送信</button>
-                        </div>
-                    </div>
+						<div class="post-form-card">
+							<textarea
+								id="post-content"
+								placeholder="業務連絡、日報、または息抜きの雑談を入力してください..."
+							></textarea>
+							<div class="form-footer">
+								<span
+									style="
+										font-size: 0.8rem;
+										color: var(--color-text-muted);
+									"
+									>※加賀美インダストリアル社内規定を遵守してご利用ください。</span
+								>
+								<button id="post-btn" class="btn-submit">
+									送信
+								</button>
+							</div>
+						</div>
 
-                    <div id="timeline" class="timeline">
-                        </div>
+						<div id="timeline" class="timeline"></div>
+					</div>
+				</section>
+			</div>
+		</main>
 
-                </div>
-            </section>
-        </div>
-    </main>
+		<footer class="site-footer">
+			<div class="container">
+				<div class="footer-main">
+					<div class="footer-brand">
+						<div class="site-logo" style="pointer-events: none">
+							<div
+								class="site-logo__mark"
+								style="
+									width: 40px;
+									height: 40px;
+									flex-shrink: 0;
+								"
+							>
+								<img
+									src="android-chrome-192x192.png"
+									alt="KI Logo"
+									style="
+										width: 100%;
+										height: 100%;
+										object-fit: contain;
+										vertical-align: middle;
+									"
+								/>
+							</div>
+							<div class="site-logo__text">
+								<span class="site-logo__name-ja"
+									>加賀美インダストリアル</span
+								>
+								<span class="site-logo__name-en"
+									>Kagami Industrial Inc.</span
+								>
+							</div>
+						</div>
+						<p class="footer-brand__desc">
+							MATERIAL / HEAVY MACHINERY &amp; HOBBY /
+							ENTERTAINMENT<br />
+							鋼鉄の巨人も、掌のミニカーも。すべての情熱は等価である。
+						</p>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">Company</h4>
+						<ul class="footer-nav__list">
+							<li><a href="about.html">企業情報</a></li>
+							<li><a href="history.html">沿革</a></li>
+							<li><a href="business.html">事業紹介</a></li>
+							<li>
+								<a href="technology.html">技術・研究開発</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">Information</h4>
+						<ul class="footer-nav__list">
+							<li><a href="sustainability.html">CSR活動</a></li>
+							<li><a href="recruit.html">採用情報</a></li>
+							<li><a href="ir.html">投資家情報</a></li>
+						</ul>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">Group</h4>
+						<ul class="footer-nav__list">
+							<li>
+								<a href="business.html#group">加賀美リゾート</a>
+							</li>
+							<li>
+								<a href="business.html#group">加賀美損保</a>
+							</li>
+							<li>
+								<a href="business.html#group">加賀美水道局</a>
+							</li>
+							<li>
+								<a href="business.html#group">加賀美不動産</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">About</h4>
+						<ul class="footer-nav__list">
+							<li>
+								<a href="manager.html#manager">担当者紹介</a>
+							</li>
+							<li>
+								<a href="manager.html#policy">サイトポリシー</a>
+							</li>
+						</ul>
+					</div>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-main">
-                <div class="footer-brand">
-                    <div class="site-logo" style="pointer-events: none;">
-                        <div class="site-logo__mark" style="width: 40px; height: 40px; flex-shrink: 0;">
-                    <img src="android-chrome-192x192.png" alt="KI Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: middle;">
-                </div>
-                        <div class="site-logo__text">
-                            <span class="site-logo__name-ja">加賀美インダストリアル</span>
-                            <span class="site-logo__name-en">Kagami Industrial Inc.</span>
-                        </div>
-                    </div>
-                    <p class="footer-brand__desc">
-                        MATERIAL / HEAVY MACHINERY &amp; HOBBY / ENTERTAINMENT<br>
-                        鋼鉄の巨人も、掌のミニカーも。すべての情熱は等価である。
-                    </p>
-                </div>
-                <div class="footer-nav">
-                    <h4 class="footer-nav__title">Company</h4>
-                    <ul class="footer-nav__list">
-                        <li><a href="about.html">企業情報</a></li>
-                        <li><a href="history.html">沿革</a></li>
-                        <li><a href="business.html">事業紹介</a></li>
-                        <li><a href="technology.html">技術・研究開発</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav">
-                    <h4 class="footer-nav__title">Information</h4>
-                    <ul class="footer-nav__list">
-                        <li><a href="sustainability.html">CSR活動</a></li>
-                        <li><a href="recruit.html">採用情報</a></li>
-                        <li><a href="ir.html">投資家情報</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav">
-                    <h4 class="footer-nav__title">Group</h4>
-                    <ul class="footer-nav__list">
-                        <li><a href="business.html#group">加賀美リゾート</a></li>
-                        <li><a href="business.html#group">加賀美損保</a></li>
-                        <li><a href="business.html#group">加賀美水道局</a></li>
-                        <li><a href="business.html#group">加賀美不動産</a></li>
-                    </ul>
-                </div>
-                <div class="footer-nav">
-                    <h4 class="footer-nav__title">About</h4>
-                    <ul class="footer-nav__list">
-                        <li><a href="manager.html#manager">担当者紹介</a></li>
-                        <li><a href="manager.html#policy">サイトポリシー</a></li>
-                    </ul>
-                </div>
+					<div class="footer-nav">
+						<h4 class="footer-nav__title">ROOM</h4>
+						<ul class="footer-nav__list">
+							<li><a href="enjoy.html">休憩室</a></li>
+							<li><a href="bbs.html">社員掲示板</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="footer-bottom">
+					<p class="footer-copyright">
+						&copy; Kagami Industrial (Unofficial Fan Site)
+					</p>
+					<p class="footer-disclaimer">
+						【免責事項】<br />
+						本サイトは、ANYCOLOR株式会社所属バーチャルライバー「加賀美ハヤト」様のファンによる非公式ファンサイトです。<br />
+						実在の人物・団体・企業とは一切関係ありません。<br />
+						掲載されている情報は、公式配信およびWiki等の情報を元にしたフィクションを含みます。
+					</p>
+				</div>
+			</div>
+		</footer>
 
-                <div class="footer-nav">
-                    <h4 class="footer-nav__title">ROOM</h4>
-                    <ul class="footer-nav__list">
-                        <li><a href="enjoy.html">休憩室</a></li>
-                        <li><a href="bbs.html">社員掲示板</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p class="footer-copyright">&copy; Kagami Industrial (Unofficial Fan Site)</p>
-                <p class="footer-disclaimer">
-                    【免責事項】<br>
-                    本サイトは、ANYCOLOR株式会社所属バーチャルライバー「加賀美ハヤト」様のファンによる非公式ファンサイトです。<br>
-                    実在の人物・団体・企業とは一切関係ありません。<br>
-                    掲載されている情報は、公式配信およびWiki等の情報を元にしたフィクションを含みます。
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
-    <script src="js/bbs.js"></script>
-
-</body>
+		<script src="js/main.js"></script>
+		<script src="js/bbs.js"></script>
+	</body>
 </html>
