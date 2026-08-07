@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // --- データベースへ保存 ---
       try {
-        const { data, error } = await _supabase.from('ranking').insert([
+        const { error } = await _supabase.from('ranking').insert([
           {
             name: playerName,
             score: score,

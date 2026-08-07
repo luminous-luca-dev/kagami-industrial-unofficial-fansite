@@ -38,8 +38,8 @@ document.addEventListener(
       Promise.resolve().then(() => {
         console.log('link-debug post-click defaultPrevented=', e.defaultPrevented, 'target=', a.outerHTML);
       });
-    } catch (err) {
-      console.error('link-debug click error', err);
+    } catch {
+      console.error('link-debug click error');
     }
   },
   { capture: true }
