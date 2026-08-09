@@ -40,22 +40,28 @@
   // Synthetic market data only: no external HTTP proxy required
   function fetchMarketData(symbol, range){
     const dates = buildDateSeries(range);
-    return Promise.resolve(buildSyntheticMarketData(symbol, dates));
+    return Promise.resolve(buildSyntheticMarketData(symbol, dates, range));
   }
 
   function buildDateSeries(range){
     const end = new Date();
-    const count = range === '1d' ? 8 : range === '5d' ? 16 : range === '1mo' ? 22 : 66;
+    let count;
+    if(range === 'realtime') count = 12;
+    else if(range === '1d') count = 8;
+    else if(range === '5d') count = 16;
+    else if(range === '1mo') count = 22;
+    else count = 66;
     const dates = [];
     for(let i = count - 1; i >= 0; i -= 1){
       const date = new Date(end);
-      date.setDate(end.getDate() - i);
+      if(range === 'realtime') date.setMinutes(end.getMinutes() - i * 5);
+      else date.setDate(end.getDate() - i);
       dates.push(date);
     }
     return dates;
   }
 
-  function buildSyntheticMarketData(symbol, dates){
+  function buildSyntheticMarketData(symbol, dates, range){
     const basePrices = {
       'KGM': 1000,
       '7974.T': 62000,
@@ -63,6 +69,13 @@
       '7832.T': 8500,
       'GOOGL': 135
     };
+    const rangeVol = {
+      'realtime': 0.06,
+      '1d': 0.04,
+      '5d': 0.035,
+      '1mo': 0.03,
+      '3mo': 0.025
+    }[range] || 0.03;
     const volFactors = {
       'KGM': 0.015,
       '7974.T': 0.03,
@@ -75,8 +88,8 @@
     let previousClose = base * (1 + (Math.random() - 0.5) * 0.02);
     return dates.map((date, index)=>{
       const driftRate = symbol === 'KGM' ? 0.00015 : 0.00008;
-      const dailyReturn = (Math.random() - 0.5) * vol * 2 + driftRate;
-      const close = Math.max(1, previousClose * (1 + dailyReturn));
+      const frameReturn = (Math.random() - 0.5) * rangeVol * 2 + driftRate;
+      const close = Math.max(1, previousClose * (1 + frameReturn));
       const rangeSize = close * vol * 0.18;
       const high = Math.max(close, close + Math.abs(rangeSize * (Math.random() * 0.6 + 0.2)));
       const low = Math.min(close, close - Math.abs(rangeSize * (Math.random() * 0.6 + 0.2)));
@@ -146,7 +159,7 @@
     }else{
       state.chart = new Chart(ctx, {
         type: 'line',
-        data: { labels, datasets:[{ label:'Close', data: data.map(d=>d.c), borderColor: 'rgba(18,44,79,0.9)', backgroundColor:'rgba(18,44,79,0.08)', pointRadius:0, fill:true }] },
+        data: { labels, datasets:[{ label:'Close', data: data.map(d=>d.c), borderColor: 'rgba(18,44,79,0.9)', backgroundColor:'rgba(18,44,79,0.08)', pointRadius:0, fill:true, tension:0.25 }] },
         options: { plugins:{legend:{display:false}}, scales:{ x:{ type:'category' }, y:{ beginAtZero:false } } }
       });
     }
