@@ -1,0 +1,1232 @@
+/* ================================================================
+   KAGAMI FINANCE — finance.css
+   加賀美ファイナンス 取引ページ専用スタイル
+   デザインシステム: style.css / components.css に準拠
+   ================================================================ */
+
+/* ── ページ全体ダークテーマ ──────────────────────────────────── */
+body.finance-page {
+  --fin-bg: #0d1924;
+  --fin-surface: #142030;
+  --fin-surface-2: #1a2d40;
+  --fin-border: rgba(200, 166, 94, 0.13);
+  --fin-border-soft: rgba(255, 255, 255, 0.07);
+  --fin-text: rgba(255, 255, 255, 0.88);
+  --fin-text-sub: rgba(255, 255, 255, 0.55);
+  --fin-text-muted: rgba(255, 255, 255, 0.32);
+  --fin-accent: #c8a65e;
+  --fin-up: #d4a94d;
+  --fin-down: #7aadd6;
+  /* チャート背景: 周りより少し薄い、薄い青ではない青 */
+  --fin-chart-default: #1e3350;
+
+  background-color: var(--fin-bg);
+  color: var(--fin-text);
+}
+
+/* ── ヘッダー ────────────────────────────────────────────────── */
+.finance-header {
+  background: linear-gradient(135deg, #081220 0%, #122c4f 55%, #0f2240 100%);
+  border-bottom: 1px solid var(--fin-border);
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ヘッダー底辺のゴールドライン */
+.finance-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(200, 166, 94, 0.5) 30%, rgba(212, 184, 118, 0.8) 50%, rgba(200, 166, 94, 0.5) 70%, transparent 100%);
+}
+
+/* ヘッダー背景の微細テクスチャライン */
+.finance-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(200, 166, 94, 0.015) 80px, rgba(200, 166, 94, 0.015) 81px);
+  pointer-events: none;
+}
+
+.finance-header__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+/* 左: KFG ブランド */
+.finance-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.finance-brand__group {
+  font-family: var(--font-heading-ja);
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.finance-brand__divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--fin-accent) 0%, transparent 70%);
+  opacity: 0.7;
+}
+
+.finance-brand__company {
+  font-family: var(--font-body-ja);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--fin-accent);
+  font-weight: 500;
+}
+
+/* 右: KI リンク */
+.finance-ki-link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  border-left: 1px solid rgba(200, 166, 94, 0.2);
+  padding-left: 1.75rem;
+  transition: opacity var(--transition-fast);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.finance-ki-link:hover {
+  opacity: 0.78;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.finance-ki-link__mark {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.finance-ki-link__mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.finance-ki-link__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.finance-ki-link__name {
+  font-family: var(--font-heading-ja);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.finance-ki-link__sub {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.35);
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+/* ── メインレイアウト ─────────────────────────────────────────── */
+.finance-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── ツールバー ──────────────────────────────────────────────── */
+.finance-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: var(--fin-surface);
+  border: 1px solid var(--fin-border-soft);
+  border-radius: 4px;
+  padding: 0.7rem 1.1rem;
+  flex-wrap: wrap;
+}
+
+.toolbar-section {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.toolbar-section--controls {
+  flex: 1;
+  flex-wrap: nowrap;
+}
+
+.toolbar-section--balance {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* ツールバー区切り線 */
+.toolbar-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.toolbar-label {
+  font-family: var(--font-en);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fin-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* セレクトボックス */
+.finance-select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--fin-border-soft);
+  color: var(--fin-text);
+  padding: 0.38rem 0.65rem;
+  font-family: var(--font-body-ja);
+  font-size: 0.8rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+  outline: none;
+  max-width: 200px;
+}
+
+.finance-select:focus {
+  border-color: var(--fin-accent);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.finance-select option {
+  background: #16283a;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* トグルボタン */
+.btn-toggle {
+  display: flex;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--fin-border-soft);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--fin-border-soft);
+  color: var(--fin-text-sub);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.toggle-btn:last-child {
+  border-right: none;
+}
+
+.toggle-btn:hover {
+  background: rgba(200, 166, 94, 0.1);
+  color: var(--fin-accent);
+}
+
+.toggle-btn.active {
+  background: var(--color-primary);
+  color: var(--fin-accent);
+  font-weight: 700;
+}
+
+/* KGM 残高表示 */
+.kgm-balance-display {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(200, 166, 94, 0.07);
+  border: 1px solid rgba(200, 166, 94, 0.22);
+  border-radius: 4px;
+  padding: 0.42rem 1.1rem;
+}
+
+.kgm-balance__icon {
+  font-size: 0.85rem;
+}
+
+.kgm-balance__label {
+  font-size: 0.62rem;
+  color: var(--fin-text-muted);
+  font-family: var(--font-en);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kgm-balance__amount {
+  font-family: var(--font-en);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--fin-accent);
+  letter-spacing: 0.03em;
+  min-width: 5ch;
+  text-align: right;
+  transition: color 0.3s;
+}
+
+@keyframes balance-flash {
+  0% {
+    color: var(--fin-accent);
+  }
+  40% {
+    color: #f0d48a;
+    text-shadow: 0 0 14px rgba(200, 166, 94, 0.6);
+  }
+  100% {
+    color: var(--fin-accent);
+  }
+}
+
+.kgm-balance__amount.flash {
+  animation: balance-flash 0.45s ease;
+}
+
+.kgm-balance__unit {
+  font-family: var(--font-en);
+  font-size: 0.65rem;
+  color: var(--fin-text-muted);
+  letter-spacing: 0.1em;
+}
+
+/* DEBUG ボタン */
+.btn--debug {
+  background: rgba(255, 90, 90, 0.1);
+  border: 1px solid rgba(255, 90, 90, 0.22);
+  color: rgba(255, 150, 150, 0.85);
+  padding: 0.42rem 0.9rem;
+  font-size: 0.68rem;
+  font-family: var(--font-en);
+  letter-spacing: 0.06em;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn--debug:hover {
+  background: rgba(255, 90, 90, 0.18);
+  border-color: rgba(255, 90, 90, 0.4);
+  color: #ffb0b0;
+}
+
+/* ── チャートセクション ───────────────────────────────────────── */
+.finance-chart-section {
+  background: var(--fin-surface);
+  border: 1px solid var(--fin-border-soft);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.chart-info-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.35rem;
+  border-bottom: 1px solid var(--fin-border-soft);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.chart-info-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.chart-ticker {
+  font-family: var(--font-en);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--fin-accent);
+  background: rgba(200, 166, 94, 0.1);
+  border: 1px solid rgba(200, 166, 94, 0.22);
+  padding: 0.18rem 0.65rem;
+  border-radius: 3px;
+}
+
+.chart-symbol-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.chart-symbol-name {
+  font-family: var(--font-heading-ja);
+  font-size: 0.95rem;
+  color: var(--fin-text);
+  line-height: 1.2;
+}
+
+.chart-symbol-desc {
+  font-size: 0.65rem;
+  color: var(--fin-text-muted);
+  letter-spacing: 0.04em;
+}
+
+.chart-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.market-status {
+  display: flex;
+  align-items: center;
+  gap: 0.38rem;
+}
+
+.market-status__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 7px rgba(74, 222, 128, 0.6);
+  animation: pulse-green 2s ease-in-out infinite;
+}
+
+@keyframes pulse-green {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.82);
+  }
+}
+
+.market-status__text {
+  font-family: var(--font-en);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  color: #4ade80;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.chart-info-right {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.chart-price-label {
+  font-size: 0.7rem;
+  color: var(--fin-text-muted);
+  font-family: var(--font-en);
+  letter-spacing: 0.08em;
+}
+
+.chart-price-value {
+  font-family: var(--font-en);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--fin-text);
+  letter-spacing: 0.02em;
+  transition: color 0.3s;
+}
+
+.chart-price-unit {
+  font-family: var(--font-en);
+  font-size: 0.78rem;
+  color: var(--fin-text-muted);
+}
+
+.chart-price-change {
+  font-family: var(--font-en);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.18rem 0.55rem;
+  border-radius: 3px;
+  transition: all 0.3s;
+  min-width: 8ch;
+  text-align: center;
+}
+
+.chart-price-change.up {
+  background: rgba(200, 166, 94, 0.12);
+  color: var(--fin-up);
+}
+
+.chart-price-change.down {
+  background: rgba(122, 173, 214, 0.12);
+  color: var(--fin-down);
+}
+
+/* ── チャートキャンバスエリア ─────────────────────────────────── */
+.chart-area {
+  position: relative;
+  height: 420px;
+  background-color: var(--fin-chart-default); /* デフォルト: 深い青 */
+  transition: background-color 0.9s ease;
+  padding: 1rem 0.75rem 0.75rem;
+  overflow: hidden;
+}
+
+/* 含み益オーバーレイ（擬似要素でグラデーション） */
+.chart-area::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  z-index: 0;
+}
+
+/* 含み益: 淡い金色背景 */
+.chart-area.bg-profit {
+  background-color: #20261a;
+}
+
+.chart-area.bg-profit::before {
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(200, 166, 94, 0.2) 0%, rgba(200, 166, 94, 0.06) 50%, transparent 100%);
+  opacity: 1;
+}
+
+/* 含み損: グレー背景 */
+.chart-area.bg-loss {
+  background-color: #1e1e1e;
+}
+
+.chart-area.bg-loss::before {
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(160, 160, 160, 0.14) 0%, rgba(100, 100, 100, 0.04) 50%, transparent 100%);
+  opacity: 1;
+}
+
+.chart-area canvas {
+  position: relative;
+  z-index: 1;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* ── ボトムグリッド ────────────────────────────────────────────── */
+.finance-bottom-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* ── ファイナンスカード共通 ─────────────────────────────────────── */
+.finance-card {
+  background: var(--fin-surface);
+  border: 1px solid var(--fin-border-soft);
+  border-radius: 4px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* カード上部ゴールドアクセントライン */
+.finance-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--fin-accent) 0%, rgba(200, 166, 94, 0.3) 50%, transparent 100%);
+  opacity: 0.55;
+}
+
+.finance-card__title {
+  font-family: var(--font-heading-ja);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fin-text);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--fin-border-soft);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.finance-card__title-icon {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ── 注文カード ──────────────────────────────────────────────── */
+.trade-price-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  padding: 0.9rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--fin-border-soft);
+  border-radius: 3px;
+}
+
+.trade-price-label {
+  font-size: 0.7rem;
+  color: var(--fin-text-muted);
+  font-family: var(--font-en);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.trade-price-value {
+  font-family: var(--font-en);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--fin-accent);
+  flex: 1;
+  text-align: right;
+  transition: color 0.3s;
+}
+
+.trade-price-unit {
+  font-size: 0.7rem;
+  color: var(--fin-text-muted);
+  white-space: nowrap;
+}
+
+/* 数量コントロール */
+.qty-control {
+  margin-bottom: 1rem;
+}
+
+.qty-label {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--fin-text-sub);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+.qty-input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--fin-border-soft);
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.qty-step-btn {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: var(--fin-text-sub);
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.qty-step-btn:hover {
+  background: rgba(200, 166, 94, 0.15);
+  color: var(--fin-accent);
+}
+
+.qty-step-btn:active {
+  transform: scale(0.95);
+}
+
+.qty-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--fin-text);
+  font-family: var(--font-en);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  padding: 0.5rem;
+  min-width: 0;
+  -moz-appearance: textfield;
+}
+
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* コスト行 */
+.trade-cost-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--fin-border-soft);
+}
+
+.trade-cost-label {
+  font-size: 0.78rem;
+  color: var(--fin-text-muted);
+}
+
+.trade-cost-value {
+  font-family: var(--font-en);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fin-text);
+}
+
+/* 買う・売るボタン */
+.trade-action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.trade-action-btn {
+  padding: 0.9rem;
+  font-family: var(--font-heading-ja);
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+}
+
+.trade-action-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.trade-action-btn:hover::after {
+  opacity: 1;
+}
+
+.trade-action-btn__icon {
+  font-size: 0.65rem;
+}
+
+/* 買うボタン: ゴールド */
+.trade-action-btn--buy {
+  background: linear-gradient(135deg, #a8883a 0%, #c8a65e 50%, #d4b46a 100%);
+  color: #0a1520;
+  box-shadow: 0 3px 14px rgba(200, 166, 94, 0.28);
+}
+
+.trade-action-btn--buy:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 22px rgba(200, 166, 94, 0.4);
+}
+
+.trade-action-btn--buy:active {
+  transform: translateY(0);
+}
+
+/* 売るボタン: ダークグレー枠 */
+.trade-action-btn--sell {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--fin-text-sub);
+  border: 1px solid var(--fin-border-soft);
+}
+
+.trade-action-btn--sell:hover {
+  background: rgba(122, 173, 214, 0.1);
+  color: var(--fin-down);
+  border-color: rgba(122, 173, 214, 0.3);
+  transform: translateY(-2px);
+}
+
+.trade-action-btn--sell:active {
+  transform: translateY(0);
+}
+
+/* プリセット株数ボタン */
+.qty-presets {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.qty-preset-btn {
+  flex: 1;
+  padding: 0.28rem 0;
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--fin-border-soft);
+  border-radius: 3px;
+  color: var(--fin-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.04em;
+}
+
+.qty-preset-btn:hover {
+  background: rgba(200, 166, 94, 0.1);
+  border-color: rgba(200, 166, 94, 0.3);
+  color: var(--fin-accent);
+}
+
+.qty-preset-btn.active-preset {
+  background: rgba(200, 166, 94, 0.15);
+  border-color: rgba(200, 166, 94, 0.4);
+  color: var(--fin-accent);
+}
+
+/* トレードメッセージ */
+.trade-msg {
+  font-size: 0.78rem;
+  text-align: center;
+  color: var(--fin-text-muted);
+  min-height: 1.4em;
+  transition: all 0.3s;
+  line-height: 1.5;
+}
+
+.trade-msg.success {
+  color: #86efac;
+}
+.trade-msg.error {
+  color: #fca5a5;
+}
+
+/* ── 保有銘柄カード ───────────────────────────────────────────── */
+.holdings-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.holdings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+.holdings-table th {
+  text-align: right;
+  padding: 0.45rem 0.75rem;
+  font-family: var(--font-en);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fin-text-muted);
+  border-bottom: 1px solid var(--fin-border-soft);
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.holdings-table .th-left {
+  text-align: left;
+}
+
+.holdings-table td {
+  text-align: right;
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: var(--fin-text-sub);
+  font-family: var(--font-en);
+  white-space: nowrap;
+  transition: background 0.2s;
+  vertical-align: middle;
+}
+
+.holdings-table td:first-child {
+  text-align: left;
+  font-family: var(--font-body-ja);
+  color: var(--fin-text);
+  font-size: 0.82rem;
+}
+
+.holdings-table tr:last-child td {
+  border-bottom: none;
+}
+.holdings-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.holdings-empty-row td {
+  text-align: center !important;
+  color: var(--fin-text-muted);
+  padding: 2rem 0;
+  font-family: var(--font-body-ja);
+  font-size: 0.85rem;
+}
+
+/* 損益カラー */
+.pnl-positive {
+  color: var(--fin-up) !important;
+  font-weight: 700;
+}
+.pnl-negative {
+  color: var(--fin-down) !important;
+  font-weight: 700;
+}
+
+.holdings-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--fin-border-soft);
+}
+
+.holdings-footer__label {
+  font-size: 0.78rem;
+  color: var(--fin-text-muted);
+}
+
+.holdings-footer__value {
+  font-family: var(--font-en);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--fin-text);
+  transition: color 0.3s;
+}
+
+/* ── ガイドカード ─────────────────────────────────────────────── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+.info-item {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+
+.info-item__icon {
+  font-size: 1.35rem;
+  flex-shrink: 0;
+  margin-top: 0.08rem;
+}
+
+.info-item__body h4 {
+  font-family: var(--font-heading-ja);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--fin-text);
+  margin-bottom: 0.35rem;
+}
+
+.info-item__body p {
+  font-size: 0.78rem;
+  color: var(--fin-text-muted);
+  line-height: 1.75;
+}
+
+.info-item__body strong {
+  color: var(--fin-accent);
+  font-weight: 600;
+}
+
+/* ── トースト通知 ─────────────────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--fin-surface-2);
+  border: 1px solid var(--fin-border-soft);
+  color: var(--fin-text);
+  padding: 0.8rem 1.25rem;
+  border-radius: 4px;
+  font-size: 0.84rem;
+  font-family: var(--font-body-ja);
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.5);
+  transform: translateX(130%);
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s ease;
+  opacity: 0;
+  max-width: 300px;
+  border-left: 3px solid var(--fin-text-muted);
+}
+
+.toast--visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast--success {
+  border-left-color: #4ade80;
+}
+.toast--error {
+  border-left-color: #fca5a5;
+}
+.toast--info {
+  border-left-color: var(--fin-accent);
+}
+
+/* ── 小銘柄ラベル（保有テーブル内） ────────────────────── */
+.holding-sym-code {
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  opacity: 0.5;
+  display: block;
+  letter-spacing: 0.06em;
+}
+
+/* ── 取引履歴テーブル ─────────────────────────────────────── */
+.history-card {
+  overflow: hidden;
+}
+
+.history-table-wrapper {
+  overflow-x: auto;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.history-table-wrapper::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.history-table-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.history-table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(200, 166, 94, 0.25);
+  border-radius: 2px;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.history-table th {
+  text-align: right;
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-en);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fin-text-muted);
+  border-bottom: 1px solid var(--fin-border-soft);
+  white-space: nowrap;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  background: var(--fin-surface);
+  z-index: 1;
+}
+
+.history-table .th-left {
+  text-align: left;
+}
+
+.history-table td {
+  text-align: right;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  color: var(--fin-text-sub);
+  font-family: var(--font-en);
+  white-space: nowrap;
+  transition: background 0.2s;
+  vertical-align: middle;
+  font-size: 0.8rem;
+}
+
+.history-table td:first-child,
+.history-table td:nth-child(2) {
+  text-align: left;
+  font-family: var(--font-body-ja);
+  color: var(--fin-text);
+}
+
+.history-table tr:last-child td {
+  border-bottom: none;
+}
+.history-table tr:hover td {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+/* 区分バッジ */
+.trade-badge {
+  display: inline-block;
+  padding: 0.18rem 0.6rem;
+  border-radius: 2px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: var(--font-en);
+  letter-spacing: 0.06em;
+}
+
+.trade-badge--buy {
+  background: rgba(200, 166, 94, 0.15);
+  color: var(--fin-up);
+  border: 1px solid rgba(200, 166, 94, 0.25);
+}
+
+.trade-badge--sell {
+  background: rgba(122, 173, 214, 0.1);
+  color: var(--fin-down);
+  border: 1px solid rgba(122, 173, 214, 0.2);
+}
+
+/* 履歴クリアボタン */
+.history-clear-btn {
+  margin-left: auto;
+  padding: 0.22rem 0.7rem;
+  font-size: 0.62rem;
+  font-family: var(--font-en);
+  letter-spacing: 0.06em;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 3px;
+  color: var(--fin-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.history-clear-btn:hover {
+  background: rgba(255, 90, 90, 0.1);
+  border-color: rgba(255, 90, 90, 0.25);
+  color: rgba(255, 150, 150, 0.85);
+}
+
+/* ── レスポンシブ ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .finance-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .finance-main {
+    padding: 1rem 1rem 3.5rem;
+  }
+
+  .finance-header__inner {
+    padding: 0 1rem;
+  }
+
+  .finance-brand__group {
+    font-size: 0.92rem;
+  }
+
+  .finance-ki-link {
+    padding-left: 1rem;
+  }
+
+  .finance-ki-link__name {
+    display: none;
+  }
+
+  .chart-area {
+    height: 300px;
+  }
+
+  .chart-price-value {
+    font-size: 1.25rem;
+  }
+
+  .toolbar-section--controls {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .toolbar-section--right {
+    gap: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .finance-brand__group {
+    font-size: 0.82rem;
+  }
+
+  .finance-ki-link {
+    display: none;
+  }
+
+  .chart-area {
+    height: 240px;
+  }
+
+  .chart-info-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

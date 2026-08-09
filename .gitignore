@@ -6,3 +6,5 @@ node_modules/
 
 # 環境変数ファイル（SupabaseのAPIキーなどを隠すため）
 .env
+
+Supabase Snippet Untitled query.csv
