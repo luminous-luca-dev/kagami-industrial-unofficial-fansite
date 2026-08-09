@@ -428,16 +428,31 @@ async function generateIdCard(name) {
 
     // ボタンクリック時の挙動をスマホ共有対応に書き換え
     downloadBtn.onclick = async () => {
-      const dataUrl = canvas.toDataURL('image/png');
-      const fileName = `kagami_industrial_id_${name.trim()}.png`;
+      const jpegDataUrl = canvas.toDataURL('image/jpeg', 1.0);
+      const fileName = `kagami_industrial_id_${name.trim()}.jpg`;
+
+      const xmp = buildXmpMetadata({
+        title: '加賀美インダストリアル 社員証',
+        description: `社員証: ${name.trim()} / ${dept} / ${rank}`,
+        creator: '加賀美インダストリアル',
+        subject: '社員証, 加賀美インダストリアル, 非公式',
+        keywords: '社員証,加賀美インダストリアル,非公式',
+        custom: {
+          EmployeeID: empId,
+          EmployeeName: name.trim(),
+          Department: dept,
+          Rank: rank,
+        },
+      });
+      const finalDataUrl = insertXmpIntoJpegDataUrl(jpegDataUrl, xmp);
 
       // --- 方法2: Web Share API (スマホ用) ---
       if (navigator.share) {
         try {
           // Base64をBlobに変換してファイルオブジェクトを作成
-          const blob = await (await fetch(dataUrl)).blob();
+          const blob = await (await fetch(finalDataUrl)).blob();
           const file = new File([blob], fileName, {
-            type: 'image/png',
+            type: 'image/jpeg',
           });
 
           // 共有可能かチェックしてから実行
@@ -458,7 +473,7 @@ async function generateIdCard(name) {
       // --- 方法1: 従来のファイルダウンロード (PC or Share未対応スマホ用) ---
       const link = document.createElement('a');
       link.download = fileName;
-      link.href = dataUrl;
+      link.href = finalDataUrl;
       link.click();
     };
   }
@@ -467,6 +482,78 @@ async function generateIdCard(name) {
     genBtn.disabled = false;
     genBtn.innerText = '社員証を発行する';
   }
+}
+
+function escapeXml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+function utf8ToBinaryString(value) {
+  const bytes = new TextEncoder().encode(String(value));
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return binary;
+}
+
+function buildXmpMetadata({ title, description, creator, subject, keywords, custom }) {
+  const escapedTitle = escapeXml(title || '');
+  const escapedDescription = escapeXml(description || '');
+  const escapedCreator = escapeXml(creator || '');
+  const escapedSubject = escapeXml(subject || '');
+  const escapedKeywords = escapeXml(keywords || '');
+
+  let customTags = '';
+  if (custom) {
+    Object.keys(custom).forEach((key) => {
+      const value = custom[key];
+      if (value != null) {
+        const escapedKey = escapeXml(key);
+        customTags += `<KI:${escapedKey}>${escapeXml(String(value))}</KI:${escapedKey}>`;
+      }
+    });
+  }
+
+  return (
+    '<?xpacket begin="" id="W5M0MpCehiHzreSzNTczkc9d"?>' +
+    '<x:xmpmeta xmlns:x="adobe:ns:meta/">' +
+    '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">' +
+    '<rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:KI="http://kagami-industrial.example.com/ns/">' +
+    `<dc:title><rdf:Alt><rdf:li xml:lang="x-default">${escapedTitle}</rdf:li></rdf:Alt></dc:title>` +
+    `<dc:description><rdf:Alt><rdf:li xml:lang="x-default">${escapedDescription}</rdf:li></rdf:Alt></dc:description>` +
+    `<dc:creator><rdf:Seq><rdf:li>${escapedCreator}</rdf:li></rdf:Seq></dc:creator>` +
+    `<dc:subject><rdf:Bag><rdf:li>${escapedSubject}</rdf:li></rdf:Bag></dc:subject>` +
+    `<xmp:Label>${escapedKeywords}</xmp:Label>` +
+    `<xmp:MetadataDate>${new Date().toISOString()}</xmp:MetadataDate>` +
+    customTags +
+    '</rdf:Description>' +
+    '</rdf:RDF>' +
+    '</x:xmpmeta>' +
+    '<?xpacket end="w"?>'
+  );
+}
+
+function insertXmpIntoJpegDataUrl(jpegDataUrl, xmpXml) {
+  const prefix = 'data:image/jpeg;base64,';
+  if (!jpegDataUrl.startsWith(prefix)) {
+    return jpegDataUrl;
+  }
+
+  const jpegBinary = atob(jpegDataUrl.slice(prefix.length));
+  const xmpHeader = 'http://ns.adobe.com/xap/1.0/\x00';
+  const xmpPayload = utf8ToBinaryString(xmpXml);
+  const app1Body = xmpHeader + xmpPayload;
+  const app1Length = app1Body.length + 2;
+  const app1Segment = '\xFF\xE1' + String.fromCharCode((app1Length >> 8) & 0xff, app1Length & 0xff) + app1Body;
+
+  const newJpegBinary = jpegBinary.slice(0, 2) + app1Segment + jpegBinary.slice(2);
+  return prefix + btoa(newJpegBinary);
 }
 
 // Bind to form buttons
