@@ -3,128 +3,330 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>加賀美ファイナンス | Kagami Finance</title>
+    <title>加賀美ファイナンス | 株式取引デモ | Kagami Finance</title>
+    <meta name="description" content="加賀美ファイナンス株式会社 — 加賀美グループ各社の株式をKGMで売買できるデモトレードサービス。初心者に優しい株取引体験。" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/finance.css" />
-    <meta name="description" content="加賀美ファイナンス — 気軽にトレード体験できるデモ取引ページ" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   </head>
-  <body>
+  <body class="finance-page">
+
+    <!-- ======================== HEADER ======================== -->
     <header class="finance-header">
-      <div class="container" style="display:flex;align-items:center;justify-content:space-between">
-        <div class="finance-left">
-          <div class="kfg-name">加賀美フィナンシャル・グループ</div>
-          <div class="kfg-sub">加賀美ファイナンス</div>
+      <div class="finance-header__inner">
+
+        <!-- Left: KFG ブランド -->
+        <div class="finance-brand">
+          <div class="finance-brand__group">加賀美フィナンシャル・グループ</div>
+          <div class="finance-brand__divider"></div>
+          <div class="finance-brand__company">加賀美ファイナンス</div>
         </div>
-        <div class="finance-right">
-          <a href="index.html" class="site-logo">
-            <div class="site-logo__mark"><img src="android-chrome-192x192.png" alt="KI" /></div>
-            <div class="site-logo__text">
-              <div class="site-logo__title-row">加賀美インダストリアル</div>
-              <span class="site-logo__unofficial">非公式ファンサイト</span>
-            </div>
-          </a>
-        </div>
+
+        <!-- Right: KI ファンサイトへのリンク -->
+        <a href="index.html" class="finance-ki-link" title="加賀美インダストリアル 非公式ファンサイト">
+          <div class="finance-ki-link__mark">
+            <img src="android-chrome-192x192.png" alt="Kagami Industrial Logo" />
+          </div>
+          <div class="finance-ki-link__text">
+            <div class="finance-ki-link__name">加賀美インダストリアル</div>
+            <div class="finance-ki-link__sub">非公式ファンサイト</div>
+          </div>
+        </a>
+
       </div>
     </header>
 
-    <main class="finance-main container">
-      <section class="panel chart-panel">
-        <div class="chart-controls">
-          <label>銘柄
-            <select id="symbolSelect">
-              <option value="KGM">KGM（加賀美）</option>
-              <option value="7974.T">任天堂 (7974.T)</option>
-              <option value="7203.T">トヨタ (7203.T)</option>
-              <option value="7832.T">バンダイ (7832.T)</option>
-              <option value="GOOGL">Google (GOOGL)</option>
-            </select>
-          </label>
-          <label>時間足
-            <select id="rangeSelect">
-              <option value="realtime">リアルタイム</option>
-              <option value="1d">1日</option>
-              <option value="5d">5日</option>
-              <option value="1mo" selected>1ヶ月</option>
-              <option value="3mo">3ヶ月</option>
-            </select>
-          </label>
-          <label>表示
-            <select id="chartTypeSelect">
-              <option value="candlestick">ローソク足</option>
-              <option value="line">ライン</option>
-            </select>
-          </label>
-          <div class="balance">残高: <span id="kgmBalance">--</span> KGM</div>
-          <button id="topupBtn" class="btn btn--accent">DEBUG: KGM 補充 +1000</button>
-        </div>
-        <div id="marketNotice" class="finance-notice"></div>
+    <!-- ======================== MAIN ======================== -->
+    <main class="finance-main">
 
-        <div class="chart-area" id="chartArea">
-          <canvas id="marketChart"></canvas>
-        </div>
+      <!-- ── ツールバー ── -->
+      <div class="finance-toolbar">
+        <div class="toolbar-section toolbar-section--controls">
 
-        <div class="trade-panel">
-          <div class="trade-left">
-            <div>現在価格: <span id="currentPrice">--</span> JPY</div>
-            <label>数量 (株)
-              <input id="qtyInput" type="number" min="1" value="1" />
-            </label>
-            <div>概算コスト: <span id="costKgm">--</span> KGM</div>
-            <div class="trade-actions">
-              <button id="buyBtn" class="btn btn--primary">買う（KGMで決済）</button>
-              <button id="sellBtn" class="btn btn--secondary">売る（KGMで受取）</button>
+          <div class="toolbar-group">
+            <label class="toolbar-label" for="symbolSelect">銘柄</label>
+            <select id="symbolSelect" class="finance-select">
+              <option value="KGI">加賀美インダストリアル (KGI)</option>
+              <option value="KGR">加賀美リゾート (KGR)</option>
+              <option value="KGF">加賀美フィナンシャル (KGF)</option>
+              <option value="KGT">加賀美テクノロジー (KGT)</option>
+              <option value="KGMN">加賀美マリン (KGMN)</option>
+            </select>
+          </div>
+
+          <div class="toolbar-divider"></div>
+
+          <div class="toolbar-group">
+            <span class="toolbar-label">時間足</span>
+            <div class="btn-toggle" id="timeframeToggle" role="group" aria-label="時間足選択">
+              <button class="toggle-btn" data-value="realtime" id="tf-realtime">RT</button>
+              <button class="toggle-btn" data-value="1d"       id="tf-1d">1日</button>
+              <button class="toggle-btn" data-value="1w"       id="tf-1w">1週</button>
+              <button class="toggle-btn active" data-value="1mo" id="tf-1mo">1ヶ月</button>
+              <button class="toggle-btn" data-value="3mo"      id="tf-3mo">3ヶ月</button>
             </div>
           </div>
-          <div class="trade-right">
-            <h4>保有銘柄</h4>
-            <table class="holdings-table">
-              <thead><tr><th>銘柄</th><th>株数</th><th>平均取得単価 (JPY)</th><th>評価損益</th></tr></thead>
-              <tbody id="holdingsBody"></tbody>
+
+          <div class="toolbar-divider"></div>
+
+          <div class="toolbar-group">
+            <span class="toolbar-label">表示</span>
+            <div class="btn-toggle" id="chartTypeToggle" role="group" aria-label="チャートタイプ">
+              <button class="toggle-btn active" data-value="candlestick" id="ct-candle">ローソク</button>
+              <button class="toggle-btn"         data-value="line"        id="ct-line">ライン</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="toolbar-section toolbar-section--balance">
+
+          <div class="kgm-balance-display">
+            <span class="kgm-balance__icon">💰</span>
+            <span class="kgm-balance__label">残高</span>
+            <span class="kgm-balance__amount" id="kgmBalance">--</span>
+            <span class="kgm-balance__unit">KGM</span>
+          </div>
+
+          <button id="topupBtn" class="btn--debug" title="デバッグ用 KGM 補充">DEBUG +10,000 KGM</button>
+
+        </div>
+      </div>
+
+      <!-- ── チャートセクション ── -->
+      <div class="finance-chart-section">
+        <div class="chart-info-bar">
+          <div class="chart-info-left">
+            <span class="chart-ticker" id="currentTicker">KGI</span>
+            <div class="chart-symbol-info">
+              <span class="chart-symbol-name" id="currentSymbolName">加賀美インダストリアル</span>
+              <span class="chart-symbol-desc" id="currentSymbolDesc">産業用ロボット・精密機械</span>
+            </div>
+            <span class="market-status">
+              <span class="market-status__dot"></span>
+              <span class="market-status__text">OPEN</span>
+            </span>
+          </div>
+          <div class="chart-info-right">
+            <div class="chart-price-block">
+              <span class="chart-price-label">現在価格</span>
+              <span class="chart-price-value" id="currentPrice">--</span>
+              <span class="chart-price-unit">KGM</span>
+            </div>
+            <span class="chart-price-change" id="priceChange"></span>
+          </div>
+        </div>
+
+        <div class="chart-area bg-default" id="chartArea">
+          <canvas id="marketChart"></canvas>
+        </div>
+      </div>
+
+      <!-- ── 取引 + 保有 ── -->
+      <div class="finance-bottom-grid">
+
+        <!-- 注文パネル -->
+        <section class="finance-card trade-card">
+          <h2 class="finance-card__title">
+            <span class="finance-card__title-icon">📈</span>注文
+          </h2>
+
+          <div class="trade-price-display">
+            <span class="trade-price-label">現在価格</span>
+            <span class="trade-price-value" id="tradePriceDisplay">--</span>
+            <span class="trade-price-unit">KGM / 株</span>
+          </div>
+
+          <div class="qty-control">
+            <label class="qty-label" for="qtyInput">数量（株）</label>
+            <div class="qty-input-group">
+              <button class="qty-step-btn" id="qtyMinus" aria-label="数量を減らす">−</button>
+              <input type="number" id="qtyInput" class="qty-input" min="1" max="9999" value="1" />
+              <button class="qty-step-btn" id="qtyPlus" aria-label="数量を増やす">＋</button>
+            </div>
+          </div>
+
+          <div class="qty-presets">
+            <button class="qty-preset-btn" data-qty="5">5株</button>
+            <button class="qty-preset-btn" data-qty="10">10株</button>
+            <button class="qty-preset-btn" data-qty="50">50株</button>
+            <button class="qty-preset-btn" data-qty="100">100株</button>
+          </div>
+
+          <div class="trade-cost-row">
+            <span class="trade-cost-label">概算コスト</span>
+            <span class="trade-cost-value" id="costKgm">-- KGM</span>
+          </div>
+
+          <div class="trade-action-row">
+            <button id="buyBtn" class="trade-action-btn trade-action-btn--buy">
+              <span class="trade-action-btn__icon">▲</span>買う
+            </button>
+            <button id="sellBtn" class="trade-action-btn trade-action-btn--sell">
+              <span class="trade-action-btn__icon">▼</span>売る
+            </button>
+          </div>
+
+          <div id="tradeMsg" class="trade-msg" role="alert" aria-live="polite"></div>
+        </section>
+
+        <!-- 保有銘柄パネル -->
+        <section class="finance-card holdings-card">
+          <h2 class="finance-card__title">
+            <span class="finance-card__title-icon">💼</span>保有銘柄
+          </h2>
+          <div class="holdings-table-wrapper">
+            <table class="holdings-table" id="holdingsTable">
+              <thead>
+                <tr>
+                  <th class="th-left">銘柄</th>
+                  <th>株数</th>
+                  <th>取得単価</th>
+                  <th>現在価格</th>
+                  <th>評価損益</th>
+                </tr>
+              </thead>
+              <tbody id="holdingsBody">
+                <tr class="holdings-empty-row">
+                  <td colspan="5">保有銘柄はありません</td>
+                </tr>
+              </tbody>
             </table>
+          </div>
+          <div class="holdings-footer">
+            <span class="holdings-footer__label">合計評価損益</span>
+            <span class="holdings-footer__value" id="totalPnl">-- KGM</span>
+          </div>
+        </section>
+
+      </div><!-- /.finance-bottom-grid -->
+
+      <!-- ── 取引履歴 ── -->
+      <section class="finance-card history-card">
+        <h2 class="finance-card__title">
+          <span class="finance-card__title-icon">📋</span>取引履歴
+          <button class="history-clear-btn" id="historyClearBtn" title="履歴をクリア">クリア</button>
+        </h2>
+        <div class="history-table-wrapper">
+          <table class="history-table" id="historyTable">
+            <thead>
+              <tr>
+                <th class="th-left">日時</th>
+                <th class="th-left">銘柄</th>
+                <th>区分</th>
+                <th>株数</th>
+                <th>単価</th>
+                <th>合計</th>
+                <th>実現損益</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody">
+              <tr class="holdings-empty-row">
+                <td colspan="7">取引履歴はありません</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ── ガイドパネル ── -->
+      <section class="finance-card info-card">
+        <h2 class="finance-card__title">
+          <span class="finance-card__title-icon">📖</span>ご利用ガイド
+        </h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-item__icon" aria-hidden="true">💰</span>
+            <div class="info-item__body">
+              <h4>KGM（加賀美コイン）</h4>
+              <p>このデモサービス内の仮想通貨です。残高の範囲で加賀美グループ各社の株を自由に売買できます。</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-item__icon" aria-hidden="true">📊</span>
+            <div class="info-item__body">
+              <h4>チャートの操作</h4>
+              <p>ローソク足（高値・安値・始値・終値）とラインチャートを切替可能。時間足でスパンを調整できます。</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-item__icon" aria-hidden="true">📈</span>
+            <div class="info-item__body">
+              <h4>評価損益の見方</h4>
+              <p>チャート背景が<strong>金色</strong>なら含み益、<strong>グレー</strong>なら含み損。保有がなければ青系のニュートラル表示。</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-item__icon" aria-hidden="true">💾</span>
+            <div class="info-item__body">
+              <h4>データの保存</h4>
+              <p>残高・保有情報はブラウザに自動保存されます。ページを閉じても取引履歴が維持されます。</p>
+            </div>
           </div>
         </div>
       </section>
-      <section class="panel info-panel">
-        <h3>使い方</h3>
-        <ul>
-          <li>KGMはこのデモ内通貨です。1 KGM はデフォルトで 1,000 JPY に相当します。</li>
-          <li>銘柄を選び、時間足と表示を切替えてチャートを確認してください。</li>
-          <li>買うボタンで KGM を使って指定株数を購入します。保有情報は localStorage に保存されます。</li>
-        </ul>
-      </section>
-    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/finance.js"></script>
+    </main><!-- /.finance-main -->
 
+    <!-- ======================== FOOTER ======================== -->
     <footer class="site-footer">
       <div class="container">
-        <div class="footer-main">
+        <div class="footer-main" style="grid-template-columns: 1.5fr 1fr 1fr">
           <div class="footer-brand">
             <a href="index.html" class="site-logo" style="display:flex;align-items:center;gap:0.75rem">
-              <div class="site-logo__mark"><img src="android-chrome-192x192.png" alt="KI" style="width:40px;height:40px;object-fit:contain"/></div>
+              <div class="site-logo__mark">
+                <img src="android-chrome-192x192.png" alt="KI" style="width:40px;height:40px;object-fit:contain" />
+              </div>
               <div>
                 <div class="site-logo__title-row">加賀美インダストリアル</div>
                 <div class="site-logo__unofficial">非公式ファンサイト</div>
               </div>
             </a>
+            <p class="footer-brand__desc">
+              加賀美ファイナンスは加賀美フィナンシャル・グループのデモトレードサービスです。
+              掲載される価格データはすべて架空のシミュレーションです。
+            </p>
           </div>
           <div class="footer-nav">
-            <ul>
+            <p class="footer-nav__title">KI サイト</p>
+            <ul class="footer-nav__list">
               <li><a href="about.html">About</a></li>
               <li><a href="business.html">Business</a></li>
               <li><a href="recruit.html">Recruit</a></li>
+              <li><a href="ir.html">IR</a></li>
+            </ul>
+          </div>
+          <div class="footer-nav">
+            <p class="footer-nav__title">加賀美グループ</p>
+            <ul class="footer-nav__list">
+              <li><a href="#">加賀美インダストリアル</a></li>
+              <li><a href="#">加賀美リゾート</a></li>
+              <li><a href="#">加賀美フィナンシャル</a></li>
+              <li><a href="#">加賀美テクノロジー</a></li>
+              <li><a href="#">加賀美マリン</a></li>
             </ul>
           </div>
         </div>
         <div class="footer-bottom">
-          <p class="footer-copyright">&copy; Kagami Industrial (Unofficial Fan Site)</p>
+          <p class="footer-copyright">&copy; Kagami Industrial Unofficial Fan Site / Kagami Finance Demo</p>
+          <p class="footer-disclaimer">
+            このサービスはフィクションです。実在の金融商品・投資勧誘とは一切関係ありません。<br>
+            価格データはすべて架空の合成データであり、実際の市場データとは関係ありません。
+          </p>
         </div>
       </div>
     </footer>
+
+    <!-- トースト通知コンテナ -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/finance.js"></script>
   </body>
 </html>
