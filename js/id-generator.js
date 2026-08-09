@@ -433,7 +433,7 @@ async function generateIdCard(name) {
 
       const xmp = buildXmpMetadata({
         title: '加賀美インダストリアル 社員証',
-        description: `社員証: ${name.trim()} / ${dept} / ${rank}`,
+        description: `加賀美インダストリアル社員証: ${name.trim()} / ${dept} / ${rank}`,
         creator: '加賀美インダストリアル',
         subject: '社員証, 加賀美インダストリアル, 非公式',
         keywords: '社員証,加賀美インダストリアル,非公式',
