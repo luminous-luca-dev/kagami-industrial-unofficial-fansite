@@ -1,0 +1,65 @@
+table_name,column_name,data_type,is_nullable,column_default
+bbs_posts,id,bigint,NO,null
+bbs_posts,player_id,text,NO,null
+bbs_posts,content,text,NO,null
+bbs_posts,parent_id,bigint,YES,null
+bbs_posts,likes,integer,YES,0
+bbs_posts,created_at,timestamp with time zone,YES,now()
+fund_portfolios,id,bigint,NO,null
+fund_portfolios,player_id,text,NO,null
+fund_portfolios,stock_id,bigint,YES,null
+fund_portfolios,quantity,bigint,YES,0
+fund_portfolios,average_buy_price,numeric,YES,0
+fund_portfolios,updated_at,timestamp with time zone,YES,now()
+fund_stocks,id,bigint,NO,null
+fund_stocks,stock_symbol,text,NO,null
+fund_stocks,stock_name,text,NO,null
+fund_stocks,current_price,numeric,YES,100.00
+fund_stocks,updated_at,timestamp with time zone,YES,now()
+kgm_transactions,id,bigint,NO,null
+kgm_transactions,player_id,text,NO,null
+kgm_transactions,amount,bigint,NO,null
+kgm_transactions,transaction_type,text,NO,null
+kgm_transactions,description,text,YES,null
+kgm_transactions,created_at,timestamp with time zone,YES,now()
+orange-ranking,id,bigint,NO,null
+orange-ranking,created_at,timestamp with time zone,NO,now()
+orange-ranking,name,text,YES,null
+orange-ranking,score,double precision,YES,null
+orange-ranking,rank,text,YES,null
+profiles,id,bigint,NO,null
+profiles,created_at,timestamp with time zone,NO,now()
+profiles,player_id,text,NO,null
+profiles,perikan_rank,text,YES,null
+profiles,orange_rank,text,YES,null
+profiles,update_at,timestamp with time zone,YES,now()
+profiles,perikan_score,bigint,YES,null
+profiles,orange_score,double precision,YES,null
+profiles,username,text,YES,null
+profiles,kgm_balance,bigint,YES,0
+profiles,salary_multiplier,numeric,YES,1.00
+profiles,department,text,YES,null
+profiles,job_rank,text,YES,null
+profiles,mbti_aptitude,text,YES,null
+ranking,id,bigint,NO,null
+ranking,created_at,timestamp with time zone,NO,now()
+ranking,name,text,YES,null
+ranking,score,bigint,YES,null
+ranking,rank,text,YES,null
+ringisho,id,bigint,NO,null
+ringisho,player_id,text,NO,null
+ringisho,category,text,YES,null
+ringisho,content,text,NO,null
+ringisho,status,text,YES,'pending'::text
+ringisho,created_at,timestamp with time zone,YES,now()
+ringisho_approvals,id,bigint,NO,null
+ringisho_approvals,ringisho_id,bigint,YES,null
+ringisho_approvals,player_id,text,NO,null
+ringisho_approvals,job_rank,text,YES,null
+ringisho_approvals,created_at,timestamp with time zone,YES,now()
+timecards,id,bigint,NO,null
+timecards,player_id,text,NO,null
+timecards,task_label,text,YES,null
+timecards,start_time,timestamp with time zone,YES,now()
+timecards,end_time,timestamp with time zone,YES,null
+timecards,earned_kgm,bigint,YES,0
