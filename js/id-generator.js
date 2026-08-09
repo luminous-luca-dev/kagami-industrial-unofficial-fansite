@@ -193,6 +193,14 @@ async function generateIdCard(name) {
 
   // 描画用のIDとして確定
   const empId = currentSessionId;
+  // --- ▼ 追加：マイデスク専用URLの生成 ▼ ---
+  // btoa() でIDを暗号化（ハッシュ化）してURLパラメータにする
+  const deskUrl = window.location.origin + window.location.pathname + '?desk=' + btoa(empId);
+  
+  // ※ここで deskUrl をHTMLの任意の要素（inputタグなど）に出力して、
+  // ユーザーがコピーできるUIをHTML側に追加してください。
+  // 例: document.getElementById('desk-url-input').value = deskUrl;
+  // --- ▲ 追加ここまで ▲ ---
 
   // （オプション）もし画面上に「〇〇としてログイン中」のような表示エリアがあれば、ここでテキストを更新してもOKです
   // document.getElementById('current-employee-id').innerText = empId;
@@ -463,6 +471,35 @@ async function generateIdCard(name) {
 
 // Bind to form buttons
 document.addEventListener('DOMContentLoaded', () => {
+
+  // --- ▼ 追加：専用URLおよびキャッシュからの復帰処理 ▼ ---
+  const urlParams = new URLSearchParams(window.location.search);
+  const deskParam = urlParams.get('desk');
+
+  if (deskParam) {
+    try {
+      // Base64を復号化してIDを取り出す
+      const decodedId = atob(deskParam);
+      if (decodedId.startsWith('KI-')) {
+        localStorage.setItem('kagami_employee_id', decodedId);
+        currentSessionId = decodedId;
+        // URLのパラメータを消してスッキリさせる
+        window.history.replaceState(null, null, window.location.pathname);
+        console.log('専用URLから復帰しました:', currentSessionId);
+      }
+    } catch (e) {
+      // 不正なURLパラメータの場合は無視
+    }
+  } else {
+    // URLにパラメータがない場合は、ローカルストレージのキャッシュを確認
+    const cachedId = localStorage.getItem('kagami_employee_id');
+    if (cachedId) {
+      currentSessionId = cachedId;
+      console.log('キャッシュから復帰しました:', currentSessionId);
+    }
+  }
+  // --- ▲ 追加ここまで ▲ ---
+
   const genBtn = document.getElementById('generate-id-btn');
   const nameInput = document.getElementById('employee-name');
 
