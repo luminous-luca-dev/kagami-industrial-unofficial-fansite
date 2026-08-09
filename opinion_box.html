@@ -5,7 +5,9 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYB1GGHVZ4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
+      function gtag() {
+        dataLayer.push(arguments);
+      }
       gtag('js', new Date());
       gtag('config', 'G-DYB1GGHVZ4');
     </script>
@@ -85,9 +87,7 @@
               <br />
               <span class="gold-shimmer">（加賀美インダストリアル 目安箱）</span>
             </h1>
-            <p class="opinion-hero__desc">
-              社員の皆様・株主の皆様・ファンの皆様からの「こんなサービスがあったら面白い」「この記述や昇進試験の問題、ここを直した方がいい」といったご意見や自由なアイデアをお待ちしております！
-            </p>
+            <p class="opinion-hero__desc">社員の皆様・株主の皆様・ファンの皆様からの「こんなサービスがあったら面白い」「この記述や昇進試験の問題、ここを直した方がいい」といったご意見や自由なアイデアをお待ちしております！</p>
           </div>
 
           <!-- 意見集積メーター -->
@@ -109,7 +109,6 @@
     <!-- ======================== MAIN CONTENT ======================== -->
     <main class="opinion-container">
       <div class="opinion-grid">
-
         <!-- 左カラム: 投稿フォーム -->
         <section class="opinion-form-card">
           <div class="opinion-section-head">
@@ -131,7 +130,8 @@
           <form id="opinionForm">
             <div class="form-group">
               <label class="form-label" for="categorySelect">
-                区分（カテゴリ） <span class="required">*必須</span>
+                区分（カテゴリ）
+                <span class="required">*必須</span>
               </label>
               <select id="categorySelect" class="form-select" required>
                 <option value="新サービス提案">💡 こんなサービスがあったら面白そう（新サービス提案）</option>
@@ -144,16 +144,15 @@
 
             <div class="form-group">
               <label class="form-label" for="contentInput">
-                ご意見・提案内容 <span class="required">*必須</span>
+                ご意見・提案内容
+                <span class="required">*必須</span>
               </label>
               <textarea id="contentInput" class="form-textarea" placeholder="例：休憩室にミニゲーム「社長とデュエル」を追加してほしい！&#10;例：昇進試験の問3の選択肢B、文法が少しおかしい気がします。" required></textarea>
             </div>
 
             <div class="form-submit-area">
               <span class="submit-note">※送信ボタンを押すと即時に目安箱へ投函されます。</span>
-              <button type="submit" id="submitBtn" class="submit-btn">
-                🚀 社長室・担当者へ送信する
-              </button>
+              <button type="submit" id="submitBtn" class="submit-btn">🚀 社長室・担当者へ送信する</button>
             </div>
           </form>
         </section>
@@ -273,7 +272,6 @@
             </ul>
           </div>
         </aside>
-
       </div>
 
       <!-- ── 最近届いたご意見フィード ── -->
