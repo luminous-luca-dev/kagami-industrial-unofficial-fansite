@@ -196,7 +196,7 @@ async function generateIdCard(name) {
   // --- ▼ 追加：マイデスク専用URLの生成 ▼ ---
   // btoa() でIDを暗号化（ハッシュ化）してURLパラメータにする
   const deskUrl = window.location.origin + window.location.pathname + '?desk=' + btoa(empId);
-  
+
   // ※ここで deskUrl をHTMLの任意の要素（inputタグなど）に出力して、
   // ユーザーがコピーできるUIをHTML側に追加してください。
   // 例: document.getElementById('desk-url-input').value = deskUrl;
@@ -485,12 +485,7 @@ async function generateIdCard(name) {
 }
 
 function escapeXml(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
 function utf8ToBinaryString(value) {
@@ -520,23 +515,7 @@ function buildXmpMetadata({ title, description, creator, subject, keywords, cust
     });
   }
 
-  return (
-    '<?xpacket begin="" id="W5M0MpCehiHzreSzNTczkc9d"?>' +
-    '<x:xmpmeta xmlns:x="adobe:ns:meta/">' +
-    '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">' +
-    '<rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:KI="http://kagami-industrial.example.com/ns/">' +
-    `<dc:title><rdf:Alt><rdf:li xml:lang="x-default">${escapedTitle}</rdf:li></rdf:Alt></dc:title>` +
-    `<dc:description><rdf:Alt><rdf:li xml:lang="x-default">${escapedDescription}</rdf:li></rdf:Alt></dc:description>` +
-    `<dc:creator><rdf:Seq><rdf:li>${escapedCreator}</rdf:li></rdf:Seq></dc:creator>` +
-    `<dc:subject><rdf:Bag><rdf:li>${escapedSubject}</rdf:li></rdf:Bag></dc:subject>` +
-    `<xmp:Label>${escapedKeywords}</xmp:Label>` +
-    `<xmp:MetadataDate>${new Date().toISOString()}</xmp:MetadataDate>` +
-    customTags +
-    '</rdf:Description>' +
-    '</rdf:RDF>' +
-    '</x:xmpmeta>' +
-    '<?xpacket end="w"?>'
-  );
+  return '<?xpacket begin="" id="W5M0MpCehiHzreSzNTczkc9d"?>' + '<x:xmpmeta xmlns:x="adobe:ns:meta/">' + '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">' + '<rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:KI="http://kagami-industrial.example.com/ns/">' + `<dc:title><rdf:Alt><rdf:li xml:lang="x-default">${escapedTitle}</rdf:li></rdf:Alt></dc:title>` + `<dc:description><rdf:Alt><rdf:li xml:lang="x-default">${escapedDescription}</rdf:li></rdf:Alt></dc:description>` + `<dc:creator><rdf:Seq><rdf:li>${escapedCreator}</rdf:li></rdf:Seq></dc:creator>` + `<dc:subject><rdf:Bag><rdf:li>${escapedSubject}</rdf:li></rdf:Bag></dc:subject>` + `<xmp:Label>${escapedKeywords}</xmp:Label>` + `<xmp:MetadataDate>${new Date().toISOString()}</xmp:MetadataDate>` + customTags + '</rdf:Description>' + '</rdf:RDF>' + '</x:xmpmeta>' + '<?xpacket end="w"?>';
 }
 
 function insertXmpIntoJpegDataUrl(jpegDataUrl, xmpXml) {
@@ -558,7 +537,6 @@ function insertXmpIntoJpegDataUrl(jpegDataUrl, xmpXml) {
 
 // Bind to form buttons
 document.addEventListener('DOMContentLoaded', () => {
-
   // --- ▼ 追加：専用URLおよびキャッシュからの復帰処理 ▼ ---
   const urlParams = new URLSearchParams(window.location.search);
   const deskParam = urlParams.get('desk');
