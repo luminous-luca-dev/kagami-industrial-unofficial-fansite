@@ -1,0 +1,58 @@
+/* Finance page specific styles — follow site variables */
+.finance-header {
+  display: block;
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  min-height: var(--header-height);
+  display: flex;
+  align-items: center;
+}
+.finance-left {
+  text-align: left;
+}
+.kfg-name {
+  font-family: var(--font-heading-ja);
+  font-size: 1.1rem;
+  color: var(--color-primary);
+}
+.kfg-sub {
+  font-family: var(--font-en);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+.finance-right .site-logo { display:flex; align-items:center; gap:0.75rem; }
+.site-logo__mark img { width:40px; height:40px; object-fit:contain }
+
+.finance-main { padding: calc(var(--space-lg)) 0; }
+.panel { background: var(--color-white); padding: 1.25rem; border:1px solid var(--color-border); box-shadow: var(--shadow-sm); margin-bottom: 1.5rem }
+.chart-panel { display:block }
+.chart-controls { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem }
+.chart-controls label { font-size:0.9rem }
+.chart-area { background: rgba(18,44,79,0.04); padding:1rem; border-radius:4px }
+.chart-area canvas { width:100% !important; height:420px !important }
+
+..trade-panel { display:flex; gap:1.5rem; margin-top:1rem; align-items:flex-start }
+.trade-left { flex:1 }
+.trade-actions { display:flex; gap:0.75rem; margin-top:1rem }
+.trade-actions .btn { flex:1 }
+.btn--secondary { border:1px solid #c7d4e8; background:#f8fafc; color:#15334d }
+.trade-right { width:360px }
+.finance-notice { margin: 0.75rem 0 0; color: var(--color-text-muted); font-size: 0.95rem; }
+.holdings-table { width:100%; border-collapse:collapse }
+.holdings-table th, .holdings-table td { padding:0.5rem; border-bottom:1px solid var(--color-bg-alt); font-size:0.9rem }
+
+.info-panel ul { margin-left: 1rem }
+
+/* Background color helpers changed by JS */
+.bg-default { background: linear-gradient(180deg, #f4f7fb, #eef4fb);} /* slightly pale blue */
+.bg-profit { background: linear-gradient(180deg, rgba(200,166,94,0.08), rgba(244,236,200,0.04)); }
+.bg-loss { background: linear-gradient(180deg, rgba(120,120,120,0.08), rgba(220,220,220,0.02)); }
+
+@media (max-width: 900px) {
+  .trade-panel { flex-direction: column }
+  .trade-right { width:100% }
+  .chart-area canvas { height:300px !important }
+}
+
+.finance-left .kfg-name { font-size: 1.2rem; }
+.finance-left .kfg-sub { margin-top: 2px }

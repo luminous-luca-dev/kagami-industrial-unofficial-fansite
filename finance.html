@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>加賀美ファイナンス | Kagami Finance</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/finance.css" />
+    <meta name="description" content="加賀美ファイナンス — 気軽にトレード体験できるデモ取引ページ" />
+  </head>
+  <body>
+    <header class="finance-header">
+      <div class="container" style="display:flex;align-items:center;justify-content:space-between">
+        <div class="finance-left">
+          <div class="kfg-name">加賀美フィナンシャル・グループ</div>
+          <div class="kfg-sub">加賀美ファイナンス</div>
+        </div>
+        <div class="finance-right">
+          <a href="index.html" class="site-logo">
+            <div class="site-logo__mark"><img src="android-chrome-192x192.png" alt="KI" /></div>
+            <div class="site-logo__text">
+              <div class="site-logo__title-row">加賀美インダストリアル</div>
+              <span class="site-logo__unofficial">非公式ファンサイト</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="finance-main container">
+      <section class="panel chart-panel">
+        <div class="chart-controls">
+          <label>銘柄
+            <select id="symbolSelect">
+              <option value="KGM">KGM（加賀美）</option>
+              <option value="7974.T">任天堂 (7974.T)</option>
+              <option value="7203.T">トヨタ (7203.T)</option>
+              <option value="7832.T">バンダイ (7832.T)</option>
+              <option value="GOOGL">Google (GOOGL)</option>
+            </select>
+          </label>
+          <label>時間足
+            <select id="rangeSelect">
+              <option value="1d">1日</option>
+              <option value="5d">5日</option>
+              <option value="1mo" selected>1ヶ月</option>
+              <option value="3mo">3ヶ月</option>
+            </select>
+          </label>
+          <label>表示
+            <select id="chartTypeSelect">
+              <option value="candlestick">ローソク足</option>
+              <option value="line">ライン</option>
+            </select>
+          </label>
+          <div class="balance">残高: <span id="kgmBalance">--</span> KGM</div>
+          <button id="topupBtn" class="btn btn--accent">DEBUG: KGM 補充 +1000</button>
+        </div>
+        <div id="marketNotice" class="finance-notice"></div>
+
+        <div class="chart-area" id="chartArea">
+          <canvas id="marketChart"></canvas>
+        </div>
+
+        <div class="trade-panel">
+          <div class="trade-left">
+            <div>現在価格: <span id="currentPrice">--</span> JPY</div>
+            <label>数量 (株)
+              <input id="qtyInput" type="number" min="1" value="1" />
+            </label>
+            <div>概算コスト: <span id="costKgm">--</span> KGM</div>
+            <div class="trade-actions">
+              <button id="buyBtn" class="btn btn--primary">買う（KGMで決済）</button>
+              <button id="sellBtn" class="btn btn--secondary">売る（KGMで受取）</button>
+            </div>
+          </div>
+          <div class="trade-right">
+            <h4>保有銘柄</h4>
+            <table class="holdings-table">
+              <thead><tr><th>銘柄</th><th>株数</th><th>平均取得単価 (JPY)</th><th>評価損益</th></tr></thead>
+              <tbody id="holdingsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section class="panel info-panel">
+        <h3>使い方</h3>
+        <ul>
+          <li>KGMはこのデモ内通貨です。1 KGM はデフォルトで 1,000 JPY に相当します。</li>
+          <li>銘柄を選び、時間足と表示を切替えてチャートを確認してください。</li>
+          <li>買うボタンで KGM を使って指定株数を購入します。保有情報は localStorage に保存されます。</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/finance.js"></script>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <a href="index.html" class="site-logo" style="display:flex;align-items:center;gap:0.75rem">
+              <div class="site-logo__mark"><img src="android-chrome-192x192.png" alt="KI" style="width:40px;height:40px;object-fit:contain"/></div>
+              <div>
+                <div class="site-logo__title-row">加賀美インダストリアル</div>
+                <div class="site-logo__unofficial">非公式ファンサイト</div>
+              </div>
+            </a>
+          </div>
+          <div class="footer-nav">
+            <ul>
+              <li><a href="about.html">About</a></li>
+              <li><a href="business.html">Business</a></li>
+              <li><a href="recruit.html">Recruit</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copyright">&copy; Kagami Industrial (Unofficial Fan Site)</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
