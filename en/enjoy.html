@@ -13,7 +13,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Employee Lounge | Unofficial | Kagami Industrial</title>
-    <meta name="description" content="Break room and fan mini-games of the Kagami Industrial unofficial fan site." />
+    <meta name="description" content="Break room & minigames of Kagami Industrial unofficial fan site." />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/components.css" />
     <link rel="stylesheet" href="../css/home.css" />
@@ -29,7 +29,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="../css/perikan.css" />
-    <script src="../js/perikan.js"></script>
+    <script src="../js/perikan-en.js"></script>
     <script src="../js/ranking-display.js"></script>
     <script src="../js/orange-ranking-display.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -121,7 +121,7 @@
       <div class="geo-line geo-line--2"></div>
       <div class="geo-line geo-line--3"></div>
       <div class="page-header__content">
-        <p class="page-header__label">Entertainment Area</p>
+        <p class="page-header__label">ROOM</p>
         <h1 class="page-header__title">Employee Lounge</h1>
         <p class="page-header__subtitle">Break Room &amp; Minigames</p>
       </div>
@@ -135,18 +135,422 @@
       </div>
     </div>
 
-    <!-- MINIGAME SECTION -->
-    <section class="section">
-      <div class="container" style="text-align: center;">
-        <span class="section-label">Minigame</span>
-        <h2 class="section-title">Pelican Catch Game</h2>
-        <p style="color: var(--color-text-light); margin-bottom: var(--space-xl);">Take a break and test your reflexes! Catch as many falling items as possible.</p>
-        
-        <div id="game-container" style="display: inline-block; position: relative;">
-          <!-- Game Canvas / Elements -->
-          <div id="perikan-game-area"></div>
+    <!-- MINI GAME 01: SCHRODINGER'S PELICAN -->
+    <section class="section section--dark" id="mini-game">
+      <div class="container">
+        <div class="minigame-wrapper" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(200, 166, 94, 0.2); padding: var(--space-xl); border-radius: 8px; text-align: center; max-width: 600px; margin: 0 auto">
+          <span class="section-label" style="color: var(--color-accent-light)">MINI GAME 01</span>
+          <h2 style="color: var(--color-white); margin-bottom: var(--space-sm)">Schrödinger's Pelican</h2>
+          <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; margin-bottom: var(--space-lg)">
+            Guess whether the pelican hidden inside the container is facing "Left" or "Right".
+            <br />
+            Your corporate rank rises as your streak continues.
+          </p>
+          <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.65rem; margin-bottom: var(--space-lg)">* A merciless trial of pure 50/50 probability (1/256 odds for the summit).</p>
+
+          <div class="minigame-stats" style="display: flex; justify-content: space-around; margin-bottom: var(--space-md); font-weight: bold; color: var(--color-accent)">
+            <div>
+              SCORE:
+              <span id="game-score" style="font-size: 1.5rem; color: #fff">0</span>
+            </div>
+            <div>
+              CLASS:
+              <span id="game-rank" style="font-size: 1.5rem; color: #fff">Part-Time Intern</span>
+            </div>
+          </div>
+
+          <div id="game-screen" style="width: 200px; height: 200px; margin: 0 auto var(--space-md); background: #122c4f; border: 2px solid var(--color-border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4rem">📦</div>
+
+          <div id="game-controls">
+            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: var(--space-md)">
+              <button class="btn btn--outline" id="btn-select-left" style="flex: 1; max-width: 120px">👈 Left</button>
+              <button class="btn btn--outline" id="btn-select-right" style="flex: 1; max-width: 120px">Right 👉</button>
+            </div>
+            <button class="btn btn--accent" id="btn-next" style="display: none; width: 100%; max-width: 250px; margin: 0 auto">Next Round</button>
+            <div id="game-feedback" style="margin-top: 15px; font-weight: bold; height: 24px"></div>
+          </div>
+
+          <div id="game-over-screen" style="display: none; margin-top: var(--space-md)">
+            <h3 style="color: #ff4a4a; margin-bottom: 10px">Pelican Escaped! (Wrong Guess)</h3>
+            <p style="color: #fff; margin-bottom: var(--space-md)">
+              Your final achieved rank:
+              <span id="final-rank" style="color: var(--color-accent); font-weight: bold"></span>
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; align-items: center">
+              <button class="btn btn--outline" id="btn-retry" style="width: 100%; max-width: 250px">🔄 Try Again</button>
+              <button class="btn btn--accent" id="btn-ranking" style="width: 100%; max-width: 250px">🏆 Register to Leaderboard</button>
+              <p style="font-size: 0.7rem; color: rgba(255, 255, 255, 0.4); margin-top: 15px; text-align: left; line-height: 1.5">
+                ※ Leaderboard Notice:
+                <br />
+                • Inappropriate or offensive names will be removed by administrators.
+                <br />
+                • This fan game is purely for community enjoyment and has no affiliation with ANYCOLOR Inc.
+              </p>
+            </div>
+          </div>
+          <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.8rem; margin-top: var(--space-lg)">
+            Asset source: Free Pencil (
+            <a href="https://iconbu.com/" target="_blank" style="color: var(--color-accent)">https://iconbu.com</a>
+            )
+          </p>
         </div>
       </div>
+    </section>
+
+    <!-- PELICAN ONLINE RANKING -->
+    <section class="section section--dark" id="online-ranking-board">
+      <div class="container">
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(200, 166, 94, 0.15); padding: var(--space-lg); border-radius: 4px; max-width: 500px; margin: 0 auto">
+          <div style="text-align: center; margin-bottom: var(--space-md)">
+            <span class="section-label" style="color: var(--color-accent-light); font-size: 0.7rem; letter-spacing: 0.2em">CONFIDENTIAL</span>
+            <h3 style="color: var(--color-white); font-size: 1.2rem; margin-top: 5px">Honorary Pelican Employee Roster</h3>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; color: #fff">
+            <thead>
+              <tr style="border-bottom: 1px solid rgba(200, 166, 94, 0.3); color: var(--color-accent)">
+                <th style="padding: 10px 5px; text-align: left; font-weight: normal">RANK</th>
+                <th style="padding: 10px 5px; text-align: left; font-weight: normal">NAME / CLASS</th>
+                <th style="padding: 10px 5px; text-align: right; font-weight: normal">SCORE</th>
+              </tr>
+            </thead>
+            <tbody id="global-ranking-body">
+              <tr>
+                <td colspan="3" style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.3)">Consulting roster...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p style="font-size: 0.65rem; color: rgba(255, 255, 255, 0.3); margin-top: 10px; text-align: center">* Inappropriate usernames will be moderated without notice.</p>
+    </section>
+
+    <!-- MINI GAME 02: ORANGE SQUEEZE -->
+    <section class="section section--dark" id="orange-game">
+      <div class="container">
+        <div class="minigame-wrapper" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(200, 166, 94, 0.2); padding: var(--space-xl); border-radius: 8px; text-align: center; max-width: 600px; margin: 40px auto">
+          <span class="section-label" style="color: var(--color-accent-light)">MINI GAME 02</span>
+          <h2 style="color: var(--color-white); margin-bottom: var(--space-sm)">Freshly Squeezed Orange</h2>
+          <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; margin-bottom: var(--space-lg)">
+            Squeeze the orange to fill the CEO's cup right to the brim.
+            <br />
+            The closer you get to 100.00%, the higher your secretarial rank.
+          </p>
+          <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.7rem; margin-top: var(--space-lg)">
+            * If you exceed 100.01%, the cup will be crushed by the President's bare hands.
+          </p>
+
+          <div class="minigame-stats" style="display: flex; justify-content: space-around; margin-bottom: var(--space-md); font-weight: bold; color: var(--color-accent)">
+            <div>
+              AMOUNT:
+              <span id="juice-percent" style="font-size: 1.5rem; color: #fff">0.00</span>
+              %
+            </div>
+            <div>
+              CLASS:
+              <span id="orange-rank" style="font-size: 1.5rem; color: #fff">Part-Timer</span>
+            </div>
+          </div>
+
+          <div id="orange-game-screen" style="width: 200px; height: 260px; margin: 0 auto var(--space-md); background: #122c4f; border: 2px solid var(--color-border); border-radius: 8px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 20px 0">
+            <div id="target-orange" style="font-size: 4rem; transition: transform 0.1s">🍊</div>
+
+            <div id="cup-container" style="width: 80px; height: 120px; border: 3px solid rgba(255, 255, 255, 0.3); border-top: none; border-radius: 0 0 10px 10px; position: relative; overflow: hidden; background: rgba(255, 255, 255, 0.05)">
+              <div id="juice-fill" style="position: absolute; bottom: 0; width: 100%; height: 0%; background: #ff9f1c; box-shadow: 0 0 15px #ff9f1c"></div>
+              <div id="orange-shutter" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #122c4f; transform: translateY(-100%); transition: transform 0.4s ease; border-bottom: 2px solid var(--color-accent); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--color-accent)">CLOSED</div>
+            </div>
+          </div>
+
+          <div id="orange-controls">
+            <button class="btn btn--accent" id="btn-orange-pour" style="width: 100%; max-width: 250px; margin: 0 auto; user-select: none">Squeeze (Hold Down)</button>
+            <div id="orange-feedback" style="margin-top: 15px; font-weight: bold; height: 24px; color: #ffffff"></div>
+            <button class="btn btn--outline" id="btn-orange-retry" style="display: none; width: 100%; max-width: 250px; margin: 10px auto 0">Try Again</button>
+            <button class="btn btn--accent" id="btn-orange-ranking" style="display: none; width: 100%; max-width: 250px">🏆 Register to Leaderboard</button>
+          </div>
+          <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.8rem; margin-top: var(--space-lg)">
+            Inspired by (
+            <a href="https://pheniki-games.com/girigirimilk/" target="_blank" style="color: var(--color-accent)">Girigiri Milk Pouring Game</a>
+            )
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORANGE SQUEEZE SCRIPT -->
+    <script>
+      (function () {
+        document.addEventListener('DOMContentLoaded', () => {
+          const _supabase = window._supabase;
+          let amount = 0;
+          let isActive = false;
+          let timer;
+
+          const juiceFill = document.getElementById('juice-fill');
+          const percentDisp = document.getElementById('juice-percent');
+          const shutter = document.getElementById('orange-shutter');
+          const orange = document.getElementById('target-orange');
+          const rankDisp = document.getElementById('orange-rank');
+          const pourBtn = document.getElementById('btn-orange-pour');
+          const retryBtn = document.getElementById('btn-orange-retry');
+          const feedback = document.getElementById('orange-feedback');
+
+          const pourSpeed = 0.78;
+
+          function startAction(e) {
+            if (e && e.cancelable) e.preventDefault();
+            if (amount > 0 && !isActive) return;
+
+            isActive = true;
+            feedback.innerText = '';
+            retryBtn.style.display = 'none';
+
+            timer = setInterval(() => {
+              amount += pourSpeed;
+              if (amount > 120) stopAction();
+              updateUI();
+            }, 30);
+          }
+
+          function stopAction(e) {
+            if (e && e.cancelable) e.preventDefault();
+            if (!isActive) return;
+
+            isActive = false;
+            clearInterval(timer);
+            shutter.style.transform = 'translateY(-100%)';
+            judgeResult();
+            pourBtn.style.display = 'none';
+            retryBtn.style.display = 'inline-block';
+          }
+
+          function updateUI() {
+            percentDisp.innerText = amount.toFixed(2);
+            juiceFill.style.height = Math.min(amount, 100) + '%';
+
+            const squeeze = 1 - amount * 0.006;
+            orange.style.transform = `scale(${Math.max(squeeze, 0.4)}, ${Math.max(squeeze + 0.2, 0.5)})`;
+
+            if (amount >= 70) {
+              percentDisp.parentElement.style.opacity = '0';
+              percentDisp.parentElement.style.transition = 'opacity 0.5s ease';
+            }
+
+            if (amount > 65) {
+              shutter.style.transform = 'translateY(0)';
+            }
+          }
+
+          function judgeResult() {
+            percentDisp.parentElement.style.opacity = '1';
+            document.getElementById('btn-orange-ranking').style.display = 'inline-block';
+
+            pourBtn.style.display = 'none';
+            retryBtn.style.display = 'inline-block';
+
+            const diff = Math.abs(100 - amount);
+            let rank = '';
+            let msg = '';
+
+            if (amount > 100) {
+              rank = 'Reprimand Class';
+              msg = 'Overfilled! "Oops... *CRUSH*"';
+            } else if (diff <= 0.16) {
+              amount = 100.0;
+              percentDisp.innerText = '100.00';
+              percentDisp.style.color = '#FFD700';
+              percentDisp.style.fontWeight = 'bold';
+              rank = 'Sleepy Kitty Grandmaster';
+              msg = 'A miraculous 100.00%!! "Time for a night out!"';
+
+              const gameContainer = document.getElementById('orange-game-screen');
+              if (gameContainer) gameContainer.classList.add('shake-animation');
+
+              if (typeof confetti !== 'undefined') {
+                confetti({
+                  particleCount: 150,
+                  spread: 70,
+                  origin: { y: 0.6 },
+                  colors: ['#FFD700', '#FFA500', '#FFFFFF'],
+                });
+              }
+            } else if (diff <= 1.0) {
+              rank = "CEO's Right Hand";
+              msg = 'Surface tension achieved! "Isn\'t this incredible!?"';
+            } else if (diff <= 5.0) {
+              rank = 'Chief Executive Secretary';
+              msg = 'Magnificent! "How did none spill!?"';
+            } else if (diff <= 10.0) {
+              rank = 'Senior Secretary';
+              msg = 'Exquisite pressure control. "Just as expected!"';
+            } else if (diff <= 15.0) {
+              rank = 'Veteran Clerk';
+              msg = 'Great grip strength. "Thank you very much!"';
+            } else if (diff <= 30.0) {
+              rank = 'Office Clerk';
+              msg = 'GOOD. "Bottoms up!"';
+            } else {
+              rank = 'Part-Timer';
+              msg = 'Aim for more greed! "A bit on the lighter side?"';
+            }
+
+            rankDisp.innerText = rank;
+            feedback.innerText = msg;
+
+            const finalScore = parseFloat(amount.toFixed(2));
+            saveOrangeGameScore(finalScore, rank);
+          }
+
+          async function saveOrangeGameScore(finalScore, finalRank) {
+            const savedPlayerId = localStorage.getItem('kagami_employee_id');
+            if (!savedPlayerId) return;
+
+            const _supabase = window._supabase;
+            if (!_supabase) return;
+
+            if (finalScore > 100) return;
+
+            try {
+              const { data: currentProfile, error: fetchError } = await _supabase.from('profiles').select('orange_score').eq('player_id', savedPlayerId).single();
+              if (fetchError) return;
+
+              const dbScore = currentProfile && currentProfile.orange_score ? currentProfile.orange_score : 0;
+
+              if (finalScore > dbScore) {
+                await _supabase
+                  .from('profiles')
+                  .update({
+                    orange_score: finalScore,
+                    orange_rank: finalRank,
+                  })
+                  .eq('player_id', savedPlayerId);
+              }
+            } catch (err) {
+              console.error('Orange score save error:', err);
+            }
+          }
+
+          function resetGame(e) {
+            if (e && e.cancelable) e.preventDefault();
+            amount = 0;
+            isActive = false;
+
+            document.getElementById('btn-orange-ranking').style.display = 'none';
+            pourBtn.style.display = 'inline-block';
+            retryBtn.style.display = 'none';
+
+            percentDisp.parentElement.style.opacity = '1';
+            percentDisp.parentElement.style.transition = 'none';
+            percentDisp.innerText = '0.00';
+            juiceFill.style.height = '0%';
+            orange.style.transform = 'scale(1)';
+            shutter.style.transform = 'translateY(-100%)';
+            rankDisp.innerText = 'Part-Timer';
+            feedback.innerText = '';
+          }
+
+          const isTouch = 'ontouchstart' in window;
+
+          pourBtn.addEventListener('mousedown', startAction);
+          pourBtn.addEventListener('touchstart', startAction);
+          window.addEventListener('mouseup', stopAction);
+          window.addEventListener('touchend', stopAction);
+
+          retryBtn.addEventListener('click', resetGame);
+          if (isTouch) retryBtn.addEventListener('touchstart', resetGame);
+
+          const rankingBtn = document.getElementById('btn-orange-ranking');
+          const rankingAction = async (e) => {
+            if (e && e.cancelable) e.preventDefault();
+            try {
+              if (amount === 0) {
+                alert('Squeeze the orange first!');
+                return;
+              }
+
+              const NG_WORDS = ['fuck', 'shit', 'bitch', 'asshole', '死ね', '馬鹿', 'ハゲ', 'カス'];
+              const inputName = prompt('Enter your name for the leaderboard (Max 10 chars):', 'Anonymous');
+
+              if (inputName === null) return;
+              const playerName = inputName.trim();
+              if (playerName === '') return;
+
+              if (NG_WORDS.some((word) => playerName.toLowerCase().includes(word))) {
+                alert('Inappropriate language detected.');
+                return;
+              }
+              if (playerName.length > 10) {
+                alert('Names must be within 10 characters.');
+                return;
+              }
+
+              const finalScore = parseFloat(amount.toFixed(2));
+              const currentRank = rankDisp.innerText;
+
+              const { error: insertError } = await _supabase.from('orange-ranking').insert([
+                {
+                  name: playerName,
+                  score: finalScore,
+                  rank: currentRank,
+                },
+              ]);
+
+              if (insertError) {
+                alert('Registration failed.');
+                return;
+              }
+
+              const { data: topPlayers, error: fetchError } = await _supabase.from('orange-ranking').select('*').lte('score', 100).order('score', { ascending: false }).limit(10);
+
+              if (fetchError) {
+                alert('Failed to retrieve updated rankings.');
+              } else {
+                let rankingTable = '🏆 【ONLINE TOP 10】\n';
+                topPlayers.forEach((entry, index) => {
+                  rankingTable += `#${index + 1}: ${entry.name} - ${entry.score}% (${entry.rank})\n`;
+                });
+                setTimeout(() => {
+                  alert(rankingTable);
+                }, 200);
+              }
+            } catch (err) {
+              console.error(err);
+              alert('Network error occurred.');
+            }
+          };
+
+          rankingBtn.addEventListener('click', rankingAction);
+          if (isTouch) rankingBtn.addEventListener('touchstart', rankingAction);
+        });
+      })();
+    </script>
+
+    <!-- ORANGE ONLINE RANKING -->
+    <section class="section section--dark" id="online-orange-ranking-board">
+      <div class="container">
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(200, 166, 94, 0.15); padding: var(--space-lg); border-radius: 4px; max-width: 500px; margin: 0 auto">
+          <div style="text-align: center; margin-bottom: var(--space-md)">
+            <span class="section-label" style="color: var(--color-accent-light); font-size: 0.7rem; letter-spacing: 0.2em">CONFIDENTIAL</span>
+            <h3 style="color: var(--color-white); font-size: 1.2rem; margin-top: 5px">Honorary Fresh-Squeezed Employee Roster</h3>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; color: #fff">
+            <thead>
+              <tr style="border-bottom: 1px solid rgba(200, 166, 94, 0.3); color: var(--color-accent)">
+                <th style="padding: 10px 5px; text-align: left; font-weight: normal">RANK</th>
+                <th style="padding: 10px 5px; text-align: left; font-weight: normal">NAME / CLASS</th>
+                <th style="padding: 10px 5px; text-align: right; font-weight: normal">SCORE</th>
+              </tr>
+            </thead>
+            <tbody id="global-orange-ranking-body">
+              <tr>
+                <td colspan="3" style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.3)">Consulting roster...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p style="font-size: 0.65rem; color: rgba(255, 255, 255, 0.3); margin-top: 10px; text-align: center">* Inappropriate usernames will be moderated without notice.</p>
     </section>
 
     <!-- FOOTER -->
@@ -207,7 +611,7 @@
         </div>
         <div class="footer-bottom">
           <p class="footer-copyright">&copy; Kagami Industrial (Unofficial Fan Site)</p>
-          <p class="footer-disclaimer">[Disclaimer] This site is an unofficial fan site created by fans of Virtual Liver "Hayato Kagami" (ANYCOLOR Inc.). It has no affiliation with any real individuals, organizations, or companies.</p>
+          <p class="footer-disclaimer">[Disclaimer] This site is an unofficial fan site created by fans of Virtual Liver "Hayato Kagami" (ANYCOLOR Inc.). It has no affiliation with any real individuals, organizations, or companies. Content includes fiction based on official streams and community wiki information.</p>
         </div>
       </div>
     </footer>
