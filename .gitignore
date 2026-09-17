@@ -7,7 +7,4 @@ node_modules/
 # 環境変数ファイル（SupabaseのAPIキーなどを隠すため）
 .env
 
-# 作業ゴミ箱（廃止ファイルを含む履歴保存ディレクトリ）
-没/
-
 Supabase Snippet Untitled query.csv
