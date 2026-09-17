@@ -20,9 +20,9 @@ document.addEventListener(
     try {
       const a = e.target && e.target.closest ? e.target.closest('a') : null;
       if (!a) return;
-      console.log('link-debug touchstart on', a.href || a.getAttribute('href'), 'defaultPrevented=', e.defaultPrevented);
+      // console.log('link-debug touchstart on', a.href || a.getAttribute('href'), 'defaultPrevented=', e.defaultPrevented);
     } catch (err) {
-      console.error('link-debug touchstart error', err);
+      // console.error('link-debug touchstart error', err);
     }
   },
   { capture: true }
@@ -34,12 +34,12 @@ document.addEventListener(
     try {
       const a = e.target && e.target.closest ? e.target.closest('a') : null;
       if (!a) return;
-      console.log('link-debug click on', a.href || a.getAttribute('href'), 'captureDefaultPrevented=', e.defaultPrevented);
-      Promise.resolve().then(() => {
-        console.log('link-debug post-click defaultPrevented=', e.defaultPrevented, 'target=', a.outerHTML);
-      });
+      // console.log('link-debug click on', a.href || a.getAttribute('href'), 'captureDefaultPrevented=', e.defaultPrevented);
+      // Promise.resolve().then(() => {
+      //   console.log('link-debug post-click defaultPrevented=', e.defaultPrevented, 'target=', a.outerHTML);
+      // });
     } catch {
-      console.error('link-debug click error');
+      // console.error('link-debug click error');
     }
   },
   { capture: true }
@@ -78,7 +78,7 @@ document.addEventListener(
         return;
       }
       // finally navigate
-      console.log('link-debug touchend navigating to', a.href);
+      // console.log('link-debug touchend navigating to', a.href);
       window.location.href = a.href;
     } catch (err) {
       console.error('link-debug touchend error', err);

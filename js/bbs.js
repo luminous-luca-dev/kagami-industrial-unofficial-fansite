@@ -1,9 +1,5 @@
 // --- 初期設定とグローバル変数 ---
-if (!window._supabase) {
-  const url = 'https://vcsnquepttevlmhgyeje.supabase.co';
-  const key = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
-  window._supabase = supabase.createClient(url, key);
-}
+// Supabase クライアントは js/supabase-client.js で初期化済み
 const _supabase = window._supabase; // 既存の共通クライアントを参照
 let currentUser = null;
 let currentReplyParentId = null; // 返信先のID
