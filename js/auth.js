@@ -2,7 +2,7 @@
 // KAGAMI INDUSTRIAL - 認証・セッション管理システム
 // ============================================
 // Supabase クライアントは js/supabase-client.js で初期化済み
-const _supabase = window._supabase;
+// window._supabase はブラウザのグローバル変数として参照可能
 
 // ページが読み込まれたら自動的にログイン状態をチェック
 document.addEventListener('DOMContentLoaded', async () => {

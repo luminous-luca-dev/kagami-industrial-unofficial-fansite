@@ -14,9 +14,13 @@
 //   その後、下記 SUPABASE_ANON_KEY の値を新しいキーに差し替えてください。
 // ============================================
 
-const SUPABASE_URL = 'https://vcsnquepttevlmhgyeje.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
+(function () {
+  const SUPABASE_URL = 'https://vcsnquepttevlmhgyeje.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
 
-if (!window._supabase) {
-  window._supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-}
+  if (typeof window !== 'undefined' && typeof supabase !== 'undefined') {
+    if (!window._supabase) {
+      window._supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+  }
+})();

@@ -13,12 +13,14 @@ function escapeHTML(str) {
 }
 
 (function () {
-  // 1. 設定（あなたのプロジェクトのURLとキーに書き換えてください）
-  const _supabase = window._supabase;
-
   // 2. ランキングを取得して表示する関数
   async function fetchGlobalRanking() {
     try {
+      const _supabase = window._supabase;
+      if (!_supabase) {
+        console.error('Supabase client not initialized');
+        return;
+      }
       const { data: players, error } = await _supabase.from('ranking').select('name, score, rank, created_at').order('score', { ascending: false }).order('created_at', { ascending: false }).limit(15);
 
       if (error) throw error;
