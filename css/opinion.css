@@ -1,0 +1,581 @@
+/* ================================================================
+   KAGAMI INDUSTRIAL — opinion.css
+   業務改善・提案ボックス（目安箱 / 意見窓口）専用スタイル
+   ================================================================ */
+
+.opinion-page {
+  background-color: var(--color-bg);
+}
+
+/* ── ヒーローヘッダー ── */
+.opinion-hero {
+  background: linear-gradient(135deg, #0f2238 0%, #1a3a60 60%, #122c4f 100%);
+  color: var(--color-white);
+  padding: 4rem 0 3rem;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2px solid var(--color-accent);
+}
+
+.opinion-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(200, 166, 94, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.opinion-hero__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.opinion-hero__text {
+  max-width: 650px;
+}
+
+.opinion-hero__badge {
+  display: inline-block;
+  background: rgba(200, 166, 94, 0.2);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent-light);
+  font-family: var(--font-en);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 0.25rem 0.85rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.opinion-hero__title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--color-white);
+  font-family: var(--font-heading-ja);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+.opinion-hero__desc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+}
+
+/* ── 意見メーター（統計カード） ── */
+.opinion-meter-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(200, 166, 94, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  min-width: 280px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.opinion-meter__title {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-en);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.opinion-meter__count {
+  font-family: var(--font-en);
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-accent-light);
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(200, 166, 94, 0.4);
+}
+
+.opinion-meter__unit {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: 0.2rem;
+}
+
+.opinion-meter__bar-bg {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  margin-top: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.opinion-meter__bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #c8a65e, #f0d48a);
+  border-radius: 4px;
+  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 0 10px var(--color-accent);
+}
+
+.opinion-meter__status {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 0.5rem;
+}
+
+/* ── 2カラム メインコンテンツ ── */
+.opinion-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem;
+}
+
+.opinion-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+/* ── 投稿フォームカード ── */
+.opinion-form-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.opinion-form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 12px 12px 0 0;
+}
+
+.opinion-section-head {
+  margin-bottom: 1.8rem;
+}
+
+.opinion-section-head h2 {
+  font-size: 1.4rem;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-heading-ja);
+}
+
+.opinion-section-head p {
+  font-size: 0.88rem;
+  color: var(--color-text-light);
+  margin-top: 0.4rem;
+}
+
+/* クイックテンプレート・タグ */
+.quick-tags {
+  margin-bottom: 1.5rem;
+}
+
+.quick-tags__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+.quick-tags__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.quick-tag-btn {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  font-family: var(--font-body-ja);
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.quick-tag-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.quick-tag-btn.active {
+  background: var(--color-accent);
+  color: var(--color-white);
+  border-color: var(--color-accent);
+  font-weight: 700;
+}
+
+/* フォーム項目 */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.form-label .required {
+  color: #e53e3e;
+  font-size: 0.75rem;
+  margin-left: 0.4rem;
+}
+
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: var(--font-body-ja);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  background: #fff;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  outline: none;
+}
+
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(18, 44, 79, 0.12);
+}
+
+.form-textarea {
+  min-height: 150px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+/* 送信エリア */
+.form-submit-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  color: var(--color-white);
+  border: none;
+  padding: 1rem 2.5rem;
+  font-family: var(--font-heading-ja);
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(18, 44, 79, 0.3);
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 22px rgba(18, 44, 79, 0.4);
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, #25528c 100%);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-note {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+/* ── 右カラム: にじたうん＆ハヤトプス Mascot Widget ── */
+.mascot-widget {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.8rem;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  position: sticky;
+  top: 100px;
+}
+
+.mascot-widget__title {
+  font-size: 1rem;
+  font-family: var(--font-heading-ja);
+  color: var(--color-primary);
+  margin-bottom: 0.3rem;
+}
+
+.mascot-widget__sub {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.2rem;
+}
+
+/* キャラクターぽてっと描画コンテナ */
+.mascot-stage {
+  background: linear-gradient(180deg, #f0f5fa 0%, #e6eef5 100%);
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mascot-stage:hover {
+  transform: scale(1.03);
+}
+
+.mascot-stage:active {
+  transform: scale(0.97);
+}
+
+/* ポップアップバブル */
+.mascot-bubble {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #122c4f;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 15px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  z-index: 5;
+}
+
+.mascot-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px 6px 0;
+  border-style: solid;
+  border-color: #122c4f transparent;
+}
+
+/* SVG マスコットのアニメーション & 状態切替 */
+.mascot-svg-wrapper {
+  width: 200px;
+  height: 140px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* 状態ごとのスタイル変化 (normal / tap / thanks) */
+.mascot-stage[data-state='normal'] .mascot-eyes--tap,
+.mascot-stage[data-state='normal'] .mascot-eyes--thanks {
+  display: none;
+}
+
+.mascot-stage[data-state='tap'] .mascot-eyes--normal,
+.mascot-stage[data-state='tap'] .mascot-eyes--thanks {
+  display: none;
+}
+
+.mascot-stage[data-state='thanks'] .mascot-eyes--normal,
+.mascot-stage[data-state='thanks'] .mascot-eyes--tap {
+  display: none;
+}
+
+/* ぷにぷにぽてっとアニメーション */
+@keyframes potettoBounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  50% {
+    transform: translateY(-8px) scale(0.96, 1.04);
+  }
+}
+
+@keyframes potettoTap {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.15, 0.85);
+  }
+  70% {
+    transform: scale(0.9, 1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes potettoThanks {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-10deg) scale(1.1);
+  }
+  75% {
+    transform: rotate(10deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.mascot-stage[data-state='normal'] svg {
+  animation: potettoBounce 3.5s ease-in-out infinite;
+}
+
+.mascot-stage[data-state='tap'] svg {
+  animation: potettoTap 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mascot-stage[data-state='thanks'] svg {
+  animation: potettoThanks 0.6s ease-in-out infinite;
+}
+
+.mascot-hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* 用途ガイド */
+.opinion-guide-card {
+  margin-top: 1.5rem;
+  background: var(--color-bg);
+  border-radius: 8px;
+  padding: 1.2rem;
+  text-align: left;
+  font-size: 0.82rem;
+}
+
+.opinion-guide-card h4 {
+  font-size: 0.88rem;
+  color: var(--color-primary);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.opinion-guide-list {
+  padding-left: 1.2rem;
+  color: var(--color-text-light);
+  line-height: 1.8;
+  list-style-type: disc;
+}
+
+/* ── 投稿一覧 / フィード ── */
+.recent-opinions-section {
+  margin-top: 4rem;
+}
+
+.opinion-feed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.feed-item-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.2rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s;
+}
+
+.feed-item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.feed-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.feed-cat-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  background: rgba(18, 44, 79, 0.08);
+  color: var(--color-primary);
+}
+
+.feed-date {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-en);
+}
+
+.feed-content {
+  font-size: 0.88rem;
+  color: var(--color-text);
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 900px) {
+  .opinion-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mascot-widget {
+    position: static;
+    order: -1;
+  }
+
+  .opinion-hero__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

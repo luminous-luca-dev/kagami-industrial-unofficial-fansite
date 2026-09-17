@@ -9,26 +9,26 @@
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-
       gtag('config', 'G-DYB1GGHVZ4');
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>加賀美インダストリアル | 非公式 | KAGAMI INDUSTRIAL Inc.</title>
-    <meta name="description" content="加賀美インダストリアル ― 鋼鉄の巨人も、掌のミニカーも。すべての情熱は等価である。産業用ロボット・重機から精密ダイキャストカー・玩具まで。" />
+    <title>業務改善・提案ボックス（目安箱） | 加賀美インダストリアル</title>
+    <meta name="description" content="加賀美インダストリアル 業務改善・提案ボックス（意見窓口・目安箱）。こんなサービスがほしい、休憩室ゲームのアイデア、昇進試験やサイト誤字等のご意見まで、超お手軽に投稿できます。" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/components.css" />
-    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/opinion.css" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta property="og:title" content="【非公式】加賀美インダストリアル ファンサイト" />
-    <meta property="og:description" content="加賀美ハヤト様の活動を応援する非公式ファンメイドサイトです。" />
+    <meta property="og:title" content="【目安箱・意見窓口】加賀美インダストリアル 業務改善・提案ボックス" />
+    <meta property="og:description" content="加賀美インダストリアルへのご意見・新サービス提案・改善点などを超お手軽に投稿できる目安箱です。" />
     <meta property="og:image" content="https://kagami-industrial-unofficial-fansite.pages.dev/android-chrome-192x192.png" />
   </head>
 
-  <body>
+  <body class="opinion-page">
+    <!-- ======================== HEADER ======================== -->
     <header class="site-header">
       <div class="container">
         <a href="index.html" class="site-logo">
@@ -45,27 +45,13 @@
         </a>
         <nav class="main-nav">
           <ul class="main-nav__list">
-            <li class="main-nav__item">
-              <a href="index.html" class="active">Home</a>
-            </li>
-            <li class="main-nav__item">
-              <a href="about.html">About</a>
-            </li>
-            <li class="main-nav__item">
-              <a href="history.html">History</a>
-            </li>
-            <li class="main-nav__item">
-              <a href="business.html">Business</a>
-            </li>
-            <li class="main-nav__item">
-              <a href="technology.html">Technology</a>
-            </li>
-            <li class="main-nav__item">
-              <a href="sustainability.html">CSR</a>
-            </li>
-            <li class="main-nav__item">
-              <a href="recruit.html">Recruit</a>
-            </li>
+            <li class="main-nav__item"><a href="index.html">Home</a></li>
+            <li class="main-nav__item"><a href="about.html">About</a></li>
+            <li class="main-nav__item"><a href="history.html">History</a></li>
+            <li class="main-nav__item"><a href="business.html">Business</a></li>
+            <li class="main-nav__item"><a href="technology.html">Technology</a></li>
+            <li class="main-nav__item"><a href="sustainability.html">CSR</a></li>
+            <li class="main-nav__item"><a href="recruit.html">Recruit</a></li>
             <li class="main-nav__item"><a href="ir.html">IR</a></li>
           </ul>
         </nav>
@@ -89,196 +75,218 @@
         <li><a href="ir.html">IR</a></li>
       </ul>
     </div>
-    <!-- Mobile Nav -->
-    <div class="mobile-nav-overlay">
-      <ul class="mobile-nav__list">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="history.html">History</a></li>
-        <li><a href="business.html">Business</a></li>
-        <li><a href="technology.html">Technology</a></li>
-        <li><a href="sustainability.html">Sustainability</a></li>
-        <li><a href="recruit.html">Recruit</a></li>
-        <li><a href="ir.html">IR</a></li>
-      </ul>
-    </div>
 
-    <!-- ===== HERO ===== -->
-    <section class="hero">
-      <div class="hero__bg"></div>
-      <div class="hero__overlay"></div>
-      <div class="hero__particles" id="hero-particles"></div>
-      <div class="hero__content">
-        <p class="hero__label en-text">MATERIAL / HEAVY MACHINERY &amp; HOBBY / ENTERTAINMENT</p>
-        <h1 class="hero__title">
-          鋼鉄の巨人も、掌のミニカーも。
-          <br />
-          <span class="gold-shimmer">すべての情熱は等価である。</span>
-        </h1>
-        <p class="hero__subtitle en-text">Since 19XX — Forging Dreams, Engineering Joy.</p>
-        <div class="hero__actions">
-          <a href="about.html" class="btn btn--accent">企業情報を見る</a>
-          <a href="business.html" class="btn btn--outline">事業紹介</a>
+    <!-- ======================== HERO & METER ======================== -->
+    <section class="opinion-hero">
+      <div class="container">
+        <div class="opinion-hero__inner">
+          <div class="opinion-hero__text">
+            <span class="opinion-hero__badge">PROPOSAL &amp; FEEDBACK BOX</span>
+            <h1 class="opinion-hero__title">
+              業務改善・提案ボックス
+              <br />
+              <span class="gold-shimmer">（加賀美インダストリアル 目安箱）</span>
+            </h1>
+            <p class="opinion-hero__desc">社員の皆様・株主の皆様・ファンの皆様からの「こんなサービスがあったら面白い」「この記述や昇進試験の問題、ここを直した方がいい」といったご意見や自由なアイデアをお待ちしております！</p>
+          </div>
+
+          <!-- 意見集積メーター -->
+          <div class="opinion-meter-card">
+            <div class="opinion-meter__title">届いたアイデア・ご意見の総数</div>
+            <div>
+              <span class="opinion-meter__count" id="meterCount">142</span>
+              <span class="opinion-meter__unit">件</span>
+            </div>
+            <div class="opinion-meter__bar-bg">
+              <div class="opinion-meter__bar-fill" id="meterBarFill"></div>
+            </div>
+            <div class="opinion-meter__status">⚡ 社長室＆開発担当が順次拝見中！</div>
+          </div>
         </div>
-      </div>
-      <div class="hero__scroll-indicator">
-        <span class="en-text">Scroll</span>
-        <div class="hero__scroll-line"></div>
       </div>
     </section>
 
-    <!-- ===== NEWS TICKER ===== -->
-    <div class="news-ticker">
-      <div class="container">
-        <div class="news-ticker__inner">
-          <div class="news-ticker__label">News</div>
-          <div class="news-ticker__track">
-            <div class="news-ticker__items">
-              <div class="news-ticker__item">
-                <span class="date">2024.11.15</span>
-                <span class="tag">お知らせ</span>
-                子会社「加賀美水道局」による新規パイプライン敷設工事が完了しました。
-              </div>
-              <div class="news-ticker__item">
-                <span class="date">2024.10.28</span>
-                <span class="tag">新製品</span>
-                玩具事業部より新型変形ロボット「FX-∞」の予約受付を開始いたしました。
-              </div>
-              <div class="news-ticker__item">
-                <span class="date">2024.09.12</span>
-                <span class="tag">IR</span>
-                2024年度第2四半期 決算説明会の資料を掲載しました。
-              </div>
-              <div class="news-ticker__item">
-                <span class="date">2024.08.01</span>
-                <span class="tag">採用</span>
-                2025年度新卒採用エントリーの受付を開始いたしました。
-              </div>
-              <!-- Duplicate for seamless loop -->
-              <div class="news-ticker__item">
-                <span class="date">2024.11.15</span>
-                <span class="tag">お知らせ</span>
-                子会社「加賀美水道局」による新規パイプライン敷設工事が完了しました。
-              </div>
-              <div class="news-ticker__item">
-                <span class="date">2024.10.28</span>
-                <span class="tag">新製品</span>
-                玩具事業部より新型変形ロボット「FX-∞」の予約受付を開始いたしました。
-              </div>
-              <div class="news-ticker__item">
-                <span class="date">2024.09.12</span>
-                <span class="tag">IR</span>
-                2024年度第2四半期 決算説明会の資料を掲載しました。
-              </div>
-              <div class="news-ticker__item">
-                <span class="date">2024.08.01</span>
-                <span class="tag">採用</span>
-                2025年度新卒採用エントリーの受付を開始いたしました。
-              </div>
+    <!-- ======================== MAIN CONTENT ======================== -->
+    <main class="opinion-container">
+      <div class="opinion-grid">
+        <!-- 左カラム: 投稿フォーム -->
+        <section class="opinion-form-card">
+          <div class="opinion-section-head">
+            <h2>📮 ご意見・アイデア投稿</h2>
+            <p>超お手軽に送信できます。匿名での送信・気軽な思いつきも大歓迎です！</p>
+          </div>
+
+          <!-- クイックテンプレートタグ -->
+          <div class="quick-tags">
+            <span class="quick-tags__label">💡 タグをタップして簡単に挿入：</span>
+            <div class="quick-tags__list">
+              <button class="quick-tag-btn" data-cat="新サービス提案" data-tag="【こんなサービスがほしい】">✨ 新サービス提案</button>
+              <button class="quick-tag-btn" data-cat="休憩室ゲーム案" data-tag="【休憩室ゲームアイデア】">🎮 休憩室ゲーム案</button>
+              <button class="quick-tag-btn" data-cat="意見窓口・不具合ご指摘" data-tag="【昇進試験・記述修正】">📝 意見窓口（試験・記述指摘）</button>
+              <button class="quick-tag-btn" data-cat="コンテンツ要望" data-tag="【コンテンツ追加要望】">🚀 コンテンツ要望</button>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- ===== ABOUT SECTION ===== -->
-    <section class="section" id="about-preview">
-      <div class="container">
-        <div class="about-preview">
-          <div class="about-preview__text fade-in-left">
-            <span class="section-label">About Us</span>
-            <h2 class="section-title">少年の夢を、大人の技術で。</h2>
-            <p>加賀美インダストリアルは、産業用ロボット・建設機械の開発で培った技術力と、玩具・エンタテインメントへの飽くなき情熱を融合させた、唯一無二の企業です。</p>
-            <p>先代が築き上げた重厚な産業基盤の上に、二代目社長・加賀美隼人が新たなビジョンを掲げ、「好きを仕事にする」覚悟をもって経営に邁進しております。</p>
-            <a href="about.html" class="btn btn--primary" style="margin-top: var(--space-lg)">社長挨拶を読む</a>
-          </div>
-          <div class="about-preview__stats fade-in-right">
-            <div class="stat-card">
-              <div class="stat-card__number" data-count="130000" data-suffix="+">0</div>
-              <div class="stat-card__label">同時接続株主数（3Dプレゼンテーション時）</div>
+          <form id="opinionForm">
+            <div class="form-group">
+              <label class="form-label" for="categorySelect">
+                区分（カテゴリ）
+                <span class="required">*必須</span>
+              </label>
+              <select id="categorySelect" class="form-select" required>
+                <option value="新サービス提案">💡 こんなサービスがあったら面白そう（新サービス提案）</option>
+                <option value="コンテンツ要望">🚀 こういうコンテンツ・機能を追加してほしい</option>
+                <option value="休憩室ゲーム案">🎮 休憩室にこんなゲームのアイデアはどうでしょうか</option>
+                <option value="意見窓口・不具合ご指摘">📝 意見窓口（昇進試験問題の不備・誤字脱字・修正提案など）</option>
+                <option value="その他ご意見">📮 その他全般のご意見・応援メッセージ</option>
+              </select>
             </div>
-            <div class="stat-card">
-              <div class="stat-card__number" data-count="8" data-suffix="">0</div>
-              <div class="stat-card__label">グループ関連企業数</div>
+
+            <div class="form-group">
+              <label class="form-label" for="contentInput">
+                ご意見・提案内容
+                <span class="required">*必須</span>
+              </label>
+              <textarea id="contentInput" class="form-textarea" placeholder="例：休憩室にミニゲーム「社長とデュエル」を追加してほしい！&#10;例：昇進試験の問3の選択肢B、文法が少しおかしい気がします。" required></textarea>
             </div>
-            <div class="stat-card">
-              <div class="stat-card__number" data-count="2019" data-suffix="">0</div>
-              <div class="stat-card__label">ANYCOLOR社との提携開始</div>
+
+            <div class="form-submit-area">
+              <span class="submit-note">※送信ボタンを押すと即時に目安箱へ投函されます。</span>
+              <button type="submit" id="submitBtn" class="submit-btn">🚀 社長室・担当者へ送信する</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- 右カラム: にじたうん＆ハヤトプス マスコット Widget -->
+        <aside class="mascot-widget">
+          <h3 class="mascot-widget__title">にじたうん ＆ ハヤトプス</h3>
+          <p class="mascot-widget__sub">目安箱の守り神マスコット</p>
+
+          <!-- マスコット舞台（ぽてっと配置・タップ/送信差分対応） -->
+          <div class="mascot-stage" id="mascotStage" data-state="normal" title="タップしてみよう！">
+            <div class="mascot-bubble" id="mascotBubble">どんなご意見でも大歓迎です！</div>
+
+            <div class="mascot-svg-wrapper">
+              <!-- にじたうん＆ハヤトプス SVG イラスト -->
+              <svg viewBox="0 0 220 150" width="100%" height="100%">
+                <defs>
+                  <!-- 虹色グラデーション (にじたうん用) -->
+                  <linearGradient id="nijitownGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff9a9e" />
+                    <stop offset="30%" stop-color="#fecfef" />
+                    <stop offset="60%" stop-color="#a1c4fd" />
+                    <stop offset="100%" stop-color="#c2e9fb" />
+                  </linearGradient>
+                  <!-- ハヤトプス（シックなグリーン・ブルー） -->
+                  <linearGradient id="hayatopsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#122c4f" />
+                    <stop offset="100%" stop-color="#1a457a" />
+                  </linearGradient>
+                </defs>
+
+                <!-- 影 -->
+                <ellipse cx="65" cy="135" rx="45" ry="8" fill="rgba(0,0,0,0.12)" />
+                <ellipse cx="155" cy="135" rx="40" ry="7" fill="rgba(0,0,0,0.12)" />
+
+                <!-- ── ハヤトプス（恐竜風マスコット） ── -->
+                <g id="hayatops">
+                  <!-- 胴体 ぽてっと -->
+                  <path d="M 120 135 Q 115 80 155 80 Q 195 80 190 135 Z" fill="url(#hayatopsGrad)" />
+                  <!-- 角（ハヤトプス） -->
+                  <polygon points="135,78 142,60 148,80" fill="#c8a65e" />
+                  <polygon points="160,78 168,55 174,80" fill="#c8a65e" />
+                  <!-- 目 (Normal) -->
+                  <g class="mascot-eyes--normal">
+                    <circle cx="145" cy="98" r="4" fill="#ffffff" />
+                    <circle cx="146" cy="98" r="2" fill="#000000" />
+                    <circle cx="170" cy="98" r="4" fill="#ffffff" />
+                    <circle cx="171" cy="98" r="2" fill="#000000" />
+                    <!-- ほっぺ -->
+                    <circle cx="138" cy="106" r="4" fill="#ff7675" opacity="0.6" />
+                    <circle cx="176" cy="106" r="4" fill="#ff7675" opacity="0.6" />
+                    <!-- にっこり口 -->
+                    <path d="M 152 108 Q 158 114 164 108" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+                  </g>
+                  <!-- 目 (Tap: びっくり) -->
+                  <g class="mascot-eyes--tap">
+                    <ellipse cx="145" cy="98" rx="5" ry="7" fill="#ffffff" />
+                    <circle cx="145" cy="98" r="2.5" fill="#000000" />
+                    <ellipse cx="170" cy="98" rx="5" ry="7" fill="#ffffff" />
+                    <circle cx="170" cy="98" r="2.5" fill="#000000" />
+                    <circle cx="138" cy="106" r="5" fill="#ff7675" opacity="0.8" />
+                    <circle cx="176" cy="106" r="5" fill="#ff7675" opacity="0.8" />
+                    <ellipse cx="158" cy="110" rx="3" ry="4" fill="#ffffff" />
+                  </g>
+                  <!-- 目 (Thanks: 大喜び) -->
+                  <g class="mascot-eyes--thanks">
+                    <path d="M 140 98 Q 145 92 150 98" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+                    <path d="M 165 98 Q 170 92 175 98" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+                    <path d="M 150 106 Q 158 116 166 106 Z" fill="#ff7675" />
+                  </g>
+                </g>
+
+                <!-- ── にじたうん（虹色ぷにぷにマスコット） ── -->
+                <g id="nijitown">
+                  <!-- ぷにっと丸い身体 -->
+                  <circle cx="65" cy="100" r="38" fill="url(#nijitownGrad)" stroke="#ffffff" stroke-width="2" />
+                  <!-- 天使の輪/小さな角 -->
+                  <ellipse cx="65" cy="58" rx="16" ry="4" fill="none" stroke="#c8a65e" stroke-width="2" />
+                  <!-- 目 (Normal) -->
+                  <g class="mascot-eyes--normal">
+                    <circle cx="53" cy="96" r="4" fill="#2d3436" />
+                    <circle cx="54" cy="94" r="1.5" fill="#ffffff" />
+                    <circle cx="77" cy="96" r="4" fill="#2d3436" />
+                    <circle cx="78" cy="94" r="1.5" fill="#ffffff" />
+                    <!-- にっこり口 -->
+                    <path d="M 60 106 Q 65 110 70 106" fill="none" stroke="#2d3436" stroke-width="2" stroke-linecap="round" />
+                    <circle cx="46" cy="102" r="3.5" fill="#ff7675" opacity="0.5" />
+                    <circle cx="84" cy="102" r="3.5" fill="#ff7675" opacity="0.5" />
+                  </g>
+                  <!-- 目 (Tap: ぐるぐる/ハート) -->
+                  <g class="mascot-eyes--tap">
+                    <text x="47" y="102" font-size="12" fill="#2d3436">＞</text>
+                    <text x="71" y="102" font-size="12" fill="#2d3436">＜</text>
+                    <path d="M 60 108 Q 65 113 70 108" fill="none" stroke="#2d3436" stroke-width="2" stroke-linecap="round" />
+                  </g>
+                  <!-- 目 (Thanks: ニッコリハート) -->
+                  <g class="mascot-eyes--thanks">
+                    <text x="47" y="100" font-size="12" fill="#e84393">♥</text>
+                    <text x="71" y="100" font-size="12" fill="#e84393">♥</text>
+                    <path d="M 58 105 Q 65 112 72 105 Z" fill="#e84393" />
+                  </g>
+                </g>
+              </svg>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ===== BUSINESS CARDS ===== -->
-    <section class="section section--alt" id="business-preview">
-      <div class="container">
-        <div style="text-align: center; margin-bottom: var(--space-2xl)">
-          <span class="section-label">Our Business</span>
-          <h2 class="section-title center">事業領域</h2>
-        </div>
-        <div class="grid grid--3">
-          <div class="card fade-in">
-            <div class="card__icon">⚙️</div>
-            <h3 class="card__title">重工業部門</h3>
-            <p class="card__text">産業用ロボット、建設機械の開発・製造。インドネシア支社を含むグローバル展開でインフラ整備事業を推進。</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card__icon">🏎️</div>
-            <h3 class="card__title">ホビー事業部門</h3>
-            <p class="card__text">精密ダイキャストカー、組み立て式プラスチックモデル、TCG（トレーディングカードゲーム）の企画・開発。</p>
-          </div>
-          <div class="card fade-in">
-            <div class="card__icon">🎵</div>
-            <h3 class="card__title">エンタテインメント事業</h3>
-            <p class="card__text">ANYCOLOR株式会社との戦略的広報パートナーシップにより、次世代バーチャルエンタテインメントを展開。</p>
-          </div>
-        </div>
-        <div style="text-align: center; margin-top: var(--space-xl)">
-          <a href="business.html" class="btn btn--primary">事業詳細を見る</a>
-        </div>
-      </div>
-    </section>
+          <p class="mascot-hint">💡 キャラクターをタップすると表情が変わります！送信すると喜ぶ仕様です♪</p>
 
-    <!-- ===== PHILOSOPHY ===== -->
-    <section class="section section--dark">
-      <div class="container">
-        <div class="philosophy fade-in" style="text-align: center; max-width: 800px; margin: 0 auto">
-          <span class="section-label">Philosophy</span>
-          <h2 style="color: var(--color-white); font-size: clamp(1.5rem, 3.5vw, 2.2rem); line-height: 1.8; margin-bottom: var(--space-xl)">
-            遊びに本気になれない者が、
-            <br />
-            良い仕事などできるはずがない。
-          </h2>
-          <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; line-height: 2">
-            私たちは「ものづくり」の本質が「楽しむこと」にあると信じています。
-            <br />
-            巨大な産業ロボットも、掌に収まるミニカーも、
-            <br />
-            注ぎ込まれた情熱に貴賤はありません。
-            <br />
-            加賀美インダストリアルは、すべてのクリエイターと共に歩みます。
-          </p>
-          <div style="margin-top: var(--space-lg); font-family: var(--font-en); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--color-accent)">— HAYATO KAGAMI, CEO</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== RECRUIT CTA ===== -->
-    <section class="section">
-      <div class="container">
-        <div class="recruit-cta fade-in">
-          <div class="recruit-cta__content">
-            <span class="section-label">Join Us</span>
-            <h2 class="section-title">共に、情熱を形にしませんか。</h2>
-            <p style="color: var(--color-text-light); margin-bottom: var(--space-lg)">加賀美インダストリアルでは、重工業からホビー、エンタテインメントまで、 多様なフィールドで活躍する仲間を募集しています。 デュエリスト、歌うことへの情熱がある方、玩具売り場で子供に戻れる方、大歓迎です。</p>
-            <a href="recruit.html" class="btn btn--accent">採用情報を見る</a>
+          <!-- 用途ガイド -->
+          <div class="opinion-guide-card">
+            <h4>📌 どんな内容でもOKです！</h4>
+            <ul class="opinion-guide-list">
+              <li>「こんな新サービスがほしい！」</li>
+              <li>「休憩室のゲーム案アイデア」</li>
+              <li>「昇進試験問題のここが間違ってる」</li>
+              <li>「サイト内の誤字脱字のご指摘」</li>
+            </ul>
           </div>
-        </div>
+        </aside>
       </div>
-    </section>
 
-    <!-- ===== FOOTER ===== -->
+      <!-- ── 最近届いたご意見フィード ── -->
+      <section class="recent-opinions-section">
+        <div class="opinion-section-head">
+          <h2>💬 皆様から届いたご意見・提案（抜粋）</h2>
+          <p>目安箱に届いた直近のアイデアの一部です。皆様のご協力でサイトやサービスが改善されています！</p>
+        </div>
+        <div class="opinion-feed-grid" id="recentFeed">
+          <!-- JSで動的描画 -->
+        </div>
+      </section>
+    </main>
+
+    <!-- ======================== FOOTER ======================== -->
     <footer class="site-footer">
       <div class="container">
         <div class="footer-main">
@@ -304,9 +312,7 @@
               <li><a href="about.html">企業情報</a></li>
               <li><a href="history.html">沿革</a></li>
               <li><a href="business.html">事業紹介</a></li>
-              <li>
-                <a href="technology.html">技術・研究開発</a>
-              </li>
+              <li><a href="technology.html">技術・研究開発</a></li>
             </ul>
           </div>
           <div class="footer-nav">
@@ -315,37 +321,25 @@
               <li><a href="sustainability.html">CSR活動</a></li>
               <li><a href="recruit.html">採用情報</a></li>
               <li><a href="ir.html">投資家情報</a></li>
+              <li><a href="opinion_box.html">目安箱・意見窓口</a></li>
             </ul>
           </div>
           <div class="footer-nav">
             <h4 class="footer-nav__title">Group</h4>
             <ul class="footer-nav__list">
-              <li>
-                <a href="business.html#group">加賀美リゾート</a>
-              </li>
-              <li>
-                <a href="business.html#group">加賀美損保</a>
-              </li>
-              <li>
-                <a href="business.html#group">加賀美水道局</a>
-              </li>
-              <li>
-                <a href="business.html#group">加賀美不動産</a>
-              </li>
+              <li><a href="business.html#group">加賀美リゾート</a></li>
+              <li><a href="finance.html">加賀美ファイナンス</a></li>
+              <li><a href="business.html#group">加賀美水道局</a></li>
+              <li><a href="business.html#group">加賀美不動産</a></li>
             </ul>
           </div>
           <div class="footer-nav">
             <h4 class="footer-nav__title">About</h4>
             <ul class="footer-nav__list">
-              <li>
-                <a href="manager.html#manager">担当者紹介</a>
-              </li>
-              <li>
-                <a href="manager.html#policy">サイトポリシー</a>
-              </li>
+              <li><a href="manager.html#manager">担当者紹介</a></li>
+              <li><a href="manager.html#policy">サイトポリシー</a></li>
             </ul>
           </div>
-
           <div class="footer-nav">
             <h4 class="footer-nav__title">ROOM</h4>
             <ul class="footer-nav__list">
@@ -361,8 +355,6 @@
             本サイトは、ANYCOLOR株式会社所属バーチャルライバー「加賀美ハヤト」様のファンによる非公式ファンサイトです。
             <br />
             実在の人物・団体・企業とは一切関係ありません。
-            <br />
-            掲載されている情報は、公式配信およびWiki等の情報を元にしたフィクションを含みます。
           </p>
         </div>
       </div>
@@ -372,24 +364,6 @@
     <script src="js/supabase-client.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/main.js"></script>
-
-    <script>
-      // Hero particles
-      (function () {
-        const container = document.getElementById('hero-particles');
-        if (!container) return;
-        for (let i = 0; i < 30; i++) {
-          const particle = document.createElement('div');
-          particle.className = 'hero-particle';
-          particle.style.left = Math.random() * 100 + '%';
-          particle.style.top = Math.random() * 100 + '%';
-          particle.style.width = 2 + Math.random() * 4 + 'px';
-          particle.style.height = particle.style.width;
-          particle.style.animationDelay = Math.random() * 5 + 's';
-          particle.style.animationDuration = 3 + Math.random() * 4 + 's';
-          container.appendChild(particle);
-        }
-      })();
-    </script>
+    <script src="js/opinion.js"></script>
   </body>
 </html>
