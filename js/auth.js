@@ -1,11 +1,8 @@
 // ============================================
 // KAGAMI INDUSTRIAL - 認証・セッション管理システム
 // ============================================
-if (!window._supabase) {
-  const url = 'https://vcsnquepttevlmhgyeje.supabase.co';
-  const key = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
-  window._supabase = supabase.createClient(url, key);
-}
+// Supabase クライアントは js/supabase-client.js で初期化済み
+const _supabase = window._supabase;
 
 // ページが読み込まれたら自動的にログイン状態をチェック
 document.addEventListener('DOMContentLoaded', async () => {

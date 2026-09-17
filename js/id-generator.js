@@ -3,11 +3,8 @@
    社員証ジェネレーター
    ============================================ */
 
-if (!window._supabase) {
-  const url = 'https://vcsnquepttevlmhgyeje.supabase.co';
-  const key = 'sb_publishable_S6iay_evMqvHMLsgThkWOQ_pX3ghA4R';
-  window._supabase = supabase.createClient(url, key);
-}
+// Supabase クライアントは js/supabase-client.js で初期化済み
+const _supabase = window._supabase;
 
 const logoImg = new Image();
 logoImg.src = './android-chrome-192x192.png';
